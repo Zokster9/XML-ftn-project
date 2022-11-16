@@ -38,12 +38,30 @@
                             <xs:element name="Drzavljanstvo" type="xs:string"/>
                             <xs:element default="false" name="Podnosilac_je_pronalazac"
                                 type="xs:boolean"/>
-                            <xs:element name="Nacin_dostavljanja">
+                            <xs:element name="Dostavljanje">
                                 <xs:complexType>
-                                    <xs:choice>
-                                        <xs:element name="Elektronski" type="xs:string"/>
-                                        <xs:element name="Papirni" type="xs:string"/>
-                                    </xs:choice>
+                                    <xs:sequence>
+                                        <xs:element name="Nacin_dostavljanja">
+                                            <xs:complexType>
+                                                <xs:choice>
+                                                  <xs:element name="Elektronski">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="Email" type="xs:string"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="Papirni">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element ref="p1:Adresa"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                </xs:choice>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -66,9 +84,8 @@
                             <xs:element name="Tip_punomocnika">
                                 <xs:complexType>
                                     <xs:choice>
-                                        <xs:element name="Punomocnik_za_zastupanje" type="xs:string"/>
-                                        <xs:element name="Punomocnik_za_prijem_pismena"
-                                            type="xs:string"/>
+                                        <xs:element name="Punomocnik_za_zastupanje"/>
+                                        <xs:element name="Punomocnik_za_prijem_pismena"/>
                                     </xs:choice>
                                 </xs:complexType>
                             </xs:element>
@@ -80,7 +97,6 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element minOccurs="0" ref="p1:Adresa"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -131,8 +147,8 @@
                 <xs:element name="Tip_prijave">
                     <xs:complexType>
                         <xs:choice>
-                            <xs:element name="Dopunska_prijava" type="xs:string"/>
-                            <xs:element name="Izdvojena_prijava" type="xs:string"/>
+                            <xs:element name="Dopunska_prijava"/>
+                            <xs:element name="Izdvojena_prijava"/>
                         </xs:choice>
                     </xs:complexType>
                 </xs:element>
