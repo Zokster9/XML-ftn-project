@@ -38,30 +38,24 @@
                             <xs:element name="Drzavljanstvo" type="xs:string"/>
                             <xs:element default="false" name="Podnosilac_je_pronalazac"
                                 type="xs:boolean"/>
-                            <xs:element name="Dostavljanje">
+                            <xs:element name="Nacin_dostavljanja">
                                 <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="Nacin_dostavljanja">
+                                    <xs:choice>
+                                        <xs:element name="Elektronski">
                                             <xs:complexType>
-                                                <xs:choice>
-                                                  <xs:element name="Elektronski">
-                                                  <xs:complexType>
-                                                  <xs:sequence>
+                                                <xs:sequence>
                                                   <xs:element name="Email" type="xs:string"/>
-                                                  </xs:sequence>
-                                                  </xs:complexType>
-                                                  </xs:element>
-                                                  <xs:element name="Papirni">
-                                                  <xs:complexType>
-                                                  <xs:sequence>
-                                                  <xs:element ref="p1:Adresa"/>
-                                                  </xs:sequence>
-                                                  </xs:complexType>
-                                                  </xs:element>
-                                                </xs:choice>
+                                                </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
-                                    </xs:sequence>
+                                        <xs:element name="Papirni">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element ref="p1:Adresa"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:choice>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
