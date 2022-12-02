@@ -1,4 +1,4 @@
-package project.xmlproject.DatabaseExample;
+package project.xmlproject.database;
 
 import project.xmlproject.Util.AuthenticationUtilities;
 import org.xmldb.api.DatabaseManager;
@@ -7,53 +7,33 @@ import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
 
-import java.io.File;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 
-public class StoreXML {
-    private static AuthenticationUtilities.ConnectionProperties conn;
+public class WriteMarshal {
 
-    public static void main(String[] args) throws Exception {
-        StoreXML.run(conn = AuthenticationUtilities.loadProperties(), args);
-    }
+    public void write(String collectionName, String documentName, ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) throws Exception {
 
-    /**
-     * conn XML DB connection properties
-     * args[0] Should be the collection ID to access
-     * args[1] Should be the document ID to store in the collection
-     * args[2] Should be the document file path
-     */
-    public static void run(AuthenticationUtilities.ConnectionProperties conn, String args[]) throws Exception {
+        AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 
-        System.out.println("[INFO] " + StoreXML.class.getSimpleName());
+        System.out.println("[INFO] " + WriteMarshal.class.getSimpleName());
 
         // initialize collection and document identifiers
         String collectionId = null;
         String documentId = null;
-        String filePath = null;
 
-        if (args.length == 3) {
+        System.out.println("[INFO] Using defaults.");
 
-            System.out.println("[INFO] Passing the arguments... ");
+        collectionId = "/db/xml-project/" + collectionName;
+        documentId = documentName;
 
-            collectionId = args[0];
-            documentId = args[1];
-
-            filePath = args[2];
-        } else {
-
-            System.out.println("[INFO] Using defaults.");
-
-            collectionId = "/db/xml-project/patenti";
-            documentId = "p1.xml";
-
-            filePath = "src/main/java/patenti/p1_primer1.xml";
-
-        }
 
         System.out.println("\t- collection ID: " + collectionId);
         System.out.println("\t- document ID: " + documentId);
-        System.out.println("\t- file path: " + filePath + "\n");
 
         // initialize database driver
         System.out.println("[INFO] Loading driver class: " + conn.driver);
@@ -70,11 +50,12 @@ public class StoreXML {
         // a collection of Resources stored within an XML database
         Collection col = null;
         XMLResource res = null;
+        OutputStream os = new ByteArrayOutputStream();
 
         try {
 
             System.out.println("[INFO] Retrieving the collection: " + collectionId);
-            col = getOrCreateCollection(collectionId);
+            col = getOrCreateCollection(collectionId, conn);
 
             /*
              *  create new XMLResource with a given id
@@ -83,14 +64,17 @@ public class StoreXML {
             System.out.println("[INFO] Inserting the document: " + documentId);
             res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
 
-            File f = new File(filePath);
+            System.out.println("[INFO] Unmarshalling XML document to an JAXB instance: ");
+            JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjePatenta.class);
 
-            if(!f.canRead()) {
-                System.out.println("[ERROR] Cannot read the file: " + filePath);
-                return;
-            }
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-            res.setContent(f);
+            // marshal the contents to an output stream
+            marshaller.marshal(zahtevZaPriznanjePatenta, os);
+
+            // link the stream to the XML resource
+            res.setContent(os);
             System.out.println("[INFO] Storing the document: " + res.getId());
 
             col.storeResource(res);
@@ -119,11 +103,11 @@ public class StoreXML {
         }
     }
 
-    private static Collection getOrCreateCollection(String collectionUri) throws XMLDBException {
-        return getOrCreateCollection(collectionUri, 0);
+    private static Collection getOrCreateCollection(String collectionUri, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
+        return getOrCreateCollection(collectionUri, 0, conn);
     }
 
-    private static Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset) throws XMLDBException {
+    private static Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
 
         Collection col = DatabaseManager.getCollection(conn.uri + collectionUri, conn.user, conn.password);
 
@@ -164,7 +148,7 @@ public class StoreXML {
                     startCol.close();
                 }
             }
-            return getOrCreateCollection(collectionUri, ++pathSegmentOffset);
+            return getOrCreateCollection(collectionUri, ++pathSegmentOffset, conn);
         } else {
             return col;
         }
