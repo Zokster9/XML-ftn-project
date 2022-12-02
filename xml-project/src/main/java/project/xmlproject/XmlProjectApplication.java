@@ -160,7 +160,7 @@ public class XmlProjectApplication {
 	}
 	 */
 
-	public static void main(String[] args) throws JAXBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+	public static void main(String[] args){
 		SpringApplication.run(XmlProjectApplication.class, args);
 		//marshal();
 		//ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = unmarshall();

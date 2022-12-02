@@ -13,22 +13,22 @@ Generated on: 2022.11.30 at 09:42:14 PM CET
       <package name="rs.ac.uns.ftn.patent"/>
     </schemaBindings>
     <bindings scd="tns:Zahtev_za_priznanje_patenta">
-      <class ref="rs.ac.uns.ftn.patent.ZahtevZaPriznanjePatenta"/>
+      <class ref="model.patent.ZahtevZaPriznanjePatenta"/>
     </bindings>
     <bindings scd="tns:Dodatna_prijava">
-      <class ref="rs.ac.uns.ftn.patent.DodatnaPrijava"/>
+      <class ref="model.patent.DodatnaPrijava"/>
     </bindings>
     <bindings scd="tns:Adresa">
-      <class ref="rs.ac.uns.ftn.patent.Adresa"/>
+      <class ref="model.patent.Adresa"/>
     </bindings>
     <bindings scd="tns:Kontakt_podaci">
-      <class ref="rs.ac.uns.ftn.patent.KontaktPodaci"/>
+      <class ref="model.patent.KontaktPodaci"/>
     </bindings>
     <bindings scd="tns:Nova_prijava">
-      <class ref="rs.ac.uns.ftn.patent.NovaPrijava"/>
+      <class ref="model.patent.NovaPrijava"/>
     </bindings>
     <bindings scd="tns:Priznanje_prava_prvenstva">
-      <class ref="rs.ac.uns.ftn.patent.PriznanjePravaPrvenstva"/>
+      <class ref="model.patent.PriznanjePravaPrvenstva"/>
     </bindings>
   </bindings>
 </bindings>

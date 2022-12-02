@@ -5,5 +5,5 @@
 // Generated on: 2022.11.30 at 09:42:14 PM CET 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ftn.uns.ac.rs/patent", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
+//@javax.xml.bind.annotation.XmlSchema(namespace = "http://www.ftn.uns.ac.rs/patent", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
 package rs.ac.uns.ftn.patent;
