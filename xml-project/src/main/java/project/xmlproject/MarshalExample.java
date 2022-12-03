@@ -1,7 +1,6 @@
 package project.xmlproject;
 
 import project.xmlproject.model.patent.*;
-import rs.ac.uns.ftn.patent.*;
 
 
 import javax.xml.bind.JAXBContext;

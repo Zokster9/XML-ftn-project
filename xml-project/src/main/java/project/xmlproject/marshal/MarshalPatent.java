@@ -1,4 +1,4 @@
-package marshal;
+package project.xmlproject.marshal;
 
 import project.xmlproject.dto.creationDto.AdresaCreationDto;
 import project.xmlproject.dto.creationDto.KontaktPodaciCreationDto;
