@@ -15,8 +15,12 @@ public class PatentService {
     PatentRepository patentRepository = new PatentRepository();
 
     MarshalPatent marshalPatent = new MarshalPatent();
-    public void addPatent(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) throws Exception {
+    public ZahtevZaPriznanjePatenta addPatent(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) throws Exception {
         ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = marshalPatent.marshalPatent(zahtevZaPriznanjePatentaCreationDto);
-        patentRepository.save(zahtevZaPriznanjePatenta);
+        return patentRepository.save(zahtevZaPriznanjePatenta);
+    }
+
+    public ZahtevZaPriznanjePatenta getPatent() throws Exception {
+        return patentRepository.getPatent();
     }
 }

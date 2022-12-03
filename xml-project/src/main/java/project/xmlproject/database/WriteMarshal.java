@@ -16,7 +16,7 @@ import java.io.OutputStream;
 
 public class WriteMarshal {
 
-    public void write(String collectionName, String documentName, ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) throws Exception {
+    public ZahtevZaPriznanjePatenta write(String collectionName, String documentName, ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) throws Exception {
 
         AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 
@@ -101,6 +101,7 @@ public class WriteMarshal {
                 }
             }
         }
+        return zahtevZaPriznanjePatenta;
     }
 
     private static Collection getOrCreateCollection(String collectionUri, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {

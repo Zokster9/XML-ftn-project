@@ -1,5 +1,8 @@
 package project.xmlproject.dto.creationDto;
 
+import project.xmlproject.model.patent.PriznanjePravaPrvenstva;
+import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
+
 import java.util.ArrayList;
 
 public class PodaciOPrijavamaCreationDto {
@@ -16,6 +19,15 @@ public class PodaciOPrijavamaCreationDto {
         this.novaPrijava = novaPrijava;
         this.dodatnaPrijava = dodatnaPrijava;
         this.priznanjaPravaPrvenstva = priznanjaPravaPrvenstva;
+    }
+
+    public PodaciOPrijavamaCreationDto(ZahtevZaPriznanjePatenta.PodaciOPrijavama podaciOPrijavama) {
+        this.novaPrijava = new NovaPrijavaCreationDto(podaciOPrijavama.getNovaPrijava());
+        this.dodatnaPrijava = new DodatnaPrijavaCreationDto(podaciOPrijavama.getDodatnaPrijava());
+        this.priznanjaPravaPrvenstva = new ArrayList<>();
+        for (PriznanjePravaPrvenstva p : podaciOPrijavama.getPriznanjaPravaPrvenstva().getPriznanjePravaPrvenstva()){
+            this.priznanjaPravaPrvenstva.add(new PriznanjePravaPrvenstvaCreationDto(p));
+        }
     }
 
     public NovaPrijavaCreationDto getNovaPrijava() {

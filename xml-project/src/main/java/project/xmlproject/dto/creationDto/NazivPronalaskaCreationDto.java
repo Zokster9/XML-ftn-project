@@ -1,5 +1,7 @@
 package project.xmlproject.dto.creationDto;
 
+import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
+
 public class NazivPronalaskaCreationDto {
 
     private String srpskiNaziv;
@@ -12,6 +14,11 @@ public class NazivPronalaskaCreationDto {
     public NazivPronalaskaCreationDto(String srpskiNaziv, String engleskiNaziv) {
         this.srpskiNaziv = srpskiNaziv;
         this.engleskiNaziv = engleskiNaziv;
+    }
+
+    public NazivPronalaskaCreationDto(ZahtevZaPriznanjePatenta.NazivPronalaska nazivPronalaska) {
+        this.srpskiNaziv = nazivPronalaska.getSrpskiNaziv();
+        this.engleskiNaziv = nazivPronalaska.getEngleskiNaziv();
     }
 
     public String getSrpskiNaziv() {

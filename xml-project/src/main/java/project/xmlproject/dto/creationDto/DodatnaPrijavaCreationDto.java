@@ -12,10 +12,15 @@ public class DodatnaPrijavaCreationDto {
 
     }
 
-    public DodatnaPrijavaCreationDto(String tipPrijave, String brojPrvobitnePrijave, String datumPodnosenjaPrijave) {
-        this.tipPrijave = tipPrijave;
-        this.brojPrvobitnePrijave = brojPrvobitnePrijave;
-        this.datumPodnosenjaPrijave = datumPodnosenjaPrijave;
+    public DodatnaPrijavaCreationDto(DodatnaPrijava dodatnaPrijava) {
+        if (dodatnaPrijava.getTipPrijave().getDopunskaPrijava() != null) {
+            this.tipPrijave = "dopunska";
+        }
+        else {
+            this.tipPrijave = "izdvojena";
+        }
+        this.brojPrvobitnePrijave = dodatnaPrijava.getBrojPrvobitnePrijave();
+        this.datumPodnosenjaPrijave = dodatnaPrijava.getDatumPodnosenjaPrijave();
     }
 
     public String getTipPrijave() {

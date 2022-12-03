@@ -1,5 +1,7 @@
 package project.xmlproject.dto.creationDto;
 
+import project.xmlproject.model.patent.KontaktPodaci;
+
 public class KontaktPodaciCreationDto {
 
     private String brojTelefona;
@@ -13,6 +15,12 @@ public class KontaktPodaciCreationDto {
         this.brojTelefona = brojTelefona;
         this.brojFaksa = brojFaksa;
         this.ePosta = ePosta;
+    }
+
+    public KontaktPodaciCreationDto(KontaktPodaci kontaktPodaci) {
+        this.brojTelefona = kontaktPodaci.getBrojTelefona();
+        this.brojFaksa = kontaktPodaci.getBrojFaksa();
+        this.ePosta = kontaktPodaci.getEPosta();
     }
 
     public String getBrojTelefona() {

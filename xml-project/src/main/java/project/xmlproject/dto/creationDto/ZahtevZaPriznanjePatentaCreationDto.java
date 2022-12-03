@@ -1,5 +1,10 @@
 package project.xmlproject.dto.creationDto;
 
+import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class ZahtevZaPriznanjePatentaCreationDto {
 
     private PodaciOPrijavamaCreationDto podaciOPrijavama;
@@ -18,6 +23,14 @@ public class ZahtevZaPriznanjePatentaCreationDto {
         this.podnosilac = podnosilac;
         this.pronalazac = pronalazac;
         this.punomocnik = punomocnik;
+    }
+
+    public ZahtevZaPriznanjePatentaCreationDto(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
+        this.podaciOPrijavama = new PodaciOPrijavamaCreationDto(zahtevZaPriznanjePatenta.getPodaciOPrijavama());
+        this.nazivPronalaska = new NazivPronalaskaCreationDto(zahtevZaPriznanjePatenta.getNazivPronalaska());
+        this.podnosilac = new PodnosilacCreationDto(zahtevZaPriznanjePatenta.getPodnosilac());
+        this.pronalazac = new PronalazacCreationDto(zahtevZaPriznanjePatenta.getPronalazac());
+        this.punomocnik = new PunomocnikCreationDto(zahtevZaPriznanjePatenta.getPunomocnik());
     }
 
     public PodaciOPrijavamaCreationDto getPodaciOPrijavama() {

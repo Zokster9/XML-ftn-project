@@ -1,5 +1,7 @@
 package project.xmlproject.dto.creationDto;
 
+import project.xmlproject.model.patent.PriznanjePravaPrvenstva;
+
 public class PriznanjePravaPrvenstvaCreationDto {
 
     private String datumPrijave;
@@ -14,6 +16,13 @@ public class PriznanjePravaPrvenstvaCreationDto {
         this.datumPrijave = datumPrijave;
         this.brojRanijePrijave = brojRanijePrijave;
         this.dvoslovnaOznakaDrzaveOrganizacije = dvoslovnaOznakaDrzaveOrganizacije;
+    }
+
+    public PriznanjePravaPrvenstvaCreationDto(PriznanjePravaPrvenstva priznanjePravaPrvenstva){
+
+        this.datumPrijave = priznanjePravaPrvenstva.getDatumPrijave();
+        this.brojRanijePrijave = priznanjePravaPrvenstva.getBrojRanijePrijave();
+        this.dvoslovnaOznakaDrzaveOrganizacije = priznanjePravaPrvenstva.getDvoslovnaOznakaDrzaveOrganizacije();
     }
 
     public String getDatumPrijave() {

@@ -1,5 +1,7 @@
 package project.xmlproject.dto.creationDto;
 
+import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
+
 public class PunomocnikCreationDto {
 
     private String tipPunomocnika;
@@ -18,6 +20,20 @@ public class PunomocnikCreationDto {
         this.naziv = naziv;
         this.adresa = adresa;
         this.kontaktPodaci = kontaktPodaci;
+    }
+
+    public PunomocnikCreationDto(ZahtevZaPriznanjePatenta.Punomocnik punomocnik) {
+        if (punomocnik.getTipPunomocnika().getPunomocnikZaZastupanje() != null) {
+            this.tipPunomocnika = "zastupanje";
+        }
+        else
+        {
+            this.tipPunomocnika = "prijemPismena";
+        }
+        this.naziv = punomocnik.getNaziv();
+        this.adresa = new AdresaCreationDto(punomocnik.getAdresa());
+        this.kontaktPodaci = new KontaktPodaciCreationDto(punomocnik.getKontaktPodaci());
+        this.zajednickiPredstavnik = punomocnik.isZajednickiPredstavnik();
     }
 
     public String getTipPunomocnika() {

@@ -1,5 +1,8 @@
 package project.xmlproject.dto.creationDto;
 
+import project.xmlproject.model.patent.KontaktPodaci;
+import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
+
 public class PodnosilacCreationDto {
 
     private String naziv;
@@ -20,6 +23,15 @@ public class PodnosilacCreationDto {
         this.drzavljanstvo = drzavljanstvo;
         this.podnosilacJePronalazac = podnosilacJePronalazac;
         this.nacinDostavljanja = nacinDostavljanja;
+    }
+
+    public PodnosilacCreationDto(ZahtevZaPriznanjePatenta.Podnosilac podnosilac) {
+        this.naziv = podnosilac.getNaziv();
+        this.adresa = new AdresaCreationDto(podnosilac.getAdresa());
+        this.kontaktPodaci = new KontaktPodaciCreationDto(podnosilac.getKontaktPodaci());
+        this.drzavljanstvo = podnosilac.getDrzavljanstvo();
+        this.podnosilacJePronalazac = podnosilac.isPodnosilacJePronalazac();
+        this.nacinDostavljanja = new NacinDostavljanjaCreationDto(podnosilac.getNacinDostavljanja());
     }
 
     public String getNaziv() {

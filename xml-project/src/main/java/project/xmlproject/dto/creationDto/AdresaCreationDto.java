@@ -1,5 +1,7 @@
 package project.xmlproject.dto.creationDto;
 
+import project.xmlproject.model.patent.Adresa;
+
 public class AdresaCreationDto {
 
     private String ulicaIBroj;
@@ -16,6 +18,13 @@ public class AdresaCreationDto {
         this.postanskiBroj = postanskiBroj;
         this.mesto = mesto;
         this.drzava = drzava;
+    }
+
+    public AdresaCreationDto(Adresa adresa) {
+        this.ulicaIBroj = adresa.getUlicaIBroj();
+        this.postanskiBroj = adresa.getPostanskiBroj();
+        this.mesto = adresa.getMesto();
+        this.drzava = adresa.getDrzava();
     }
 
     public String getUlicaIBroj() {

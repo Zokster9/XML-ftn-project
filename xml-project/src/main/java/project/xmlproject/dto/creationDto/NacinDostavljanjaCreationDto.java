@@ -1,5 +1,7 @@
 package project.xmlproject.dto.creationDto;
 
+import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
+
 public class NacinDostavljanjaCreationDto {
 
     private String nacinDostavljanja;
@@ -14,6 +16,18 @@ public class NacinDostavljanjaCreationDto {
         this.nacinDostavljanja = nacinDostavljanja;
         this.email = email;
         this.adresa = adresa;
+    }
+
+    public NacinDostavljanjaCreationDto(ZahtevZaPriznanjePatenta.Podnosilac.NacinDostavljanja nacinDostavljanja){
+        if (nacinDostavljanja.getElektronski() != null) {
+            this.nacinDostavljanja = "elektronski";
+            this.email = nacinDostavljanja.getElektronski().getEmail();
+            this.adresa = null;
+        } else {
+            this.nacinDostavljanja = "papirni";
+            this.email = null;
+            this.adresa = new AdresaCreationDto(nacinDostavljanja.getPapirni().getAdresa());
+        }
     }
 
     public String getNacinDostavljanja() {

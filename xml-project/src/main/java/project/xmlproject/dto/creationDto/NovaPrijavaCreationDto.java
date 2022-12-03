@@ -1,5 +1,7 @@
 package project.xmlproject.dto.creationDto;
 
+import project.xmlproject.model.patent.NovaPrijava;
+
 public class NovaPrijavaCreationDto {
 
     private String brojPrijave;
@@ -14,6 +16,12 @@ public class NovaPrijavaCreationDto {
         this.brojPrijave = brojPrijave;
         this.datumPrijave = datumPrijave;
         this.priznatiDatumPrijave = priznatiDatumPrijave;
+    }
+
+    public NovaPrijavaCreationDto(NovaPrijava novaPrijava){
+        this.brojPrijave = novaPrijava.getBrojPrijave();
+        this.datumPrijave = novaPrijava.getDatumPrijave();
+        this.priznatiDatumPrijave = novaPrijava.getPriznatiDatumPrijave();
     }
 
     public String getBrojPrijave() {
