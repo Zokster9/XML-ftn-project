@@ -1,0 +1,294 @@
+
+<form class="ml-3 mr-3 card p-3 bg-light w-75 mt-3 mb-3" [formGroup]="patentForm">
+  <h2 class="arial_font center_text mb-3"><b>Zahtev za priznanje patenta</b></h2>
+
+  <!-- PODACI O NOVOJ PRIJAVI -->
+  <h4 class="mb-2 arial_font"><b>Podaci o novoj prijavi</b></h4>
+  <section>
+    <div class="left-elem-three" formGroupName="podaciOPrijavama">
+      <div formGroupName="novaPrijava">
+        <label for="brojPrijave" class="arial_font">Broj prijave</label>
+        <input formControlName="brojPrijave" type="text" id="brojPrijave" name="brojPrijave" class="bg_gray borderless_input input_size mb-2" placeholder="Unesite broj prijave" required>
+      </div>
+    </div>
+    <div class="left-elem-three" formGroupName="podaciOPrijavama">
+      <div formGroupName="novaPrijava">
+        <label for="datumPrijave" class="arial_font">Datum prijave</label>
+        <input formControlName="datumPrijave" type="text" id="datumPrijave" name="datumPrijave" class="bg_gray borderless_input input_size mb-2" placeholder="Unesite datum prijave" required>
+      </div>
+    </div>
+    <div class="right-elem-three" formGroupName="podaciOPrijavama">
+      <div formGroupName="novaPrijava">
+        <label for="priznatiDatumPrijave" class="arial_font">Priznati datum prijave</label>
+        <input formControlName="priznatiDatumPrijave" type="text" id="priznatiDatumPrijave" name="priznatiDatumPrijave" class="bg_gray borderless_input input_size mb-2" placeholder="Unesite priznati datum prijave" required>
+      </div>
+    </div>
+  </section>
+  <hr>
+
+  <!-- NAZIV PRONALASKA -->
+  <h4 class="mb-2 arial_font"><b>Naziv pronalaska</b></h4>
+  <section>
+    <div class="left_element" formGroupName="nazivPronalaska">
+      <label for="srpskiNaziv" class="arial_font">Srpski naziv</label>
+      <input formControlName="srpskiNaziv" type="text" id="srpskiNaziv" name="srpskiNaziv" class="bg_gray borderless_input input_size mb-2" placeholder="Unesite naziv pronalaska na srpskom jeziku" required>
+    </div>
+    <div class="right_element" formGroupName="nazivPronalaska">
+        <label for="engleskiNaziv" class="arial_font">Engleski naziv</label>
+        <input formControlName="engleskiNaziv" type="text" id="engleskiNaziv" name="engleskiNaziv" class="bg_gray borderless_input input_size mb-2" placeholder="Unesite naziv pronalaska na engleskom jeziku" required>
+    </div>
+  </section>
+  <hr>
+  
+  <!-- PODNOSILAC PRIJAVE -->
+  <section>
+    <h4 class="mb-2 arial_font title-podnosilac-prijave"><b>Podnosilac prijave</b></h4>
+    <div class="form-check title-right mt-1" formGroupName="podnosilac">
+      <input class="form-check-input" type="checkbox" value=true id="podnosilacJePronalazac" formControlName="podnosilacJePronalazac">
+      <label class="form-check-label arial_font" for="podnosilacJePronalazac"> Podnosilac prijave je i pronalazač </label>
+    </div>
+  </section>
+  <section>
+    <div class="left_element" formGroupName="podnosilac">
+        <label for="nazivPodnosioca" class="arial_font">Ime i prezime/Poslovno ime</label>
+        <input formControlName="naziv" type="text" id="nazivPodnosioca" name="nazivPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ime i prezime/poslovno ime" required>
+    </div>
+    <div class="right_element" formGroupName="podnosilac">
+        <label for="drzavljanstvoPodnosioca" class="arial_font">Državljanstvo</label>
+        <input formControlName="drzavljanstvo" type="text" id="drzavljanstvoPodnosioca" name="drzavljanstvoPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državljanstvo" required>
+    </div>
+  </section>
+  <h5 class="mb-2 arial_font"><b>Kontakt podaci</b></h5>
+  <section formGroupName="podnosilac">
+    <div class="left-elem-three" formGroupName="kontaktPodaci">
+        <label for="brojTelefonaPodnosioca" class="arial_font">Broj telefona</label>
+        <input formControlName="brojTelefona" type="text" id="brojTelefonaPodnosioca" name="brojTelefonaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj telefona" required>
+    </div>
+    <div class="left-elem-three" formGroupName="kontaktPodaci">
+        <label for="brojFaksaPodnosioca" class="arial_font">Broj faksa</label>
+        <input formControlName="brojFaksa" type="text" id="brojFaksaPodnosioca" name="brojFaksaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj faksa" required>
+    </div>
+    <div class="right-elem-three" formGroupName="kontaktPodaci">
+        <label for="ePostaPodnosioca" class="arial_font">E-pošta</label>
+        <input formControlName="ePosta" type="text" id="ePostaPodnosioca" name="ePostaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite e-poštu" required>
+    </div>
+  </section>
+  <h5 class="mb-2 arial_font new-line"><b>Adresa</b></h5>
+  <section formGroupName="podnosilac">
+    <div class="left-elem-four" formGroupName="adresa">
+        <label for="ulicaIBrojPodnosioca" class="arial_font">Ulica i broj</label>
+        <input formControlName="ulicaIBroj" type="text" id="ulicaIBrojPodnosioca" name="ulicaIBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu i broj" required>
+    </div>
+    <div class="left-elem-four" formGroupName="adresa">
+        <label for="postanskiBrojPodnosioca" class="arial_font">Poštanski broj</label>
+        <input formControlName="postanskiBroj" type="text" id="postanskiBrojPodnosioca" name="postanskiBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+    </div>
+    <div class="left-elem-four" formGroupName="adresa">
+      <label for="mestoPodnosioca" class="arial_font">Grad</label>
+      <input formControlName="mesto" type="text" id="mestoPodnosioca" name="mestoPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+    </div>
+      <div class="right-elem-four" formGroupName="adresa">
+        <label for="drzavaPodnosioca" class="arial_font">Država</label>
+        <input formControlName="drzava" type="text" id="drzavaPodnosioca" name="drzavaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
+    </div>
+  </section>
+  <section formGroupName="podnosilac">
+    <h5 class="mb-2 arial_font title-left new-line"><b>Način dostavljanja pismena</b></h5>
+    <div class="form-check title-left mt-1" formGroupName="nacinDostavljanja">
+      <input class="form-check-input" type="radio" name="nacinDostavljanja" id="elektronski" value="elektronski" formControlName="nacinDostavljanja" checked>
+      <label class="form-check-label arial_font" for="elektronski">Elektronski dokument</label>
+    </div>
+    <div class="form-check title-right mt-1" formGroupName="nacinDostavljanja">
+      <input class="form-check-input" type="radio" name="nacinDostavljanja" id="papirni" value="elektronski" formControlName="nacinDostavljanja">
+      <label class="form-check-label arial_font" for="papirni">Papirni dokument</label>
+    </div>
+  </section>
+  <section formGroupName="podnosilac">
+    <!-- Ako je elektronski odabran -->
+    <div class="new-line" formGroupName="nacinDostavljanja">
+      <label for="elektronskiEmail" class="arial_font">E-pošta</label>
+      <input formControlName="email" type="text" id="elektronskiEmail" name="elektronskiEmail" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite e-poštu">
+    </div>
+  <!-- Ako je papirni odabran -->
+  </section>
+  <h6 class="mb-2 arial_font"><b>Adresa za dostavljanje</b></h6>
+  <section formGroupName="podnosilac">
+    <div formGroupName="nacinDostavljanja">
+      <div class="left-elem-four" formGroupName="adresa">
+        <label for="ulicaIBrojPodnosioca" class="arial_font">Ulica i broj</label>
+        <input formControlName="ulicaIBroj" type="text" id="ulicaIBrojPodnosioca" name="ulicaIBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu i broj" required>
+    </div>
+    <div class="left-elem-four" formGroupName="adresa">
+        <label for="postanskiBrojPodnosioca" class="arial_font">Poštanski broj</label>
+        <input formControlName="postanskiBroj" type="text" id="postanskiBrojPodnosioca" name="postanskiBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+    </div>
+    <div class="left-elem-four" formGroupName="adresa">
+      <label for="mestoPodnosioca" class="arial_font">Grad</label>
+      <input formControlName="mesto" type="text" id="mestoPodnosioca" name="mestoPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+  </div>
+    <div class="right-elem-four" formGroupName="adresa">
+      <label for="drzavaPodnosioca" class="arial_font">Država</label>
+      <input formControlName="drzava" type="text" id="drzavaPodnosioca" name="drzavaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
+  </div>
+    </div>
+  </section>
+  <hr class="new-line">
+
+  <!-- PRONALAZAC -->
+  <section>
+    <h4 class="mb-2 arial_font title-podnosilac-prijave new-line"><b>Pronalazač</b></h4>
+    <div class="form-check title-right mt-1" formGroupName="pronalazac">
+      <input class="form-check-input" type="checkbox" value=false id="pronalazacZeliBitiUPrijavi" formControlName="zeliBitiUPrijavi">
+      <label class="form-check-label arial_font" for="pronalazacZeliBitiUPrijavi">Pronalazač ne želi da bude naveden u prijavi</label>
+    </div>
+  </section>
+  <section>
+    <div class="new-line" formGroupName="pronalazac">
+      <label for="nazivPronalazaca" class="arial_font">Ime i prezime</label>
+      <input formControlName="naziv" type="text" id="nazivPronalazaca" name="nazivPronalazaca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ime i prezime">
+    </div>
+    <h5 class="mb-2 arial_font"><b>Kontakt podaci</b></h5>
+  </section>
+  <section formGroupName="pronalazac">
+    <div class="left-elem-three" formGroupName="kontaktPodaci">
+        <label for="brojTelefonaPronalazaca" class="arial_font">Broj telefona</label>
+        <input formControlName="brojTelefona" type="text" id="brojTelefonaPronalazaca" name="brojTelefonaPronalazaca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj telefona" required>
+    </div>
+    <div class="left-elem-three" formGroupName="kontaktPodaci">
+        <label for="brojFaksaPronalazaca" class="arial_font">Broj faksa</label>
+        <input formControlName="brojFaksa" type="text" id="brojFaksaPronalazaca" name="brojFaksaPronalazaca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj faksa" required>
+    </div>
+    <div class="right-elem-three" formGroupName="kontaktPodaci">
+      <label for="ePostaPronalazaca" class="arial_font">E-pošta</label>
+      <input formControlName="ePosta" type="text" id="ePostaPronalazaca" name="ePostaPronalazaca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite e-poštu" required>
+    </div>
+  </section>
+  <h5 class="mb-2 arial_font new-line"><b>Adresa</b></h5>
+  <section formGroupName="pronalazac">
+    <div class="left-elem-four" formGroupName="adresa">
+        <label for="ulicaIBrojPronalazaca" class="arial_font">Ulica i broj</label>
+        <input formControlName="ulicaIBroj" type="text" id="ulicaIBrojPronalazaca" name="ulicaIBrojPronalazaca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu i broj" required>
+    </div>
+    <div class="left-elem-four" formGroupName="adresa">
+        <label for="postanskiBrojPronalazaca" class="arial_font">Poštanski broj</label>
+        <input formControlName="postanskiBroj" type="text" id="postanskiBrojPronalazaca" name="postanskiBrojPronalazaca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+    </div>
+    <div class="left-elem-four" formGroupName="adresa">
+      <label for="mestoPronalazaca" class="arial_font">Grad</label>
+      <input formControlName="mesto" type="text" id="mestoPronalazaca" name="mestoPronalazaca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+    </div>
+      <div class="right-elem-four" formGroupName="adresa">
+        <label for="drzavaPronalazaca" class="arial_font">Država</label>
+        <input formControlName="drzava" type="text" id="drzavaPronalazaca" name="drzavaPronalazaca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
+    </div>
+  </section>
+  <hr class="new-line">
+
+  <!-- PUNOMOCNIK -->
+  <section>
+    <h4 class="mb-2 arial_font punomocnik-title new-line"><b>Punomoćnik</b></h4>
+    <div class="form-check punomocnik-title mt-1" formGroupName="punomocnik">
+      <input class="form-check-input" type="radio" name="tipPunomocnika" id="zastupanje" value="zastupanje" formControlName="tipPunomocnika" checked>
+      <label class="form-check-label arial_font" for="zastupanje">Punomoćnik za zastupanje</label>
+    </div>
+    <div class="form-check punomocnik-title mt-1" formGroupName="punomocnik">
+      <input class="form-check-input" type="radio" name="tipPunomocnika" id="prijemPismena" value="prijem" formControlName="tipPunomocnika">
+      <label class="form-check-label arial_font" for="prijemPismena">Punomoćnik za prijem pismena</label>
+    </div>
+    <div class="form-check title-right mt-1" formGroupName="punomocnik">
+      <input class="form-check-input" type="checkbox" value=true id="zajednickiPredstavnik" formControlName="zajednickiPredstavnik">
+      <label class="form-check-label arial_font" for="zajednickiPredstavnik">Zajednički predstavnik</label>
+    </div>
+  </section>
+  <section formGroupName="punomocnik">
+    <div class="new-line">
+      <label for="nazivPunomocnika" class="arial_font">Ime i prezime/Poslovno ime</label>
+      <input formControlName="naziv" type="text" id="nazivPunomocnika" name="nazivPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ime i prezime/Poslovno ime">
+    </div>
+  </section>
+    <h5 class="mb-2 arial_font"><b>Kontakt podaci</b></h5>
+    <section formGroupName="punomocnik">
+      <div class="left-elem-three" formGroupName="kontaktPodaci">
+          <label for="brojTelefonaPunomocnika" class="arial_font">Broj telefona</label>
+          <input formControlName="brojTelefona" type="text" id="brojTelefonaPunomocnika" name="brojTelefonaPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj telefona" required>
+      </div>
+      <div class="left-elem-three" formGroupName="kontaktPodaci">
+          <label for="brojFaksaPunomocnika" class="arial_font">Broj faksa</label>
+          <input formControlName="brojFaksa" type="text" id="brojFaksaPunomocnika" name="brojFaksaPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj faksa" required>
+      </div>
+      <div class="right-elem-three" formGroupName="kontaktPodaci">
+        <label for="ePostaPunomocnika" class="arial_font">E-pošta</label>
+        <input formControlName="ePosta" type="text" id="ePostaPunomocnika" name="ePostaPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite e-poštu" required>
+      </div>
+    </section>
+    <h5 class="mb-2 arial_font new-line"><b>Adresa</b></h5>
+    <section formGroupName="punomocnik">
+      <div class="left-elem-four" formGroupName="adresa">
+          <label for="ulicaIBrojPunomocnika" class="arial_font">Ulica i broj</label>
+          <input formControlName="ulicaIBroj" type="text" id="ulicaIBrojPunomocnika" name="ulicaIBrojPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu i broj" required>
+      </div>
+      <div class="left-elem-four" formGroupName="adresa">
+          <label for="postanskiBrojPunomocnika" class="arial_font">Poštanski broj</label>
+          <input formControlName="postanskiBroj" type="text" id="postanskiBrojPunomocnika" name="postanskiBrojPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+      </div>
+      <div class="left-elem-four" formGroupName="adresa">
+        <label for="mestoPunomocnika" class="arial_font">Grad</label>
+        <input formControlName="mesto" type="text" id="mestoPunomocnika" name="mestoPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+      </div>
+        <div class="right-elem-four" formGroupName="adresa">
+          <label for="drzavaPunomocnika" class="arial_font">Država</label>
+          <input formControlName="drzava" type="text" id="drzavaPunomocnika" name="drzavaPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
+      </div>
+    </section>
+  <hr class="new-line">
+
+  <!-- DODATNA PRIJAVA -->
+  <section formGroupName="podaciOPrijavama">
+    <h4 class="mb-2 arial_font title-left new-line"><b>Podaci o dodatnoj prijavi</b></h4>
+    <div class="form-check title-left mt-1" formGroupName="dodatnaPrijava">
+      <input class="form-check-input" type="radio" name="tipPrijave" id="dodatnaPrijava" value="dodatna" formControlName="tipPrijave" checked>
+      <label class="form-check-label arial_font" for="dodatnaPrijava">Dodatna prijava</label>
+    </div>
+    <div class="form-check title-right mt-1" formGroupName="dodatnaPrijava">
+      <input class="form-check-input" type="radio" name="tipPrijave" id="izdvojenaPrijava" value="izdvojena" formControlName="tipPrijave">
+      <label class="form-check-label arial_font" for="izdvojenaPrijava">Izdvojena prijava</label>
+    </div>
+  </section>
+  <section class="new-line" formGroupName="podaciOPrijavama">
+    <div class="left_element" formGroupName="dodatnaPrijava">
+        <label for="brojPrvobitnePrijave" class="arial_font">Broj prvobitne prijave</label>
+        <input formControlName="brojPrvobitnePrijave" type="text" id="brojPrvobitnePrijave" name="brojPrvobitnePrijave" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj prvobitne prijave" required>
+    </div>
+    <div class="right_element" formGroupName="dodatnaPrijava">
+        <label for="datumPodnosenjaPrijave" class="arial_font">Datum podnosenja prijave</label>
+        <input formControlName="datumPodnosenjaPrijave" type="text" id="datumPodnosenjaPrijave" name="datumPodnosenjaPrijave" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite datum podnosenja prijave" required>
+    </div>
+  </section>
+  <hr class="new-line">
+
+  <!-- PRIZNANJE PRAVA PRVENSTVA -->
+  <!-- Nekako dodati da se red doda pritiskom na dugme-->
+  <section formGroupName="podaciOPrijavama">
+    <h4 class="mb-2 arial_font new-line"><b>Zahtev za priznanje prava prvenstva iz ranijih prijava</b></h4>
+    <div formArrayName="priznanjaPravaPrvenstva">
+      <div *ngFor="let priznanjePravaPrvenstva of priznanjaPravaPrvenstva.controls; let i = index">
+        <div class="left-elem-three" [formGroupName]="i">
+          <label for="zahtevDatumPrijave" class="arial_font">Datum ranije prijave</label>
+          <input formControlName="datumPrijave" type="text" id="zahtevDatumPrijave" name="zahtevDatumPrijave" class="bg_gray borderless_input input_size mb-5" placeholder="Unesite datum ranije prijave" required>
+        </div>
+        <div class="left-elem-three" [formGroupName]="i">
+          <label for="zahtevBrojRanijePrijave" class="arial_font">Broj ranije prijave</label>
+          <input formControlName="brojRanijePrijave" type="text" id="zahtevBrojRanijePrijave" name="zahtevBrojRanijePrijave" class="bg_gray borderless_input input_size mb-5" placeholder="Unesite broj ranije prijave" required>
+        </div>
+        <div class="right-elem-three" [formGroupName]="i">
+          <label for="zahtevDvoslovnaOznaka" class="arial_font">Dvoslovna oznaka države ili organizacije</label>
+          <input formControlName="dvoslovnaOznakaDrzaveOrganizacije" type="text" id="zahtevDvoslovnaOznaka" name="zahtevDvoslovnaOznaka" class="bg_gray borderless_input input_size mb-5" placeholder="Unesite dvoslovnu oznaku države ili organizacije" required>
+        </div>
+        <button class="btn btn-danger" (click)="deletePriznanjePravaPrvenstva(i)">Obriši</button>
+      </div>
+    </div>
+  </section>
+  <button class="btn btn-success" (click)="addPriznanjePravaPrvenstva()">Dodaj</button>
+  <button type="submit" class="btn btn-dark arial_font btn-block">Pošalji zahtev za priznanje patenta</button>
+</form>
+
