@@ -1,5 +1,5 @@
 
-<form class="ml-3 mr-3 card p-3 bg-light w-75 mt-3 mb-3" [formGroup]="patentForm">
+<form class="ml-3 mr-3 card p-3 bg-light w-75 mt-3 mb-3" [formGroup]="patentForm" (ngSubmit)="addPatent ()">
   <h2 class="arial_font center_text mb-3"><b>Zahtev za priznanje patenta</b></h2>
 
   <!-- PODACI O NOVOJ PRIJAVI -->
@@ -99,46 +99,49 @@
       <label class="form-check-label arial_font" for="elektronski">Elektronski dokument</label>
     </div>
     <div class="form-check title-right mt-1" formGroupName="nacinDostavljanja">
-      <input class="form-check-input" type="radio" name="nacinDostavljanja" id="papirni" value="elektronski" formControlName="nacinDostavljanja">
+      <input class="form-check-input" type="radio" name="nacinDostavljanja" id="papirni" value="papirni" formControlName="nacinDostavljanja">
       <label class="form-check-label arial_font" for="papirni">Papirni dokument</label>
     </div>
   </section>
   <section formGroupName="podnosilac">
     <!-- Ako je elektronski odabran -->
-    <div class="new-line" formGroupName="nacinDostavljanja">
+    <div *ngIf="patentForm.get('podnosilac')?.get('nacinDostavljanja')?.get('nacinDostavljanja')?.value === 'elektronski'"  class="new-line" formGroupName="nacinDostavljanja">
       <label for="elektronskiEmail" class="arial_font">E-pošta</label>
       <input formControlName="email" type="text" id="elektronskiEmail" name="elektronskiEmail" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite e-poštu">
     </div>
   <!-- Ako je papirni odabran -->
   </section>
-  <h6 class="mb-2 arial_font"><b>Adresa za dostavljanje</b></h6>
-  <section formGroupName="podnosilac">
-    <div formGroupName="nacinDostavljanja">
+  <div *ngIf="patentForm.get('podnosilac')?.get('nacinDostavljanja')?.get('nacinDostavljanja')?.value === 'papirni'">
+    <h6 class="mb-2 arial_font"><b>Adresa za dostavljanje</b></h6>
+    <section formGroupName="podnosilac">
+      <div formGroupName="nacinDostavljanja">
+        <div class="left-elem-four" formGroupName="adresa">
+          <label for="ulicaIBrojPodnosioca" class="arial_font">Ulica i broj</label>
+          <input formControlName="ulicaIBroj" type="text" id="ulicaIBrojPodnosioca" name="ulicaIBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu i broj" required>
+      </div>
       <div class="left-elem-four" formGroupName="adresa">
-        <label for="ulicaIBrojPodnosioca" class="arial_font">Ulica i broj</label>
-        <input formControlName="ulicaIBroj" type="text" id="ulicaIBrojPodnosioca" name="ulicaIBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu i broj" required>
+          <label for="postanskiBrojPodnosioca" class="arial_font">Poštanski broj</label>
+          <input formControlName="postanskiBroj" type="text" id="postanskiBrojPodnosioca" name="postanskiBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+      </div>
+      <div class="left-elem-four" formGroupName="adresa">
+        <label for="mestoPodnosioca" class="arial_font">Grad</label>
+        <input formControlName="mesto" type="text" id="mestoPodnosioca" name="mestoPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
     </div>
-    <div class="left-elem-four" formGroupName="adresa">
-        <label for="postanskiBrojPodnosioca" class="arial_font">Poštanski broj</label>
-        <input formControlName="postanskiBroj" type="text" id="postanskiBrojPodnosioca" name="postanskiBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+      <div class="right-elem-four" formGroupName="adresa">
+        <label for="drzavaPodnosioca" class="arial_font">Država</label>
+        <input formControlName="drzava" type="text" id="drzavaPodnosioca" name="drzavaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
     </div>
-    <div class="left-elem-four" formGroupName="adresa">
-      <label for="mestoPodnosioca" class="arial_font">Grad</label>
-      <input formControlName="mesto" type="text" id="mestoPodnosioca" name="mestoPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+      </div>
+    </section>
   </div>
-    <div class="right-elem-four" formGroupName="adresa">
-      <label for="drzavaPodnosioca" class="arial_font">Država</label>
-      <input formControlName="drzava" type="text" id="drzavaPodnosioca" name="drzavaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
-  </div>
-    </div>
-  </section>
+  
   <hr class="new-line">
 
   <!-- PRONALAZAC -->
   <section>
     <h4 class="mb-2 arial_font title-podnosilac-prijave new-line"><b>Pronalazač</b></h4>
     <div class="form-check title-right mt-1" formGroupName="pronalazac">
-      <input class="form-check-input" type="checkbox" value=false id="pronalazacZeliBitiUPrijavi" formControlName="zeliBitiUPrijavi">
+      <input class="form-check-input" type="checkbox" value=true id="pronalazacZeliBitiUPrijavi" formControlName="zeliBitiUPrijavi">
       <label class="form-check-label arial_font" for="pronalazacZeliBitiUPrijavi">Pronalazač ne želi da bude naveden u prijavi</label>
     </div>
   </section>
@@ -267,28 +270,28 @@
   <hr class="new-line">
 
   <!-- PRIZNANJE PRAVA PRVENSTVA -->
-  <!-- Nekako dodati da se red doda pritiskom na dugme-->
   <section formGroupName="podaciOPrijavama">
     <h4 class="mb-2 arial_font new-line"><b>Zahtev za priznanje prava prvenstva iz ranijih prijava</b></h4>
     <div formArrayName="priznanjaPravaPrvenstva">
       <div *ngFor="let priznanjePravaPrvenstva of priznanjaPravaPrvenstva.controls; let i = index">
-        <div class="left-elem-three" [formGroupName]="i">
+        <div class="left-elem-four" [formGroupName]="i">
           <label for="zahtevDatumPrijave" class="arial_font">Datum ranije prijave</label>
-          <input formControlName="datumPrijave" type="text" id="zahtevDatumPrijave" name="zahtevDatumPrijave" class="bg_gray borderless_input input_size mb-5" placeholder="Unesite datum ranije prijave" required>
+          <input formControlName="datumPrijave" type="text" id="zahtevDatumPrijave" name="zahtevDatumPrijave" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite datum ranije prijave" required>
         </div>
-        <div class="left-elem-three" [formGroupName]="i">
+        <div class="left-elem-four" [formGroupName]="i">
           <label for="zahtevBrojRanijePrijave" class="arial_font">Broj ranije prijave</label>
-          <input formControlName="brojRanijePrijave" type="text" id="zahtevBrojRanijePrijave" name="zahtevBrojRanijePrijave" class="bg_gray borderless_input input_size mb-5" placeholder="Unesite broj ranije prijave" required>
+          <input formControlName="brojRanijePrijave" type="text" id="zahtevBrojRanijePrijave" name="zahtevBrojRanijePrijave" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj ranije prijave" required>
         </div>
-        <div class="right-elem-three" [formGroupName]="i">
+        <div class="left-elem-four" [formGroupName]="i">
           <label for="zahtevDvoslovnaOznaka" class="arial_font">Dvoslovna oznaka države ili organizacije</label>
-          <input formControlName="dvoslovnaOznakaDrzaveOrganizacije" type="text" id="zahtevDvoslovnaOznaka" name="zahtevDvoslovnaOznaka" class="bg_gray borderless_input input_size mb-5" placeholder="Unesite dvoslovnu oznaku države ili organizacije" required>
+          <input formControlName="dvoslovnaOznakaDrzaveOrganizacije" type="text" id="zahtevDvoslovnaOznaka" name="zahtevDvoslovnaOznaka" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite dvoslovnu oznaku" required>
         </div>
-        <button class="btn btn-danger" (click)="deletePriznanjePravaPrvenstva(i)">Obriši</button>
+        <button *ngIf="i != 0" class="btn btn-danger right-elem-four mt-4" (click)="deletePriznanjePravaPrvenstva(i)">Obriši</button>
       </div>
     </div>
   </section>
-  <button class="btn btn-success" (click)="addPriznanjePravaPrvenstva()">Dodaj</button>
+  <button class="btn btn-primary margin-right-75 mb-3" (click)="addPriznanjePravaPrvenstva()">Dodaj</button>
+  <hr class="new-line">
   <button type="submit" class="btn btn-dark arial_font btn-block">Pošalji zahtev za priznanje patenta</button>
 </form>
 

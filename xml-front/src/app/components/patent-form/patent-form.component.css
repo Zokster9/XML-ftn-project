@@ -103,3 +103,8 @@ input, label {
     margin-right: 3%;
     width: 22%;
 }
+
+.margin-right-75 {
+    float:left;
+    margin-left: 76.5%;
+}

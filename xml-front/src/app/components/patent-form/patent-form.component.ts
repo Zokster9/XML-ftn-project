@@ -16,11 +16,11 @@ export class PatentFormComponent implements OnInit{
         priznatiDatumPrijave: ['']
       }),
       dodatnaPrijava: this.formBuilder.group({
-        tipPrijave: [''],
+        tipPrijave: ['dodatna'],
         brojPrvobitnePrijave: [''],
         datumPodnosenjaPrijave: ['']
       }),
-      priznanjaPravaPrvenstva: this.formBuilder.array([])
+      priznanjaPravaPrvenstva: this.formBuilder.array([]),
     }),
     nazivPronalaska: this.formBuilder.group({
       srpskiNaziv: [''],
@@ -42,7 +42,7 @@ export class PatentFormComponent implements OnInit{
         ePosta: ['']
       }),
       nacinDostavljanja: this.formBuilder.group({
-        nacinDostavljanja: [''],
+        nacinDostavljanja: ['elektronski'],
         email: [''],
         adresa: this.formBuilder.group({
           ulicaIBroj: [''],
@@ -68,7 +68,7 @@ export class PatentFormComponent implements OnInit{
       })
     }),
     punomocnik: this.formBuilder.group({
-      tipPunomocnika: [''],
+      tipPunomocnika: ['zastupanje'],
       zajednickiPredstavnik: false,
       naziv: [''],
       adresa: this.formBuilder.group({
@@ -109,5 +109,9 @@ export class PatentFormComponent implements OnInit{
 
   deletePriznanjePravaPrvenstva(index: number) {
     this.priznanjaPravaPrvenstva.removeAt(index);
+  }
+
+  addPatent() {
+    console.log(this.patentForm);
   }
 }
