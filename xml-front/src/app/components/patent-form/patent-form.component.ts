@@ -13,7 +13,7 @@ import { PunomocnikDto } from 'src/app/models/PunomocnikDto';
 import { ZahtevZaPriznanjePatentaDto } from 'src/app/models/ZahtevZaPriznanjePatentaDTO';
 import { PatentService } from 'src/app/services/patent.service';
 import { NovaPrijavaDto } from "./../../models/NovaPrijavaDto";
-import { PriznanjaPravaPrvenstvaDto } from "./../../models/PriznanjaPravaPrvenstvaDto";
+import * as xml2js from 'xml2js';
 
 @Component({
   selector: 'app-patent-form',
@@ -46,7 +46,7 @@ export class PatentFormComponent implements OnInit{
       podnosilacJePronalazac: false,
       adresa: this.formBuilder.group({
         ulicaIBroj: [''],
-        postanskiBroj: 11000,
+        postanskiBroj: [null],
         mesto: [''],
         drzava: ['']
       }),
@@ -60,7 +60,7 @@ export class PatentFormComponent implements OnInit{
         email: [''],
         adresa: this.formBuilder.group({
           ulicaIBroj: [''],
-          postanskiBroj: 11000,
+          postanskiBroj: [null],
           mesto: [''],
           drzava: ['']
         })
@@ -71,7 +71,7 @@ export class PatentFormComponent implements OnInit{
       zeliBitiUPrijavi: true,
       adresa: this.formBuilder.group({
         ulicaIBroj: [''],
-        postanskiBroj: 11000,
+        postanskiBroj: [null],
         mesto: [''],
         drzava: ['']
       }),
@@ -87,7 +87,7 @@ export class PatentFormComponent implements OnInit{
       naziv: [''],
       adresa: this.formBuilder.group({
         ulicaIBroj: [''],
-        postanskiBroj: 11000,
+        postanskiBroj: [null],
         mesto: [''],
         drzava: ['']
       }),
@@ -144,7 +144,7 @@ export class PatentFormComponent implements OnInit{
       datumPodnosenjaPrijave: this.patentForm.controls['podaciOPrijavama'].controls['dodatnaPrijava'].value.datumPodnosenjaPrijave as string
     }
 
-    const priznanjaPravaPrvenstvaList: PriznanjePravaPrvenstvaDto[] = [];
+    const priznanjaPravaPrvenstva: PriznanjePravaPrvenstvaDto[] = [];
 
     for (let p of this.priznanjaPravaPrvenstvaForme) {
       const priznanjePravaPrvenstva: PriznanjePravaPrvenstvaDto = {
@@ -152,11 +152,7 @@ export class PatentFormComponent implements OnInit{
         brojRanijePrijave: p.value.brojRanijePrijave,
         dvoslovnaOznakaDrzaveOrganizacije: p.value.dvoslovnaOznakaDrzaveOrganizacije
       }
-      priznanjaPravaPrvenstvaList.push(priznanjePravaPrvenstva);
-    }
-
-    const priznanjaPravaPrvenstva: PriznanjaPravaPrvenstvaDto = {
-      priznanjaPravaPrvenstva : priznanjaPravaPrvenstvaList
+      priznanjaPravaPrvenstva.push(priznanjePravaPrvenstva);
     }
 
     const podaciOPrijavama: PodaciOPrijavamaDto = {
@@ -172,7 +168,7 @@ export class PatentFormComponent implements OnInit{
 
     const adresaPodnosilac: AdresaDto = {
       ulicaIBroj: this.patentForm.controls['podnosilac'].controls['adresa'].value.ulicaIBroj as string,
-      postanskiBroj: this.patentForm.controls['podnosilac'].controls['adresa'].value.postanskiBroj as number,
+      postanskiBroj: this.patentForm.controls['podnosilac'].controls['adresa'].value.postanskiBroj as unknown as number,
       mesto: this.patentForm.controls['podnosilac'].controls['adresa'].value.mesto as string,
       drzava: this.patentForm.controls['podnosilac'].controls['adresa'].value.drzava as string,
     }
@@ -185,7 +181,7 @@ export class PatentFormComponent implements OnInit{
 
     const adresaNacinDostavljanja: AdresaDto = {
       ulicaIBroj: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].controls['adresa'].value.ulicaIBroj as string,
-      postanskiBroj: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].controls['adresa'].value.postanskiBroj as number,
+      postanskiBroj: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].controls['adresa'].value.postanskiBroj as unknown as number,
       mesto: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].controls['adresa'].value.mesto as string,
       drzava: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].controls['adresa'].value.drzava as string,
     }
@@ -207,7 +203,7 @@ export class PatentFormComponent implements OnInit{
 
     const adresaPronalazac: AdresaDto = {
       ulicaIBroj: this.patentForm.controls['pronalazac'].controls['adresa'].value.ulicaIBroj as string,
-      postanskiBroj: this.patentForm.controls['pronalazac'].controls['adresa'].value.postanskiBroj as number,
+      postanskiBroj: this.patentForm.controls['pronalazac'].controls['adresa'].value.postanskiBroj as unknown as number,
       mesto: this.patentForm.controls['pronalazac'].controls['adresa'].value.mesto as string,
       drzava: this.patentForm.controls['pronalazac'].controls['adresa'].value.drzava as string,
     }
@@ -227,7 +223,7 @@ export class PatentFormComponent implements OnInit{
 
     const adresaPunomocnik: AdresaDto = {
       ulicaIBroj: this.patentForm.controls['punomocnik'].controls['adresa'].value.ulicaIBroj as string,
-      postanskiBroj: this.patentForm.controls['punomocnik'].controls['adresa'].value.postanskiBroj as number,
+      postanskiBroj: this.patentForm.controls['punomocnik'].controls['adresa'].value.postanskiBroj as unknown as number,
       mesto: this.patentForm.controls['punomocnik'].controls['adresa'].value.mesto as string,
       drzava: this.patentForm.controls['punomocnik'].controls['adresa'].value.drzava as string,
     }
@@ -246,7 +242,7 @@ export class PatentFormComponent implements OnInit{
       kontaktPodaci: kontaktPodaciPunomocnik
     }
 
-    const ZahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto = {
+    const zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto = {
       podaciOPrijavama: podaciOPrijavama,
       nazivPronalaska : nazivPronalaska,
       podnosilac: podnosilac,
@@ -254,7 +250,19 @@ export class PatentFormComponent implements OnInit{
       punomocnik: punomocnik
     }
 
-    this.patentService.addPatent(ZahtevZaPriznanjePatenta);
+    let zahtevZaPriznanjePatentaPovratna : ZahtevZaPriznanjePatentaDto;
+
+    this.patentService.addPatent(zahtevZaPriznanjePatenta).subscribe(
+      zahtevZaPriznanjeXml => {
+        console.log(zahtevZaPriznanjeXml);
+        const parser = new xml2js.Parser({strict: true, trim: true});
+        parser.parseString(zahtevZaPriznanjeXml.toString(), (err, result) => {
+          zahtevZaPriznanjePatentaPovratna = result;
+          console.log(zahtevZaPriznanjePatentaPovratna);
+          console.log(zahtevZaPriznanjePatentaPovratna.podaciOPrijavama);
+        })
+      }
+    );
 
   }
 }

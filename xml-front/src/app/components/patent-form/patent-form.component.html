@@ -1,5 +1,5 @@
 
-<form class="ml-3 mr-3 card p-3 bg-light w-75 mt-3 mb-3" [formGroup]="patentForm" (ngSubmit)="addPatent ()">
+<form class="ml-3 mr-3 card p-3 bg-light w-75 mt-3 mb-3" [formGroup]="patentForm">
   <h2 class="arial_font center_text mb-3"><b>Zahtev za priznanje patenta</b></h2>
 
   <!-- PODACI O NOVOJ PRIJAVI -->
@@ -292,6 +292,6 @@
   </section>
   <button class="btn btn-primary margin-right-75 mb-3" (click)="addPriznanjePravaPrvenstva()">Dodaj</button>
   <hr class="new-line">
-  <button type="submit" class="btn btn-dark arial_font btn-block">Pošalji zahtev za priznanje patenta</button>
+  <button type="submit" class="btn btn-dark arial_font btn-block" (click)="addPatent()">Pošalji zahtev za priznanje patenta</button>
 </form>
 

@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ZahtevZaPriznanjePatentaDto } from '../models/ZahtevZaPriznanjePatentaDTO';
+import * as JsonToXML from "js2xmlparser";
 
-const cabecera = {headers: new HttpHeaders({'Content-Type' : 'application/xml', 'Accept' : 'application/xml'})};
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,8 @@ export class PatentService {
   constructor(private httpClient: HttpClient) { }
 
   public addPatent(zahtevZaPriznanjePatentaCreationDto: ZahtevZaPriznanjePatentaDto) {
-    return this.httpClient.post<ZahtevZaPriznanjePatentaDto>(this.url + '/patenti/add-patent', zahtevZaPriznanjePatentaCreationDto, cabecera)
+    const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtevZaPriznanjePatentaCreationDto);
+    const xmlOdgovor = this.httpClient.post(this.url + '/patenti/add-patent', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
+    return xmlOdgovor;
   }
 }
