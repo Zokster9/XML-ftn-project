@@ -1,5 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import { AdresaDto } from 'src/app/models/AdresaDto';
+import { DodatnaPrijavaDto } from 'src/app/models/DodatnaPrijavaDto';
+import { KontaktPodaciDto } from 'src/app/models/KontaktPodaciDto';
+import { NacinDostavljanjaDto } from 'src/app/models/NacinDostavljanjaDto';
+import { NazivPronalaskaDto } from 'src/app/models/NazivPronalaskaDto';
+import { PodaciOPrijavamaDto } from 'src/app/models/PodaciOPrijavamaDto';
+import { PodnosilacDto } from 'src/app/models/PodnosilacDto';
+import { PriznanjePravaPrvenstvaDto } from 'src/app/models/PriznanjePravaPrvenstvaDto';
+import { PronalazacDto } from 'src/app/models/PronalazacDto';
+import { PunomocnikDto } from 'src/app/models/PunomocnikDto';
+import { ZahtevZaPriznanjePatentaDto } from 'src/app/models/ZahtevZaPriznanjePatentaDTO';
+import { PatentService } from 'src/app/services/patent.service';
+import { NovaPrijavaDto } from "./../../models/NovaPrijavaDto";
+import { PriznanjaPravaPrvenstvaDto } from "./../../models/PriznanjaPravaPrvenstvaDto";
 
 @Component({
   selector: 'app-patent-form',
@@ -32,7 +46,7 @@ export class PatentFormComponent implements OnInit{
       podnosilacJePronalazac: false,
       adresa: this.formBuilder.group({
         ulicaIBroj: [''],
-        postanskiBroj: [''],
+        postanskiBroj: 11000,
         mesto: [''],
         drzava: ['']
       }),
@@ -46,7 +60,7 @@ export class PatentFormComponent implements OnInit{
         email: [''],
         adresa: this.formBuilder.group({
           ulicaIBroj: [''],
-          postanskiBroj: [''],
+          postanskiBroj: 11000,
           mesto: [''],
           drzava: ['']
         })
@@ -57,7 +71,7 @@ export class PatentFormComponent implements OnInit{
       zeliBitiUPrijavi: true,
       adresa: this.formBuilder.group({
         ulicaIBroj: [''],
-        postanskiBroj: [''],
+        postanskiBroj: 11000,
         mesto: [''],
         drzava: ['']
       }),
@@ -73,7 +87,7 @@ export class PatentFormComponent implements OnInit{
       naziv: [''],
       adresa: this.formBuilder.group({
         ulicaIBroj: [''],
-        postanskiBroj: [''],
+        postanskiBroj: 11000,
         mesto: [''],
         drzava: ['']
       }),
@@ -86,7 +100,8 @@ export class PatentFormComponent implements OnInit{
   })
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private patentService: PatentService
   ) {}
 
   ngOnInit(): void {
@@ -111,7 +126,135 @@ export class PatentFormComponent implements OnInit{
     this.priznanjaPravaPrvenstva.removeAt(index);
   }
 
+  get priznanjaPravaPrvenstvaForme(): FormControl[] {
+    return (this.patentForm.get('podaciOPrijavama')?.get('priznanjaPravaPrvenstva') as FormArray).controls as FormControl[];
+  }
+
   addPatent() {
-    console.log(this.patentForm);
+
+    const novaPrijava: NovaPrijavaDto = {
+      brojPrijave: this.patentForm.controls['podaciOPrijavama'].controls['novaPrijava'].value.brojPrijave as string,
+      datumPrijave: this.patentForm.controls['podaciOPrijavama'].controls['novaPrijava'].value.datumPrijave as string,
+      priznatiDatumPrijave: this.patentForm.controls['podaciOPrijavama'].controls['novaPrijava'].value.priznatiDatumPrijave as string
+    }
+
+    const dodatnaPrijava: DodatnaPrijavaDto = {
+      tipPrijave: this.patentForm.controls['podaciOPrijavama'].controls['dodatnaPrijava'].value.tipPrijave as string,
+      brojPrvobitnePrijave: this.patentForm.controls['podaciOPrijavama'].controls['dodatnaPrijava'].value.brojPrvobitnePrijave as string,
+      datumPodnosenjaPrijave: this.patentForm.controls['podaciOPrijavama'].controls['dodatnaPrijava'].value.datumPodnosenjaPrijave as string
+    }
+
+    const priznanjaPravaPrvenstvaList: PriznanjePravaPrvenstvaDto[] = [];
+
+    for (let p of this.priznanjaPravaPrvenstvaForme) {
+      const priznanjePravaPrvenstva: PriznanjePravaPrvenstvaDto = {
+        datumPrijave: p.value.datumPrijave,
+        brojRanijePrijave: p.value.brojRanijePrijave,
+        dvoslovnaOznakaDrzaveOrganizacije: p.value.dvoslovnaOznakaDrzaveOrganizacije
+      }
+      priznanjaPravaPrvenstvaList.push(priznanjePravaPrvenstva);
+    }
+
+    const priznanjaPravaPrvenstva: PriznanjaPravaPrvenstvaDto = {
+      priznanjaPravaPrvenstva : priznanjaPravaPrvenstvaList
+    }
+
+    const podaciOPrijavama: PodaciOPrijavamaDto = {
+      novaPrijava: novaPrijava,
+      dodatnaPrijava: dodatnaPrijava,
+      priznanjaPravaPrvenstva: priznanjaPravaPrvenstva
+    }
+
+    const nazivPronalaska: NazivPronalaskaDto = {
+      srpskiNaziv: this.patentForm.controls['nazivPronalaska'].value.srpskiNaziv as string,
+      engleskiNaziv: this.patentForm.controls['nazivPronalaska'].value.engleskiNaziv as string
+    }
+
+    const adresaPodnosilac: AdresaDto = {
+      ulicaIBroj: this.patentForm.controls['podnosilac'].controls['adresa'].value.ulicaIBroj as string,
+      postanskiBroj: this.patentForm.controls['podnosilac'].controls['adresa'].value.postanskiBroj as number,
+      mesto: this.patentForm.controls['podnosilac'].controls['adresa'].value.mesto as string,
+      drzava: this.patentForm.controls['podnosilac'].controls['adresa'].value.drzava as string,
+    }
+
+    const kontaktPodaciPodnosilac: KontaktPodaciDto = {
+      brojTelefona: this.patentForm.controls['podnosilac'].controls['kontaktPodaci'].value.brojTelefona as string,
+      brojFaksa: this.patentForm.controls['podnosilac'].controls['kontaktPodaci'].value.brojFaksa as string,
+      ePosta: this.patentForm.controls['podnosilac'].controls['kontaktPodaci'].value.ePosta as string,
+    }
+
+    const adresaNacinDostavljanja: AdresaDto = {
+      ulicaIBroj: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].controls['adresa'].value.ulicaIBroj as string,
+      postanskiBroj: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].controls['adresa'].value.postanskiBroj as number,
+      mesto: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].controls['adresa'].value.mesto as string,
+      drzava: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].controls['adresa'].value.drzava as string,
+    }
+
+    const nacinDostavljanja: NacinDostavljanjaDto = {
+      nacinDostavljanja: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].value.nacinDostavljanja as string,
+      email: this.patentForm.controls['podnosilac'].controls['nacinDostavljanja'].value.email as string,
+      adresa: adresaNacinDostavljanja
+    }
+
+    const podnosilac: PodnosilacDto = {
+      naziv: this.patentForm.controls['podnosilac'].value.naziv as string,
+      drzavljanstvo: this.patentForm.controls['podnosilac'].value.drzavljanstvo as string,
+      podnosilacJePronalazac: this.patentForm.controls['podnosilac'].value.podnosilacJePronalazac as boolean,
+      adresa: adresaPodnosilac,
+      kontaktPodaci: kontaktPodaciPodnosilac,
+      nacinDostavljanja: nacinDostavljanja
+    }
+
+    const adresaPronalazac: AdresaDto = {
+      ulicaIBroj: this.patentForm.controls['pronalazac'].controls['adresa'].value.ulicaIBroj as string,
+      postanskiBroj: this.patentForm.controls['pronalazac'].controls['adresa'].value.postanskiBroj as number,
+      mesto: this.patentForm.controls['pronalazac'].controls['adresa'].value.mesto as string,
+      drzava: this.patentForm.controls['pronalazac'].controls['adresa'].value.drzava as string,
+    }
+
+    const kontaktPodaciPronalazac: KontaktPodaciDto = {
+      brojTelefona: this.patentForm.controls['pronalazac'].controls['kontaktPodaci'].value.brojTelefona as string,
+      brojFaksa: this.patentForm.controls['pronalazac'].controls['kontaktPodaci'].value.brojFaksa as string,
+      ePosta: this.patentForm.controls['pronalazac'].controls['kontaktPodaci'].value.ePosta as string,
+    }
+
+    const pronalazac: PronalazacDto = {
+      naziv: this.patentForm.controls['pronalazac'].value.naziv as string,
+      zeliBitiUPrijavi: this.patentForm.controls['pronalazac'].value.zeliBitiUPrijavi as boolean,
+      adresa: adresaPronalazac,
+      kontaktPodaci: kontaktPodaciPronalazac
+    }
+
+    const adresaPunomocnik: AdresaDto = {
+      ulicaIBroj: this.patentForm.controls['punomocnik'].controls['adresa'].value.ulicaIBroj as string,
+      postanskiBroj: this.patentForm.controls['punomocnik'].controls['adresa'].value.postanskiBroj as number,
+      mesto: this.patentForm.controls['punomocnik'].controls['adresa'].value.mesto as string,
+      drzava: this.patentForm.controls['punomocnik'].controls['adresa'].value.drzava as string,
+    }
+
+    const kontaktPodaciPunomocnik: KontaktPodaciDto = {
+      brojTelefona: this.patentForm.controls['punomocnik'].controls['kontaktPodaci'].value.brojTelefona as string,
+      brojFaksa: this.patentForm.controls['punomocnik'].controls['kontaktPodaci'].value.brojFaksa as string,
+      ePosta: this.patentForm.controls['punomocnik'].controls['kontaktPodaci'].value.ePosta as string,
+    }
+
+    const punomocnik: PunomocnikDto = {
+      tipPunomocnika: this.patentForm.controls['punomocnik'].value.tipPunomocnika as string,
+      zajednickiPredstavnik: this.patentForm.controls['punomocnik'].value.zajednickiPredstavnik as boolean,
+      naziv: this.patentForm.controls['punomocnik'].value.naziv as string,
+      adresa: adresaPunomocnik,
+      kontaktPodaci: kontaktPodaciPunomocnik
+    }
+
+    const ZahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto = {
+      podaciOPrijavama: podaciOPrijavama,
+      nazivPronalaska : nazivPronalaska,
+      podnosilac: podnosilac,
+      pronalazac: pronalazac,
+      punomocnik: punomocnik
+    }
+
+    this.patentService.addPatent(ZahtevZaPriznanjePatenta);
+
   }
 }

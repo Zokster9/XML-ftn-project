@@ -1,5 +1,5 @@
 export interface DodatnaPrijavaDto {
     tipPrijave: string;
-    brojPrvobitne: string;
+    brojPrvobitnePrijave: string;
     datumPodnosenjaPrijave: string;
 }

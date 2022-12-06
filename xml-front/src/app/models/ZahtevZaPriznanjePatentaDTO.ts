@@ -1,8 +1,14 @@
-export interface ZahtevZaPriznanjePatentaDTO {
+import { NazivPronalaskaDto } from "./NazivPronalaskaDto";
+import { PodaciOPrijavamaDto } from "./PodaciOPrijavamaDto";
+import { PodnosilacDto } from "./PodnosilacDto";
+import { PronalazacDto } from "./PronalazacDto";
+import { PunomocnikDto } from "./PunomocnikDto";
 
-    private PodaciOPrijavamaCreationDto podaciOPrijavama;
-    private NazivPronalaskaCreationDto nazivPronalaska;
-    private PodnosilacCreationDto podnosilac;
-    private PronalazacCreationDto pronalazac;
-    private PunomocnikCreationDto punomocnik;
+export interface ZahtevZaPriznanjePatentaDto {
+
+    podaciOPrijavama: PodaciOPrijavamaDto;
+    nazivPronalaska:  NazivPronalaskaDto;
+    podnosilac: PodnosilacDto;
+    pronalazac: PronalazacDto;
+    punomocnik: PunomocnikDto;
 }
