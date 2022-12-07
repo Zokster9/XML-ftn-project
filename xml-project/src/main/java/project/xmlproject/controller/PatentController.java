@@ -25,7 +25,6 @@ public class PatentController {
     @PostMapping(value="/add-patent", consumes = "application/xml", produces = "application/xml")
     public ResponseEntity<ZahtevZaPriznanjePatentaCreationDto> addPatent(@RequestBody ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) throws Exception {
         ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = patentService.addPatent(zahtevZaPriznanjePatentaCreationDto);
-        System.out.println(zahtevZaPriznanjePatenta.getNazivPronalaska());
         return new ResponseEntity<>(new ZahtevZaPriznanjePatentaCreationDto(zahtevZaPriznanjePatenta), HttpStatus.OK);
     }
 

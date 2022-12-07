@@ -257,7 +257,7 @@ export class PatentFormComponent implements OnInit{
         console.log(zahtevZaPriznanjeXml);
         const parser = new xml2js.Parser({strict: true, trim: true});
         parser.parseString(zahtevZaPriznanjeXml.toString(), (err, result) => {
-          zahtevZaPriznanjePatentaPovratna = result;
+          zahtevZaPriznanjePatentaPovratna = result.zahtevZaPriznanjePatentaCreationDto;
           console.log(zahtevZaPriznanjePatentaPovratna);
           console.log(zahtevZaPriznanjePatentaPovratna.podaciOPrijavama);
         })
