@@ -259,10 +259,23 @@ export class PatentFormComponent implements OnInit{
         parser.parseString(zahtevZaPriznanjeXml.toString(), (err, result) => {
           zahtevZaPriznanjePatentaPovratna = result.zahtevZaPriznanjePatentaCreationDto;
           console.log(zahtevZaPriznanjePatentaPovratna);
-          console.log(zahtevZaPriznanjePatentaPovratna.podaciOPrijavama);
+          console.log(zahtevZaPriznanjePatentaPovratna.podaciOPrijavama);8
         })
       }
     );
 
+  }
+
+  getPatent() {
+    this.patentService.getPatent().subscribe(
+      zahtevZaPriznanjePatentaXml => {
+        console.log(zahtevZaPriznanjePatentaXml);
+        const parser = new xml2js.Parser({strict: true, trim: true});
+        parser.parseString(zahtevZaPriznanjePatentaXml.toString(), (err, result) => {
+          let zahtevZaPriznanjePatentaPovratna = result.zahtevZaPriznanjePatentaCreationDto;
+          console.log(zahtevZaPriznanjePatentaPovratna);
+        })
+      }
+    )
   }
 }

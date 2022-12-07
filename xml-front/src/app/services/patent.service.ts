@@ -19,4 +19,9 @@ export class PatentService {
     const xmlOdgovor = this.httpClient.post(this.url + '/patenti/add-patent', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
     return xmlOdgovor;
   }
+
+  public getPatent() {
+    const xmlOdgovor = this.httpClient.get(this.url + '/patenti/get-patent', {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'})
+    return xmlOdgovor;
+  }
 }
