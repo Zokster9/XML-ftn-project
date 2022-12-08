@@ -68,8 +68,7 @@
                 <xs:element name="Klase_robe_i_usluga">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element maxOccurs="unbounded" name="Klasa" type="zig:TKlasa">
-                            </xs:element>
+                            <xs:element maxOccurs="45" name="Klasa" type="zig:TKlasa"> </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -80,16 +79,14 @@
                             <xs:element name="Osnovna_taksa" type="zig:TTaksa"/>
                             <xs:element name="Taksa_za_klase">
                                 <xs:complexType>
-                                    <xs:simpleContent>
-                                        <xs:extension base="zig:TTaksa">
-                                            <xs:attribute name="broj_klasa"
-                                                type="xs:positiveInteger"/>
-                                        </xs:extension>
-                                    </xs:simpleContent>
+                                    <xs:sequence>
+                                        <xs:element name="Vrednost" type="zig:TTaksa"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="broj_klasa" type="xs:int"/>
                                 </xs:complexType>
                             </xs:element>
                             <xs:element name="Taksa_za_graficko_resenje" type="zig:TTaksa"
-                                minOccurs="0"/>
+                                minOccurs="1" default="0"/>
                             <xs:element name="Ukupna_taksa" type="zig:TTaksa"/>
                         </xs:sequence>
                     </xs:complexType>
@@ -102,22 +99,35 @@
                                     <xs:sequence>
                                         <xs:element name="Primerak_znaka">
                                             <xs:complexType>
-                                                <xs:attribute name="nazivDokumenta" type="xs:string"
-                                                />
+                                                <xs:attribute name="naziv_dokumenta"
+                                                  type="xs:string"/>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="Spisak_robe_i_usluga">
                                             <xs:complexType>
-                                                <xs:sequence>
+                                                <xs:sequence maxOccurs="45">
+                                                  <xs:element name="Spisak">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
                                                   <xs:element name="Klasa" type="zig:TKlasa"/>
-                                                  <xs:element name="Naziv" type="xs:string"/>
+                                                  <xs:element name="Usluge">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded" name="Naziv"
+                                                  type="xs:string"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="Punomocje" minOccurs="0">
                                             <xs:complexType>
-                                                <xs:attribute name="nazivDokumenta" type="xs:string"
-                                                />
+                                                <xs:attribute name="naziv_dokumenta"
+                                                  type="xs:string"/>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="Generalno_punomocje_ranije_prilozeno"
@@ -127,20 +137,20 @@
                                         <xs:element name="Opsti_akt_o_kolektivnom_zigu"
                                             minOccurs="0">
                                             <xs:complexType>
-                                                <xs:attribute name="nazivDokumenta" type="xs:string"
-                                                />
+                                                <xs:attribute name="naziv_dokumenta"
+                                                  type="xs:string"/>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="Dokaz_o_pravu_prvenstva" minOccurs="0">
                                             <xs:complexType>
-                                                <xs:attribute name="nazivDokumenta" type="xs:string"
-                                                />
+                                                <xs:attribute name="naziv_dokumenta"
+                                                  type="xs:string"/>
                                             </xs:complexType>
                                         </xs:element>
                                         <xs:element name="Dokaz_o_uplati_takse">
                                             <xs:complexType>
-                                                <xs:attribute name="nazivDokumenta" type="xs:string"
-                                                />
+                                                <xs:attribute name="naziv_dokumenta"
+                                                  type="xs:string"/>
                                             </xs:complexType>
                                         </xs:element>
                                     </xs:sequence>
@@ -167,7 +177,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="Ulica" type="xs:string"/>
-                <xs:element name="Broj" type="xs:positiveInteger"/>
+                <xs:element name="Broj" type="xs:string"/>
                 <xs:element name="Postanski_broj" type="zig:TPostanski_broj"/>
                 <xs:element name="Mesto" type="xs:string"/>
                 <xs:element name="Drzava" type="xs:string"/>
@@ -217,9 +227,8 @@
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="TTaksa">
-        <xs:restriction base="xs:decimal">
-            <xs:fractionDigits value="2"/>
-            <xs:minExclusive value="0"/>
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="TKlasa">
