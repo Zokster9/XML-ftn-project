@@ -1,19 +1,13 @@
 package project.xmlproject.controller;
 
 
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.xmlproject.dto.creationDto.ZahtevZaPriznanjePatentaCreationDto;
+import project.xmlproject.dto.patent.creationDto.ZahtevZaPriznanjePatentaCreationDto;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
 import project.xmlproject.service.PatentService;
-
-import javax.xml.bind.JAXBException;
-import java.io.IOException;
 
 @RestController
 @RequestMapping(value="patenti")

@@ -1,4 +1,4 @@
-package project.xmlproject.dto.creationDto;
+package project.xmlproject.dto.patent.creationDto;
 
 import project.xmlproject.model.patent.PriznanjePravaPrvenstva;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;

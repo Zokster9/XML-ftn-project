@@ -1,9 +1,9 @@
 package project.xmlproject.marshal;
 
-import project.xmlproject.dto.creationDto.AdresaCreationDto;
-import project.xmlproject.dto.creationDto.KontaktPodaciCreationDto;
-import project.xmlproject.dto.creationDto.PriznanjePravaPrvenstvaCreationDto;
-import project.xmlproject.dto.creationDto.ZahtevZaPriznanjePatentaCreationDto;
+import project.xmlproject.dto.patent.creationDto.AdresaCreationDto;
+import project.xmlproject.dto.patent.creationDto.KontaktPodaciCreationDto;
+import project.xmlproject.dto.patent.creationDto.PriznanjePravaPrvenstvaCreationDto;
+import project.xmlproject.dto.patent.creationDto.ZahtevZaPriznanjePatentaCreationDto;
 import project.xmlproject.model.patent.*;
 
 import javax.xml.bind.JAXBException;

@@ -2,7 +2,6 @@ package project.xmlproject.repository;
 
 import project.xmlproject.database.ReadUnmarshal;
 import project.xmlproject.database.WriteMarshal;
-import project.xmlproject.dto.creationDto.ZahtevZaPriznanjePatentaCreationDto;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
 
 public class PatentRepository {
