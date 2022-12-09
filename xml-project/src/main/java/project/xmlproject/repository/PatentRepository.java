@@ -9,7 +9,7 @@ public class PatentRepository {
 
     public ZahtevZaPriznanjePatenta save(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) throws Exception {
         WriteMarshal writeMarshal = new WriteMarshal();
-        return writeMarshal.write("patenti", "p3.xml", zahtevZaPriznanjePatenta);
+        return writeMarshal.write("patenti", "p4.xml", zahtevZaPriznanjePatenta);
     }
 
     public ZahtevZaPriznanjePatenta getPatent() throws Exception {
