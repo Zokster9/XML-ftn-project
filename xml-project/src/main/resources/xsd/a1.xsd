@@ -8,8 +8,9 @@
                 <xs:element name="podnosilac" type="a1:TLice"/>
                 <xs:element minOccurs="0" name="punomocnik" type="a1:Punomocnik"/>
                 <xs:element name="podaci_o_autorskom_delu" type="a1:Podaci_o_autorskom_delu"/>
-                <xs:element name="broj_prijave" type="xs:positiveInteger"/>
+                <xs:element name="broj_prijave" type="xs:string"/>
                 <xs:element name="datum_prijave" type="xs:date"/>
+                <xs:element name="prilozi_uz_prijavu" type="a1:PriloziUzPrijavu"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -32,6 +33,7 @@
                     <xs:element name="ime" type="xs:string"/>
                     <xs:element name="prezime" type="xs:string"/>
                     <xs:element name="adresa_lica" type="a1:Adresa"/>
+                    <xs:element name="drzavljanstvo" type="xs:string"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -84,7 +86,7 @@
             <xs:element name="prezime" type="xs:string"/>
             <xs:element minOccurs="0" name="adresa" type="a1:Adresa"/>
             <xs:element minOccurs="0" name="drzavljanstvo" type="xs:string"/>
-            <xs:element minOccurs="0" name="godina_smrti" type="xs:date"/>
+            <xs:element minOccurs="0" name="godina_smrti" type="xs:string"/>
             <xs:element maxOccurs="1" minOccurs="0" name="znak" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
@@ -93,6 +95,12 @@
             <xs:element name="ime" type="xs:string"/>
             <xs:element name="prezime" type="xs:string"/>
             <xs:element name="adresa" type="a1:Adresa"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PriloziUzPrijavu">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="opis_autorskog_dela" type="xs:string"/>
+            <xs:element name="primer_autorskog_dela" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

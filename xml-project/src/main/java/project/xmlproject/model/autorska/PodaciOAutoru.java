@@ -50,8 +50,7 @@ public class PodaciOAutoru {
     protected Adresa adresa;
     protected String drzavljanstvo;
     @XmlElement(name = "godina_smrti")
-    @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar godinaSmrti;
+    protected String godinaSmrti;
     protected String znak;
 
     /**
@@ -144,7 +143,7 @@ public class PodaciOAutoru {
      *     {@link XMLGregorianCalendar }
      *
      */
-    public XMLGregorianCalendar getGodinaSmrti() {
+    public String getGodinaSmrti() {
         return godinaSmrti;
     }
 
@@ -156,7 +155,7 @@ public class PodaciOAutoru {
      *     {@link XMLGregorianCalendar }
      *
      */
-    public void setGodinaSmrti(XMLGregorianCalendar value) {
+    public void setGodinaSmrti(String value) {
         this.godinaSmrti = value;
     }
 

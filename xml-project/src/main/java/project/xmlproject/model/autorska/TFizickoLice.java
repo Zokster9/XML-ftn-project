@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "TFizicko_lice", propOrder = {
         "ime",
         "prezime",
-        "adresaLica"
+        "adresaLica",
+        "drzavljanstvo"
 })
 public class TFizickoLice
         extends TLice
@@ -43,6 +44,8 @@ public class TFizickoLice
     protected String prezime;
     @XmlElement(name = "adresa_lica", required = true)
     protected Adresa adresaLica;
+    @XmlElement(required = true)
+    protected String drzavljanstvo;
 
     /**
      * Gets the value of the ime property.
@@ -101,5 +104,9 @@ public class TFizickoLice
     public void setAdresaLica(Adresa value) {
         this.adresaLica = value;
     }
+
+    public String getDrzavljanstvo() { return drzavljanstvo; }
+
+    public void setDrzavljanstvo(String value) { this.drzavljanstvo = value; }
 
 }

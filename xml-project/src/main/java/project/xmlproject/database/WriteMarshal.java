@@ -7,6 +7,7 @@ import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import project.xmlproject.model.autorska.ObrazacAutorskoDelo;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
 
 import javax.xml.bind.JAXBContext;
@@ -153,5 +154,92 @@ public class WriteMarshal {
         } else {
             return col;
         }
+    }
+
+    public ObrazacAutorskoDelo writeAutorska(String collectionName, String documentName, ObrazacAutorskoDelo obrazacAutorskoDelo) throws Exception {
+        AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+
+        System.out.println("[INFO] " + WriteMarshal.class.getSimpleName());
+
+        // initialize collection and document identifiers
+        String collectionId = null;
+        String documentId = null;
+
+        System.out.println("[INFO] Using defaults.");
+
+        collectionId = "/db/xml-project/" + collectionName;
+        documentId = documentName;
+
+
+        System.out.println("\t- collection ID: " + collectionId);
+        System.out.println("\t- document ID: " + documentId);
+
+        // initialize database driver
+        System.out.println("[INFO] Loading driver class: " + conn.driver);
+        Class<?> cl = Class.forName(conn.driver);
+
+
+        // encapsulation of the database driver functionality
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+
+        // entry point for the API which enables you to get the Collection reference
+        DatabaseManager.registerDatabase(database);
+
+        // a collection of Resources stored within an XML database
+        Collection col = null;
+        XMLResource res = null;
+        OutputStream os = new ByteArrayOutputStream();
+
+        try {
+
+            System.out.println("[INFO] Retrieving the collection: " + collectionId);
+            col = getOrCreateCollection(collectionId, conn);
+
+            /*
+             *  create new XMLResource with a given id
+             *  an id is assigned to the new resource if left empty (null)
+             */
+            System.out.println("[INFO] Inserting the document: " + documentId);
+            res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
+
+            System.out.println("[INFO] Unmarshalling XML document to an JAXB instance: ");
+            JAXBContext context = JAXBContext.newInstance(ObrazacAutorskoDelo.class);
+
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+            // marshal the contents to an output stream
+            marshaller.marshal(obrazacAutorskoDelo, os);
+
+            // link the stream to the XML resource
+            res.setContent(os);
+            System.out.println("[INFO] Storing the document: " + res.getId());
+
+            col.storeResource(res);
+            System.out.println("[INFO] Done.");
+
+        } finally {
+
+            //don't forget to cleanup
+            /*
+            if(res != null) {
+                try {
+                    ((EXistResource)res).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+             */
+
+            if(col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+        return obrazacAutorskoDelo;
     }
 }

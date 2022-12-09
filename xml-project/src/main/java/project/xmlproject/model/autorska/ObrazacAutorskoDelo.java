@@ -2,7 +2,6 @@ package project.xmlproject.model.autorska;
 
 
 
-import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -41,7 +40,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
         "punomocnik",
         "podaciOAutorskomDelu",
         "brojPrijave",
-        "datumPrijave"
+        "datumPrijave",
+        "priloziUzPrijavu"
 })
 @XmlRootElement(name = "obrazac_autorsko_delo")
 public class ObrazacAutorskoDelo {
@@ -52,18 +52,19 @@ public class ObrazacAutorskoDelo {
     @XmlElement(name = "podaci_o_autorskom_delu", required = true)
     protected PodaciOAutorskomDelu podaciOAutorskomDelu;
     @XmlElement(name = "broj_prijave", required = true)
-    @XmlSchemaType(name = "positiveInteger")
-    protected BigInteger brojPrijave;
+    protected String brojPrijave;
     @XmlElement(name = "datum_prijave", required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar datumPrijave;
+    @XmlElement(name = "prilozi_uz_prijavu", required = true)
+    protected PriloziUzPrijavu priloziUzPrijavu;
 
     /**
      * Gets the value of the podnosilac property.
      *
      * @return
      *     possible object is
-     *     {@link TLice }
+     *     {@link rs.ac.uns.ftn.autorska.TLice }
      *
      */
     public TLice getPodnosilac() {
@@ -75,7 +76,7 @@ public class ObrazacAutorskoDelo {
      *
      * @param value
      *     allowed object is
-     *     {@link TLice }
+     *     {@link rs.ac.uns.ftn.autorska.TLice }
      *
      */
     public void setPodnosilac(TLice value) {
@@ -87,7 +88,7 @@ public class ObrazacAutorskoDelo {
      *
      * @return
      *     possible object is
-     *     {@link Punomocnik }
+     *     {@link rs.ac.uns.ftn.autorska.Punomocnik }
      *
      */
     public Punomocnik getPunomocnik() {
@@ -99,7 +100,7 @@ public class ObrazacAutorskoDelo {
      *
      * @param value
      *     allowed object is
-     *     {@link Punomocnik }
+     *     {@link rs.ac.uns.ftn.autorska.Punomocnik }
      *
      */
     public void setPunomocnik(Punomocnik value) {
@@ -111,7 +112,7 @@ public class ObrazacAutorskoDelo {
      *
      * @return
      *     possible object is
-     *     {@link PodaciOAutorskomDelu }
+     *     {@link rs.ac.uns.ftn.autorska.PodaciOAutorskomDelu }
      *
      */
     public PodaciOAutorskomDelu getPodaciOAutorskomDelu() {
@@ -123,7 +124,7 @@ public class ObrazacAutorskoDelo {
      *
      * @param value
      *     allowed object is
-     *     {@link PodaciOAutorskomDelu }
+     *     {@link rs.ac.uns.ftn.autorska.PodaciOAutorskomDelu }
      *
      */
     public void setPodaciOAutorskomDelu(PodaciOAutorskomDelu value) {
@@ -135,10 +136,10 @@ public class ObrazacAutorskoDelo {
      *
      * @return
      *     possible object is
-     *     {@link BigInteger }
+     *     {@link String }
      *
      */
-    public BigInteger getBrojPrijave() {
+    public String getBrojPrijave() {
         return brojPrijave;
     }
 
@@ -147,10 +148,10 @@ public class ObrazacAutorskoDelo {
      *
      * @param value
      *     allowed object is
-     *     {@link BigInteger }
+     *     {@link String }
      *
      */
-    public void setBrojPrijave(BigInteger value) {
+    public void setBrojPrijave(String value) {
         this.brojPrijave = value;
     }
 
@@ -176,6 +177,30 @@ public class ObrazacAutorskoDelo {
      */
     public void setDatumPrijave(XMLGregorianCalendar value) {
         this.datumPrijave = value;
+    }
+
+    /**
+     * Gets the value of the priloziUzPrijavu property.
+     *
+     * @return
+     *     possible object is
+     *     {@link rs.ac.uns.ftn.autorska.PriloziUzPrijavu }
+     *
+     */
+    public PriloziUzPrijavu getPriloziUzPrijavu() {
+        return priloziUzPrijavu;
+    }
+
+    /**
+     * Sets the value of the priloziUzPrijavu property.
+     *
+     * @param value
+     *     allowed object is
+     *     {@link rs.ac.uns.ftn.autorska.PriloziUzPrijavu }
+     *
+     */
+    public void setPriloziUzPrijavu(PriloziUzPrijavu value) {
+        this.priloziUzPrijavu = value;
     }
 
 }

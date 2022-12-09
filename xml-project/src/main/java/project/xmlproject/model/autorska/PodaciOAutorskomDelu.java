@@ -234,6 +234,8 @@ public class PodaciOAutorskomDelu {
         return this.autori;
     }
 
+    public void setAutori(List<PodaciOAutoru> value) {this.autori = value;}
+
     /**
      * Gets the value of the naslovAutorskogDelaPrerade property.
      *

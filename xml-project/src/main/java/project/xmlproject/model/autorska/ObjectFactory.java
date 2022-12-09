@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 /**
  * This object contains factory methods for each
  * Java content interface and Java element interface
- * generated in the rs.ac.uns.ftn.autorksa package.
+ * generated in the rs.ac.uns.ftn.autorska package.
  * <p>An ObjectFactory allows you to programatically
  * construct new instances of the Java representation
  * for XML content. The Java representation of XML
@@ -23,19 +23,22 @@ public class ObjectFactory {
 
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: rs.ac.uns.ftn.autorksa
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: rs.ac.uns.ftn.autorska
      *
      */
     public ObjectFactory() {
     }
 
-
+    /**
+     * Create an instance of {@link rs.ac.uns.ftn.autorska.ObrazacAutorskoDelo }
+     *
+     */
     public ObrazacAutorskoDelo createObrazacAutorskoDelo() {
         return new ObrazacAutorskoDelo();
     }
 
     /**
-     * Create an instance of {@link Punomocnik }
+     * Create an instance of {@link rs.ac.uns.ftn.autorska.Punomocnik }
      *
      */
     public Punomocnik createPunomocnik() {
@@ -43,7 +46,7 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link PodaciOAutorskomDelu }
+     * Create an instance of {@link rs.ac.uns.ftn.autorska.PodaciOAutorskomDelu }
      *
      */
     public PodaciOAutorskomDelu createPodaciOAutorskomDelu() {
@@ -51,7 +54,15 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link TFizickoLice }
+     * Create an instance of {@link PriloziUzPrijavu }
+     *
+     */
+    public PriloziUzPrijavu createPriloziUzPrijavu() {
+        return new PriloziUzPrijavu();
+    }
+
+    /**
+     * Create an instance of {@link rs.ac.uns.ftn.autorska.TFizickoLice }
      *
      */
     public TFizickoLice createTFizickoLice() {
@@ -59,20 +70,23 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link TPravnoLice }
+     * Create an instance of {@link rs.ac.uns.ftn.autorska.TPravnoLice }
      *
      */
     public TPravnoLice createTPravnoLice() {
         return new TPravnoLice();
     }
 
-
+    /**
+     * Create an instance of {@link rs.ac.uns.ftn.autorska.Adresa }
+     *
+     */
     public Adresa createAdresa() {
         return new Adresa();
     }
 
     /**
-     * Create an instance of {@link PodaciOAutoru }
+     * Create an instance of {@link rs.ac.uns.ftn.autorska.PodaciOAutoru }
      *
      */
     public PodaciOAutoru createPodaciOAutoru() {
