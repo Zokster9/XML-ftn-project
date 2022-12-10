@@ -6,8 +6,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
+import project.xmlproject.Util.ZigExample;
+
 import javax.xml.bind.JAXBException;
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -165,11 +169,14 @@ public class XmlProjectApplication {
 	}
 	 */
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		SpringApplication.run(XmlProjectApplication.class, args);
 		//marshal();
 		//ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = unmarshall();
 		//System.out.println(zahtevZaPriznanjePatenta.getNazivPronalaska().getEngleskiNaziv());
+//		ZigExample zigExample = new ZigExample();
+//		zigExample.marshallZig();
+//		zigExample.unmarshallZig();
 	}
 
 	@Bean
