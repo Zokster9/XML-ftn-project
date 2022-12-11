@@ -1,10 +1,8 @@
 package project.xmlproject.Util;
 
 import org.xml.sax.SAXException;
-import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
 import project.xmlproject.model.zig.*;
 
-import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -12,13 +10,10 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.function.Consumer;
 
 public class ZigExample {
 
@@ -171,7 +166,7 @@ public class ZigExample {
         mar.marshal(zahtevZaPriznanjeZiga, new File("./src/main/resources/data/z1_primer1.xml"));
     }
 
-    public void unmarshallZig() throws JAXBException, SAXException {
+    public void unmarshallZig() throws Exception {
         JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
 //        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
