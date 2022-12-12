@@ -21,7 +21,7 @@ export class AutorskaService {
     }
 
     dobaviObrazacAutorska(brojPrijave: string) {
-        const xmlOdgovor = this.httpClient.get(this.url + '/autorksa/dobavi-autorsko/' + brojPrijave, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
+        const xmlOdgovor = this.httpClient.get(this.url + '/autorska/dobavi-autorsko/' + brojPrijave, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
         return xmlOdgovor;
     }
     
