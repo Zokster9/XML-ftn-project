@@ -19,5 +19,10 @@ export class AutorskaService {
         const xmlOdgovor = this.httpClient.post(this.url + '/autorska/dodaj-autorska', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
         return xmlOdgovor;
     }
+
+    dobaviObrazacAutorska(brojPrijave: string) {
+        const xmlOdgovor = this.httpClient.get(this.url + '/autorksa/dobavi-autorsko/' + brojPrijave, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
+        return xmlOdgovor;
+    }
     
 }

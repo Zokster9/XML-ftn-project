@@ -155,4 +155,16 @@ export class AutorskaFormComponent implements OnInit{
       else return {fizickoLiceDTO: fizickoLice, punomocnikDTO: punomocnik, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu};
     }
   }
+
+  dobaviZahtev() {
+    let obrazacAutorskoDeloDTO: ObrazacAutorskoDeloDTO;
+    this.autorskaService.dobaviObrazacAutorska('A-1670846129123').subscribe((xmlText) => {
+      console.log(xmlText);
+      const parser = new xml2js.Parser({strict: true, trim: true});
+        parser.parseString(xmlText.toString(), (err, result) => {
+          obrazacAutorskoDeloDTO = result.ObrazacAutorskoDeloDTO;
+          console.log(obrazacAutorskoDeloDTO);
+        })
+    })
+  }
 }
