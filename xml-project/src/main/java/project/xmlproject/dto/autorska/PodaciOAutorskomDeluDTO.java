@@ -1,10 +1,11 @@
 package project.xmlproject.dto.autorska;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import project.xmlproject.model.autorska.PodaciOAutorskomDelu;
 import project.xmlproject.model.autorska.PodaciOAutoru;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,8 @@ public class PodaciOAutorskomDeluDTO {
     @XmlElement
     private boolean anonimniAutor;
 
-    @XmlElementWrapper
-    @XmlElement(name="podaciOAutoruDTO")
+    @JacksonXmlProperty(localName = "autori")
+    @JacksonXmlElementWrapper(useWrapping = false)
     private List<PodaciOAutoruDTO> autori;
 
     @XmlElement

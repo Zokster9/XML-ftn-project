@@ -3,7 +3,6 @@ package project.xmlproject.dto.autorska;
 import project.xmlproject.model.autorska.PodaciOAutoru;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 public class PodaciOAutoruDTO {
 

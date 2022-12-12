@@ -6,11 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { PatentFormComponent } from './components/patent-form/patent-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AutorskaFormComponent } from './components/autorska-form/autorska-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PatentFormComponent
+    PatentFormComponent,
+    AutorskaFormComponent
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,8 @@ import project.xmlproject.dto.autorska.ObrazacAutorskoDeloDTO;
 import project.xmlproject.model.autorska.ObrazacAutorskoDelo;
 import project.xmlproject.service.AutorskaService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping(value = "autorska")
 public class AutorskaController {
@@ -16,7 +18,7 @@ public class AutorskaController {
     @Autowired
     private AutorskaService autorskaService;
 
-    @PostMapping(value = "dodaj-autorska", consumes = "application/xml", produces = "application/xml")
+    @PostMapping(value = "/dodaj-autorska", consumes = "application/xml", produces = "application/xml")
     public ResponseEntity<ObrazacAutorskoDeloDTO> kreirajZahtev(@RequestBody ObrazacAutorskoDeloCreationDTO obrazacAutorskoDeloCreationDTO) {
         try {
             ObrazacAutorskoDelo obrazacAutorskoDelo = autorskaService.kreirajZahtev(obrazacAutorskoDeloCreationDTO);
@@ -26,7 +28,7 @@ public class AutorskaController {
         }
     }
 
-    @GetMapping(value = "dobavi-autorsko/{brojAutorskog}", consumes = "application/xml", produces = "application/xml")
+    @GetMapping(value = "/dobavi-autorsko/{brojAutorskog}", consumes = "application/xml", produces = "application/xml")
     public ResponseEntity<ObrazacAutorskoDeloDTO> dobaviObrazacZaAutorsko(@PathVariable("brojAutorskog") String brojAutorskog) {
         try {
             ObrazacAutorskoDelo obrazacAutorskoDelo = autorskaService.dobaviAutorskoDelo(brojAutorskog);

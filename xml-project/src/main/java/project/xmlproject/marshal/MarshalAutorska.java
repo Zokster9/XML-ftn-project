@@ -105,11 +105,14 @@ public class MarshalAutorska {
             PodaciOAutoru podaciOAutoru = new PodaciOAutoru();
             podaciOAutoru.setIme(autorDTO.getIme());
             podaciOAutoru.setPrezime(autorDTO.getPrezime());
-            podaciOAutoru.setZnak(autorDTO.getZnak());
-            podaciOAutoru.setDrzavljanstvo(autorDTO.getDrzavljanstvo());
-            podaciOAutoru.setGodinaSmrti(autorDTO.getGodinaSmrti());
-            Adresa adresa = marshalAdresa(autorDTO.getAdresa());
-            podaciOAutoru.setAdresa(adresa);
+            if (autorDTO.getGodinaSmrti() == null) {
+                Adresa adresa = marshalAdresa(autorDTO.getAdresa());
+                podaciOAutoru.setAdresa(adresa);
+                podaciOAutoru.setZnak(autorDTO.getZnak());
+                podaciOAutoru.setDrzavljanstvo(autorDTO.getDrzavljanstvo());
+            }else {
+                podaciOAutoru.setGodinaSmrti(autorDTO.getGodinaSmrti());
+            }
             autori.add(podaciOAutoru);
         }
         return autori;
