@@ -22,13 +22,14 @@ public class PodaciOPrijavamaCreationDto {
     }
 
     public PodaciOPrijavamaCreationDto(ZahtevZaPriznanjePatenta.PodaciOPrijavama podaciOPrijavama) {
-        this.novaPrijava = new NovaPrijavaCreationDto(podaciOPrijavama.getNovaPrijava());
+        this.novaPrijava = new NovaPrijavaCreationDto();
         this.dodatnaPrijava = new DodatnaPrijavaCreationDto(podaciOPrijavama.getDodatnaPrijava());
         this.priznanjaPravaPrvenstva = new ArrayList<>();
         for (PriznanjePravaPrvenstva p : podaciOPrijavama.getPriznanjaPravaPrvenstva().getPriznanjePravaPrvenstva()){
             this.priznanjaPravaPrvenstva.add(new PriznanjePravaPrvenstvaCreationDto(p));
         }
     }
+
 
     public NovaPrijavaCreationDto getNovaPrijava() {
         return novaPrijava;

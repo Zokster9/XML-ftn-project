@@ -8,6 +8,7 @@ import project.xmlproject.model.patent.*;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class MarshalPatent {
@@ -52,10 +53,16 @@ public class MarshalPatent {
     }
 
     public NovaPrijava marshalNovaPrijava(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {
+
+        long miliseconds = System.currentTimeMillis();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String date = timestamp.toString().substring(0, 10);
+
         NovaPrijava novaPrijava = new NovaPrijava();
-        novaPrijava.setBrojPrijave(zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave());
-        novaPrijava.setDatumPrijave(zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getDatumPrijave());
-        novaPrijava.setPriznatiDatumPrijave(zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getPriznatiDatumPrijave());
+        novaPrijava.setBrojPrijave('P'+String.valueOf(miliseconds));
+        novaPrijava.setDatumPrijave(date);
+        novaPrijava.setPriznatiDatumPrijave("");
+
         return novaPrijava;
     }
 
