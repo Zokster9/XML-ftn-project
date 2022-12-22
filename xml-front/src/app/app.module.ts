@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { PatentFormComponent } from './components/patent-form/patent-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatentPdfHtmlTableComponent } from './components/patent-pdf-html-table/patent-pdf-html-table.component';
+import { ModalAcceptDeclineRequestComponent } from './components/modal-accept-decline-request/modal-accept-decline-request.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatentFormComponent,
-    PatentPdfHtmlTableComponent
+    PatentPdfHtmlTableComponent,
+    ModalAcceptDeclineRequestComponent
   ],
   imports: [
     BrowserModule,

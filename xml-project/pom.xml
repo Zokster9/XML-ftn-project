@@ -60,15 +60,14 @@
 			<artifactId>jackson-dataformat-xml</artifactId>
 			<version>2.13.4</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.exist-db</groupId>
 			<artifactId>exist-core</artifactId>
 			<version>5.0.0</version>
 			<scope>runtime</scope>
 		</dependency>
-	</dependencies>
 
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
@@ -88,7 +87,7 @@
 						<xjbSource>src/main/resources/global.xjb</xjbSource>
 					</xjbSources>
 					<sources>
-						<source>src/main/resources/xsd/p1.xsd</source>
+						<source>src/main/resources/xsd/resenjeZahteva.xsd</source>
 					</sources>
 					<outputDirectory>${basedir}/src/main/java</outputDirectory>
 					<clearOutputDir>false</clearOutputDir>

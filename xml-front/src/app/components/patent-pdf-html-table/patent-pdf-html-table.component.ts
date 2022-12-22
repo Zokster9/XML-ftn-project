@@ -18,9 +18,7 @@ export class PatentPdfHtmlTableComponent implements OnInit {
       parser.parseString(data.toString(), (err, result) => {
         let zahtevi = result.List.item;
         for (var zahtev of zahtevi) {
-          console.log(zahtev);
-          let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;
-          
+          let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
           zahtevZaPriznanjePatenta = this.patentService.convertResponseToPatent(zahtev);
           this.zahteviZaPriznanjePatenta.push(zahtevZaPriznanjePatenta);
           
@@ -35,7 +33,6 @@ export class PatentPdfHtmlTableComponent implements OnInit {
 
   showHTML(zahtev : ZahtevZaPriznanjePatentaDto) {
     this.patentService.showHTML(zahtev).subscribe(data => {
-      console.log(data);
       const parser = new xml2js.Parser({strict: true, trim: true});
       parser.parseString(data.toString(), (err, result) => {
         const patentNumber = result.ZahtevZaPriznanjePatentaCreationDto.podaciOPrijavama[0].novaPrijava[0].brojPrijave[0];
