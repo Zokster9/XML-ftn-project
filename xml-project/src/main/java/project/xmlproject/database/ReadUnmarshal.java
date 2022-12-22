@@ -48,6 +48,8 @@ public class ReadUnmarshal {
             col = DatabaseManager.getCollection(conn.uri + collectionId);
             col.setProperty(OutputKeys.INDENT, "yes");
 
+            System.out.println(col.getResourceCount());
+
             System.out.println("[INFO] Retrieving the document: " + documentId);
             res = (XMLResource) col.getResource(documentId);
             System.out.println(res.getContent().toString());

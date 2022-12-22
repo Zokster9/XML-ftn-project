@@ -6,11 +6,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { PatentFormComponent } from './components/patent-form/patent-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PatentPdfHtmlTableComponent } from './components/patent-pdf-html-table/patent-pdf-html-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PatentFormComponent
+    PatentFormComponent,
+    PatentPdfHtmlTableComponent
   ],
   imports: [
     BrowserModule,

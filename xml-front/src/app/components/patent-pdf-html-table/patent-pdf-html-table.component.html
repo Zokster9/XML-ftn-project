@@ -1,0 +1,24 @@
+<table class="table table-light table-hover text-center">
+    <thead>
+        <th></th>
+        <th rowspan="2" class="arial_font">Zahtevi za priznanje patenta</th>
+        <th></th>
+    </thead>
+    <!-- uredi tabelu -->
+    <thead>
+        <tr>
+            <th scope="col" class="arial_font">Broj patenta</th>
+            <th scope="col" class="arial_font">Datum prijave</th>
+            <th scope="col" class="arial_font">HTML</th>
+            <th scope="col" class="arial_font">PDF</th>
+        </tr>
+    </thead>
+    <tbody *ngFor="let zahtev of zahteviZaPriznanjePatenta">
+        <tr>
+            <td scope="row" >{{zahtev.podaciOPrijavama.novaPrijava.brojPrijave}}</td>
+            <td class="arial_font">{{zahtev.podaciOPrijavama.novaPrijava.datumPrijave}}</td>
+            <td><button class="btn btn-dark arial_font" (click)="showHTML(zahtev)">HTML</button></td>
+            <td><button class="btn btn-dark arial_font" (click)="showPDF(zahtev)">PDF</button></td>
+        </tr>
+    </tbody>  
+</table>

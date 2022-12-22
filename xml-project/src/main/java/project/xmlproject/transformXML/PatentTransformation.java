@@ -5,6 +5,8 @@ import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import project.xmlproject.XmlProjectApplication;
+import project.xmlproject.dto.creationDto.ZahtevZaPriznanjePatentaCreationDto;
+import project.xmlproject.marshal.MarshalPatent;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
 import project.xmlproject.repository.PatentRepository;
 
@@ -33,7 +35,7 @@ public class PatentTransformation {
 
     public static final String XSL_FILE = "/xslt/patent.xsl";
 
-    public static final String HTML_FILE = "src/main/java/project/xmlproject/html/patent.html";
+    //public static final String HTML_FILE = "src/main/resources/project/xmlproject/html/patent.html";
 
     public static final String OUTPUT_FILE = "src/main/java/project/xmlproject/pdf/patent.pdf";
 
@@ -55,28 +57,8 @@ public class PatentTransformation {
         pdfDocument.setDefaultPageSize(new PageSize(780, 2000));
         HtmlConverter.convertToPdf(Files.newInputStream(Paths.get(html)), pdfDocument);
     }
-    public org.w3c.dom.Document buildDocument(String filePath) {
 
-        org.w3c.dom.Document document = null;
-        try {
-
-            DocumentBuilder builder = documentFactory.newDocumentBuilder();
-            document = builder.parse(new File(filePath));
-
-            if (document != null)
-                System.out.println("[INFO] File parsed with no errors.");
-            else
-                System.out.println("[WARN] Document is null.");
-
-        } catch (Exception e) {
-            return null;
-
-        }
-
-        return document;
-    }
-
-    public void generateHTML() {
+    public void generateHTML(String htmlFile, ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {
         //actimem.com/java/xslt-with-jaxb
         try {
             TransformerFactory factory = TransformerFactory.newInstance();
@@ -86,11 +68,11 @@ public class PatentTransformation {
             Transformer transformer = factory.newTransformer(xslt);
 
             JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjePatenta.class);
-            PatentRepository patentRepository = new PatentRepository();
-            System.out.println(patentRepository.getPatent());
-            JAXBSource source = new JAXBSource(context, patentRepository.getPatent());
+            MarshalPatent marshalPatent = new MarshalPatent();
+            ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = marshalPatent.marshalPatent(zahtevZaPriznanjePatentaCreationDto, "read");
+            JAXBSource source = new JAXBSource(context, zahtevZaPriznanjePatenta);
             System.out.println("Source" + source);
-            StreamResult result = new StreamResult(new FileOutputStream(HTML_FILE));
+            StreamResult result = new StreamResult(new FileOutputStream(htmlFile));
 
             transformer.transform(source, result);
 
@@ -104,26 +86,5 @@ public class PatentTransformation {
             throw new RuntimeException(e);
         }
 
-    }
-
-    public static void main(String[] args) throws IOException {
-
-        //System.out.println("[INFO] " + PatentTransformation.class.getSimpleName());
-
-        // Creates parent directory if necessary
-        File pdfFile = new File(OUTPUT_FILE);
-
-        if (!pdfFile.getParentFile().exists()) {
-            System.out.println("[INFO] A new directory is created: " + pdfFile.getParentFile().getAbsolutePath() + ".");
-            pdfFile.getParentFile().mkdir();
-        }
-
-        PatentTransformation patentTransformation = new PatentTransformation();
-
-        patentTransformation.generateHTML();
-        patentTransformation.generatePDF(HTML_FILE, OUTPUT_FILE);
-
-        System.out.println("[INFO] File \"" + OUTPUT_FILE + "\" generated successfully.");
-        System.out.println("[INFO] End.");
     }
 }

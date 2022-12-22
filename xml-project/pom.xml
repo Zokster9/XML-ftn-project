@@ -56,6 +56,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>2.13.4</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.exist-db</groupId>
 			<artifactId>exist-core</artifactId>
 			<version>5.0.0</version>

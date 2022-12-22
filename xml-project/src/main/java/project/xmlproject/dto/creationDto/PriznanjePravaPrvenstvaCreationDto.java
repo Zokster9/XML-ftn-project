@@ -2,6 +2,9 @@ package project.xmlproject.dto.creationDto;
 
 import project.xmlproject.model.patent.PriznanjePravaPrvenstva;
 
+import java.util.ArrayList;
+
+
 public class PriznanjePravaPrvenstvaCreationDto {
 
     private String datumPrijave;
@@ -16,6 +19,12 @@ public class PriznanjePravaPrvenstvaCreationDto {
         this.datumPrijave = datumPrijave;
         this.brojRanijePrijave = brojRanijePrijave;
         this.dvoslovnaOznakaDrzaveOrganizacije = dvoslovnaOznakaDrzaveOrganizacije;
+    }
+
+    public PriznanjePravaPrvenstvaCreationDto(ArrayList<String> values){
+        this.datumPrijave = values.get(0);
+        this.brojRanijePrijave = values.get(1);
+        this.dvoslovnaOznakaDrzaveOrganizacije = values.get(2);
     }
 
     public PriznanjePravaPrvenstvaCreationDto(PriznanjePravaPrvenstva priznanjePravaPrvenstva){

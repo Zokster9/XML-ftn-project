@@ -14,6 +14,7 @@ import { ZahtevZaPriznanjePatentaDto } from 'src/app/models/ZahtevZaPriznanjePat
 import { PatentService } from 'src/app/services/patent.service';
 import { NovaPrijavaDto } from "./../../models/NovaPrijavaDto";
 import * as xml2js from 'xml2js';
+import { PriznanjaPravaPrvenstvaDto } from 'src/app/models/PriznanjaPravaPrvenstvaDto';
 
 @Component({
   selector: 'app-patent-form',
@@ -144,15 +145,19 @@ export class PatentFormComponent implements OnInit{
       datumPodnosenjaPrijave: this.patentForm.controls['podaciOPrijavama'].controls['dodatnaPrijava'].value.datumPodnosenjaPrijave as string
     }
 
-    const priznanjaPravaPrvenstva: PriznanjePravaPrvenstvaDto[] = [];
+    const priznanjePravaPrvenstva: PriznanjePravaPrvenstvaDto[] = [];
 
     for (let p of this.priznanjaPravaPrvenstvaForme) {
-      const priznanjePravaPrvenstva: PriznanjePravaPrvenstvaDto = {
+      const jednoPriznanjePravaPrvenstva: PriznanjePravaPrvenstvaDto = {
         datumPrijave: p.value.datumPrijave,
         brojRanijePrijave: p.value.brojRanijePrijave,
         dvoslovnaOznakaDrzaveOrganizacije: p.value.dvoslovnaOznakaDrzaveOrganizacije
       }
-      priznanjaPravaPrvenstva.push(priznanjePravaPrvenstva);
+      priznanjePravaPrvenstva.push(jednoPriznanjePravaPrvenstva);
+    }
+
+    const priznanjaPravaPrvenstva: PriznanjaPravaPrvenstvaDto = {
+      priznanjaPravaPrvenstva: priznanjePravaPrvenstva
     }
 
     const podaciOPrijavama: PodaciOPrijavamaDto = {
@@ -251,15 +256,11 @@ export class PatentFormComponent implements OnInit{
     }
 
     let zahtevZaPriznanjePatentaPovratna : ZahtevZaPriznanjePatentaDto;
-
     this.patentService.addPatent(zahtevZaPriznanjePatenta).subscribe(
       zahtevZaPriznanjeXml => {
-        console.log(zahtevZaPriznanjeXml);
         const parser = new xml2js.Parser({strict: true, trim: true});
         parser.parseString(zahtevZaPriznanjeXml.toString(), (err, result) => {
           zahtevZaPriznanjePatentaPovratna = result.zahtevZaPriznanjePatentaCreationDto;
-          console.log(zahtevZaPriznanjePatentaPovratna);
-          console.log(zahtevZaPriznanjePatentaPovratna.podaciOPrijavama);8
         })
       }
     );
@@ -272,7 +273,7 @@ export class PatentFormComponent implements OnInit{
         console.log(zahtevZaPriznanjePatentaXml);
         const parser = new xml2js.Parser({strict: true, trim: true});
         parser.parseString(zahtevZaPriznanjePatentaXml.toString(), (err, result) => {
-          let zahtevZaPriznanjePatentaPovratna = result.zahtevZaPriznanjePatentaCreationDto;
+          let zahtevZaPriznanjePatentaPovratna = result.ZahtevZaPriznanjePatentaCreationDto;
           console.log(zahtevZaPriznanjePatentaPovratna);
         })
       }

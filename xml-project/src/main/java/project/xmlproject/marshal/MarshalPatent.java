@@ -17,7 +17,8 @@ public class MarshalPatent {
 
     }
 
-    public ZahtevZaPriznanjePatenta marshalPatent(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) throws JAXBException, IOException {
+    public ZahtevZaPriznanjePatenta marshalPatent(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto, String option)
+            throws JAXBException, IOException {
 
         //root
         ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = new ZahtevZaPriznanjePatenta();
@@ -27,7 +28,7 @@ public class MarshalPatent {
         ZahtevZaPriznanjePatenta.PodaciOPrijavama podaciOPrijavama = new ZahtevZaPriznanjePatenta.PodaciOPrijavama();
 
         //subelements of podaciOPrijavama: NovaPrijava, DodatnaPrijava, PriznanjaPravaPrventsva
-        NovaPrijava novaPrijava = marshalNovaPrijava(zahtevZaPriznanjePatentaCreationDto);
+        NovaPrijava novaPrijava = marshalNovaPrijava(zahtevZaPriznanjePatentaCreationDto, option);
         DodatnaPrijava dodatnaPrijava = marshalDodatnaPrijava(zahtevZaPriznanjePatentaCreationDto);
         ZahtevZaPriznanjePatenta.PodaciOPrijavama.PriznanjaPravaPrvenstva priznanjaPravaPrvenstva = marshalPriznanjaPravaPrvenstva(zahtevZaPriznanjePatentaCreationDto);
 
@@ -52,16 +53,24 @@ public class MarshalPatent {
         return zahtevZaPriznanjePatenta;
     }
 
-    public NovaPrijava marshalNovaPrijava(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {
-
-        long miliseconds = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        String date = timestamp.toString().substring(0, 10);
+    public NovaPrijava marshalNovaPrijava(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto, String option) {
 
         NovaPrijava novaPrijava = new NovaPrijava();
-        novaPrijava.setBrojPrijave('P'+String.valueOf(miliseconds));
-        novaPrijava.setDatumPrijave(date);
-        novaPrijava.setPriznatiDatumPrijave("");
+
+        if (option.equals("create")) {
+            long miliseconds = System.currentTimeMillis();
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            String date = timestamp.toString().substring(0, 10);
+
+            novaPrijava.setBrojPrijave('P'+String.valueOf(miliseconds));
+            novaPrijava.setDatumPrijave(date);
+            novaPrijava.setPriznatiDatumPrijave("");
+        }
+        else {
+            novaPrijava.setBrojPrijave(zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave());
+            novaPrijava.setDatumPrijave(zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getDatumPrijave());
+            novaPrijava.setPriznatiDatumPrijave(zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getPriznatiDatumPrijave());
+        }
 
         return novaPrijava;
     }

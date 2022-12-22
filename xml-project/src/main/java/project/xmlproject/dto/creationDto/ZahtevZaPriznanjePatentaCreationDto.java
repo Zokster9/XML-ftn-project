@@ -25,8 +25,8 @@ public class ZahtevZaPriznanjePatentaCreationDto {
         this.punomocnik = punomocnik;
     }
 
-    public ZahtevZaPriznanjePatentaCreationDto(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
-        this.podaciOPrijavama = new PodaciOPrijavamaCreationDto(zahtevZaPriznanjePatenta.getPodaciOPrijavama());
+    public ZahtevZaPriznanjePatentaCreationDto(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta, String mode) {
+        this.podaciOPrijavama = new PodaciOPrijavamaCreationDto(zahtevZaPriznanjePatenta.getPodaciOPrijavama(), mode);
         this.nazivPronalaska = new NazivPronalaskaCreationDto(zahtevZaPriznanjePatenta.getNazivPronalaska());
         this.podnosilac = new PodnosilacCreationDto(zahtevZaPriznanjePatenta.getPodnosilac());
         this.pronalazac = new PronalazacCreationDto(zahtevZaPriznanjePatenta.getPronalazac());
