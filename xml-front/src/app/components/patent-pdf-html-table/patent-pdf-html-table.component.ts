@@ -11,6 +11,8 @@ import * as xml2js from 'xml2js';
 export class PatentPdfHtmlTableComponent implements OnInit {
 
   zahteviZaPriznanjePatenta: ZahtevZaPriznanjePatentaDto[] = [];
+  modalOpened = false;
+  odabraniZahtev!: ZahtevZaPriznanjePatentaDto;
 
   ngOnInit(): void {
     this.patentService.getAllPatenti().subscribe(data => {
@@ -28,7 +30,7 @@ export class PatentPdfHtmlTableComponent implements OnInit {
   }
 
   constructor(
-    private patentService: PatentService
+    private patentService: PatentService,
   ) {}
 
   showHTML(zahtev : ZahtevZaPriznanjePatentaDto) {
@@ -51,4 +53,12 @@ export class PatentPdfHtmlTableComponent implements OnInit {
     })
   }
 
+  openModal(zahtev : ZahtevZaPriznanjePatentaDto) {
+    this.odabraniZahtev = zahtev;
+    this.modalOpened = true;
+  }
+
+  closeModal() {
+    this.modalOpened = false;
+  }
 }
