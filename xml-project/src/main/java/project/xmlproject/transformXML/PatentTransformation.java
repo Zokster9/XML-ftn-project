@@ -34,6 +34,7 @@ public class PatentTransformation {
     private static TransformerFactory transformerFactory;
 
     public static final String XSL_FILE = "/xslt/patent.xsl";
+    public static final String XSL_TO_RDF_FILE = "/xslt/metadata.xsl";
 
     //public static final String HTML_FILE = "src/main/resources/project/xmlproject/html/patent.html";
 
@@ -58,6 +59,30 @@ public class PatentTransformation {
         HtmlConverter.convertToPdf(Files.newInputStream(Paths.get(html)), pdfDocument);
     }
 
+    /**public void generateRDF() {
+        try {
+            TransformerFactory factory = TransformerFactory.newInstance();
+            InputStream resourceAsStream = getClass().getResourceAsStream(XSL_TO_RDF_FILE);
+            StreamSource xslt = new StreamSource(resourceAsStream);
+            Transformer transformer = factory.newTransformer(xslt);
+
+            JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjePatenta.class);
+            MarshalPatent marshalPatent = new MarshalPatent();
+            ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = marshalPatent.marshalPatent(zahtevZaPriznanjePatentaCreationDto, "read");
+            JAXBSource source = new JAXBSource(context, zahtevZaPriznanjePatenta);
+            System.out.println("Source" + source);
+            StreamResult result = new StreamResult(new FileOutputStream(htmlFile));
+
+
+        } catch (TransformerConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }**/
+
     public void generateHTML(String htmlFile, ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {
         //actimem.com/java/xslt-with-jaxb
         try {
@@ -75,6 +100,13 @@ public class PatentTransformation {
             StreamResult result = new StreamResult(new FileOutputStream(htmlFile));
 
             transformer.transform(source, result);
+
+            TransformerFactory factory1 = TransformerFactory.newInstance();
+            InputStream resourceAsStream1 = getClass().getResourceAsStream(XSL_TO_RDF_FILE);
+            StreamSource xslt1 = new StreamSource(resourceAsStream1);
+            Transformer transformer1 = factory1.newTransformer(xslt1);
+            StreamResult result1 = new StreamResult(new FileOutputStream("src/main/resources/rdf/neki.rdf"));
+            transformer1.transform(source, result1);
 
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
