@@ -66,6 +66,12 @@
 			<version>5.0.0</version>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>apache-jena-libs</artifactId>
+			<type>pom</type>
+			<version>3.9.0</version>
+		</dependency>
 
 	</dependencies>
 	<build>
