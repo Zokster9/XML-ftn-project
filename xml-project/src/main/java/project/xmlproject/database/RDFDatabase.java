@@ -1,7 +1,12 @@
 package project.xmlproject.database;
 
+import org.apache.jena.graph.Node;
+import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.sparql.core.DatasetGraph;
+import org.apache.jena.tdb.TDBFactory;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
@@ -22,6 +27,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class RDFDatabase {
 
@@ -29,6 +37,10 @@ public class RDFDatabase {
 
     public static String insertData(String graphURI, String ntriples) {
         return String.format("INSERT DATA { GRAPH <%1$s> { %2$s } }", graphURI, ntriples);
+    }
+
+    public static String selectData(String graphURI, String sparqlCondition) {
+        return String.format("SELECT * FROM <%1$s> WHERE { %2$s }", graphURI, sparqlCondition);
     }
 
     public void createAndInsertRDF(String rdfFile, ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
@@ -85,6 +97,44 @@ public class RDFDatabase {
         }
     }
 
+    public void generateReport() throws IOException {
+
+        ConnectionUtilities.ConnectionProperties conn = ConnectionUtilities.loadProperties();
+        System.out.println(conn.dataEndpoint + "metadata2");
+        String sparqlQuery = selectData(conn.dataEndpoint + "P1671903993206", "?s ?p ?o");
+
+        // Create a QueryExecution that will access a SPARQL service over HTTP
+        QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
+
+        // Query the SPARQL endpoint, iterate over the result set...
+        ResultSet results = query.execSelect();
+        ResultSetFormatter.outputAsXML(System.out, results);
+        String varName;
+        RDFNode varValue;
+
+        while(results.hasNext()) {
+
+            // A single answer from a SELECT query
+            QuerySolution querySolution = results.next() ;
+            Iterator<String> variableBindings = querySolution.varNames();
+
+            // Retrieve variable bindings
+            while (variableBindings.hasNext()) {
+
+                varName = variableBindings.next();
+                varValue = querySolution.get(varName);
+
+                System.out.println(varName + ": " + varValue);
+            }
+            System.out.println();
+        }
+
+        query.close() ;
+
+        System.out.println("[INFO] End.");
+    }
+
+    //Vrv drugacije
     public void createJSONFromRDF(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) throws IOException {
 
         String docNumber = zahtevZaPriznanjePatenta.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave();
@@ -101,6 +151,11 @@ public class RDFDatabase {
         FileWriter file = new FileWriter("src/main/resources/static/json/" + docNumber + ".json");
         file.write(jsonString);
         file.close();
+    }
+
+    public static void main(String[] args) throws IOException {
+        RDFDatabase rdfDatabase = new RDFDatabase();
+        rdfDatabase.generateReport();
     }
 
 }
