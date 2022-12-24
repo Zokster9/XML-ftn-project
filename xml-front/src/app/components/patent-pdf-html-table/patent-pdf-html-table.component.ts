@@ -53,6 +53,16 @@ export class PatentPdfHtmlTableComponent implements OnInit {
     })
   }
 
+  showRDF(zahtev : ZahtevZaPriznanjePatentaDto) {
+    const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
+    window.open('http://localhost:9000/rdf/' + patentNumber + '.rdf');
+  }
+
+  showJSON(zahtev : ZahtevZaPriznanjePatentaDto) {
+    const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
+    window.open('http://localhost:9000/json/' + patentNumber + '.json');
+  }
+
   openModal(zahtev : ZahtevZaPriznanjePatentaDto) {
     this.odabraniZahtev = zahtev;
     this.modalOpened = true;

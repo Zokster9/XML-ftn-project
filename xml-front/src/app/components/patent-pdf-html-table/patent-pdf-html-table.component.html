@@ -11,6 +11,8 @@
             <th scope="col" class="arial_font">Datum prijave</th>
             <th scope="col" class="arial_font">HTML</th>
             <th scope="col" class="arial_font">PDF</th>
+            <th scope="col" class="arial_font">RDF</th>
+            <th scope="col" class="arial_font">JSON</th>
             <th scope="col" class="arial_font">Podnesi resenje</th>
         </tr>
     </thead>
@@ -20,6 +22,8 @@
             <td class="arial_font">{{zahtev.podaciOPrijavama.novaPrijava.datumPrijave}}</td>
             <td><button class="btn btn-dark arial_font" (click)="showHTML(zahtev)">HTML</button></td>
             <td><button class="btn btn-dark arial_font" (click)="showPDF(zahtev)">PDF</button></td>
+            <td><button class="btn btn-dark arial_font" (click)="showRDF(zahtev)">RDF</button></td>
+            <td><button class="btn btn-dark arial_font" (click)="showJSON(zahtev)">JSON</button></td>
             <td>
                 <button *ngIf="zahtev.podaciOPrijavama.novaPrijava.priznatiDatumPrijave === ''" class="btn btn-dark arial_font" (click)="openModal(zahtev)">Podnesi resenje</button>
             </td>

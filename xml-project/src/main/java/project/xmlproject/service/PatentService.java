@@ -1,5 +1,6 @@
 package project.xmlproject.service;
 
+import project.xmlproject.database.RDFDatabase;
 import project.xmlproject.marshal.MarshalPatent;
 import org.springframework.stereotype.Service;
 import project.xmlproject.dto.creationDto.ZahtevZaPriznanjePatentaCreationDto;
@@ -15,6 +16,7 @@ public class PatentService {
 
     PatentRepository patentRepository = new PatentRepository();
     PatentTransformation patentTransformation = new PatentTransformation();
+    RDFDatabase rdfDatabase = new RDFDatabase();
 
     MarshalPatent marshalPatent = new MarshalPatent();
     public ZahtevZaPriznanjePatenta addPatent(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) throws Exception {

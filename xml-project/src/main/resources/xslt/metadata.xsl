@@ -2,6 +2,7 @@
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+                xmlns:p1="http://www.ftn.uns.ac.rs/patent/"
                 >
 
     <xsl:template match="/">
@@ -25,24 +26,28 @@
                 <xsl:variable name="Naziv_podnosioca">
                     <xsl:value-of select="//Podnosilac/Naziv"/>
                 </xsl:variable>
-                <rdf:Description rdf:about="Broj_prijave">
+                <p1:Broj_prijave>
                     <xsl:value-of select="$Broj_prijave"/>
-                </rdf:Description>
-                <rdf:Description rdf:about="Datum_prijave">
+                </p1:Broj_prijave>
+                <p1:Datum_prijave>
                     <xsl:value-of select="$Datum_prijave"/>
-                </rdf:Description>
-                <rdf:Description rdf:about="Priznati_datum_prijave">
-                    <xsl:value-of select="$Priznati_datum_prijave"/>
-                </rdf:Description>
-                <rdf:Description rdf:about="Srpski_naziv_pronalaska">
+                </p1:Datum_prijave>
+                <xsl:choose>
+                    <xsl:when test="string-length($Priznati_datum_prijave) > 0 ">
+                        <p1:Priznati_datum_prijave>
+                            <xsl:value-of select="$Priznati_datum_prijave"/>
+                        </p1:Priznati_datum_prijave>
+                    </xsl:when>
+                </xsl:choose>
+                <p1:Srpski_naziv_pronalaska>
                     <xsl:value-of select="$Srpski_naziv_pronalaska"/>
-                </rdf:Description>
-                <rdf:Description rdf:about="Engleski_naziv_pronalaska">
+                </p1:Srpski_naziv_pronalaska>
+                <p1:Engleski_naziv_pronalaska>
                     <xsl:value-of select="$Engleski_naziv_pronalaska"/>
-                </rdf:Description>
-                <rdf:Description rdf:about="Naziv_podnosioca">
+                </p1:Engleski_naziv_pronalaska>
+                <p1:Naziv_podnosioca>
                     <xsl:value-of select="$Naziv_podnosioca"/>
-                </rdf:Description>
+                </p1:Naziv_podnosioca>
             </rdf:Description>
         </rdf:RDF>
     </xsl:template>
