@@ -30,6 +30,13 @@
         </tr>
     </tbody>  
 </table>
+<div>
+    <input type="text" name="startDate" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="startDate" placeholder="Start date">
+    <input type="text" name="endDate" class="float-right bg_gray borderless_input input_size" [(ngModel)]="endDate" placeholder="End date">
+    <button class="btn btn-dark float-right" (click)="createReport()">Create a Report</button>
+</div>
+
+
 <div *ngIf="modalOpened">
     <app-modal-accept-decline-request (modalClosed)="closeModal()" [zahtev]="odabraniZahtev"></app-modal-accept-decline-request>
 </div>

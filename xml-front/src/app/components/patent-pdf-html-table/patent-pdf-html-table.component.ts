@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ReportDatesDto } from 'src/app/models/ReportDatesDto';
 import { ZahtevZaPriznanjePatentaDto } from 'src/app/models/ZahtevZaPriznanjePatentaDTO';
 import { PatentService } from 'src/app/services/patent.service';
+import { ResenjeZahtevaService } from 'src/app/services/resenje-zahteva.service';
 import * as xml2js from 'xml2js';
 
 @Component({
@@ -13,6 +15,8 @@ export class PatentPdfHtmlTableComponent implements OnInit {
   zahteviZaPriznanjePatenta: ZahtevZaPriznanjePatentaDto[] = [];
   modalOpened = false;
   odabraniZahtev!: ZahtevZaPriznanjePatentaDto;
+  startDate!: string;
+  endDate!: string;
 
   ngOnInit(): void {
     this.patentService.getAllPatenti().subscribe(data => {
@@ -31,6 +35,7 @@ export class PatentPdfHtmlTableComponent implements OnInit {
 
   constructor(
     private patentService: PatentService,
+    private resenjeZahtevaService: ResenjeZahtevaService
   ) {}
 
   showHTML(zahtev : ZahtevZaPriznanjePatentaDto) {
@@ -70,5 +75,16 @@ export class PatentPdfHtmlTableComponent implements OnInit {
 
   closeModal() {
     this.modalOpened = false;
+  }
+
+  createReport(){
+    const reportDatesDto : ReportDatesDto = {
+      startDate: this.startDate,
+      endDate: this.endDate
+    }
+    console.log(reportDatesDto);
+    this.resenjeZahtevaService.createReport(reportDatesDto).subscribe(data => {
+      window.open('http://localhost:9000/pdf/izvestaj.pdf');
+    })
   }
 }

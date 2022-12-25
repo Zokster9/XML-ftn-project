@@ -1,19 +1,21 @@
 package project.xmlproject.database;
 
 import org.xmldb.api.DatabaseManager;
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.Database;
-import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.base.*;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XPathQueryService;
 import project.xmlproject.Util.AuthenticationUtilities;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
 import project.xmlproject.model.resenjeZahteva.ResenjeZahteva;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResenjeZahtevaDatabase {
 
@@ -154,5 +156,73 @@ public class ResenjeZahtevaDatabase {
         } else {
             return col;
         }
+    }
+
+    public List<ResenjeZahteva> getAll() throws Exception {
+        AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+
+        // initialize collection and document identifiers
+        String collectionId = null;
+        collectionId = "/db/xml-project/resenja-zahteva-patenti";
+
+        System.out.println("\t- collection ID: " + collectionId);
+
+        System.out.println("[INFO] Loading driver class: " + conn.driver);
+        Class<?> cl = Class.forName(conn.driver);
+
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+
+        DatabaseManager.registerDatabase(database);
+
+        Collection col = null;
+
+        ResenjeZahteva resenjeZahteva = null;
+        List<ResenjeZahteva> resenjaZahteva;
+        try {
+            // get the collection
+            System.out.println("[INFO] Retrieving the collection: " + collectionId);
+            col = DatabaseManager.getCollection(conn.uri + collectionId);
+            //col.setProperty(OutputKeys.INDENT, "yes");
+
+            XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xPathQueryService.setProperty("indent", "yes");
+
+            String xPathExp = "//Resenje_zahteva";
+            ResourceSet result = xPathQueryService.query(xPathExp);
+            ResourceIterator i = result.getIterator();
+            XMLResource res = null;
+            resenjaZahteva = new ArrayList<>();
+            while (i.hasMoreResources()) {
+                res = (XMLResource) i.nextResource();
+                //System.out.println(res.getContent());
+
+                JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
+                Unmarshaller unmarshaller = context.createUnmarshaller();
+                resenjeZahteva = (ResenjeZahteva) unmarshaller.unmarshal(res.getContentAsDOM());
+                resenjaZahteva.add(resenjeZahteva);
+            }
+        } finally {
+            //don't forget to clean up!
+
+            /*
+            if(res != null) {
+                try {
+                    ((EXistResource)res).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+            */
+
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+        return resenjaZahteva;
     }
 }

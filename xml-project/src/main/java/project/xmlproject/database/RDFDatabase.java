@@ -1,10 +1,15 @@
 package project.xmlproject.database;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.jena.graph.Node;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.sparql.core.DatasetGraph;
 import org.apache.jena.tdb.TDBFactory;
 import org.apache.jena.update.UpdateExecutionFactory;
@@ -16,6 +21,7 @@ import org.json.JSONObject;
 import org.json.XML;
 import project.xmlproject.Util.ConnectionUtilities;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
+import project.xmlproject.model.resenjeZahteva.ResenjeZahteva;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -27,9 +33,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class RDFDatabase {
 
@@ -97,41 +107,86 @@ public class RDFDatabase {
         }
     }
 
-    public void generateReport() throws IOException {
+    public void generateReport(String startDateString, String endDateString) throws ParseException {
 
-        ConnectionUtilities.ConnectionProperties conn = ConnectionUtilities.loadProperties();
-        System.out.println(conn.dataEndpoint + "metadata2");
-        String sparqlQuery = selectData(conn.dataEndpoint + "P1671903993206", "?s ?p ?o");
+        int zahtevi = 0;
+        int prihvaceniZahtevi = 0;
+        int odbijeniZahtevi = 0;
 
-        // Create a QueryExecution that will access a SPARQL service over HTTP
-        QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
+        Date startDate = new SimpleDateFormat("dd.MM.yyyy.").parse(startDateString);
+        Date endDate = new SimpleDateFormat("dd.MM.yyyy.").parse(endDateString);
 
-        // Query the SPARQL endpoint, iterate over the result set...
-        ResultSet results = query.execSelect();
-        ResultSetFormatter.outputAsXML(System.out, results);
-        String varName;
-        RDFNode varValue;
+        String queryString = "select ?s ?p ?o {graph ?g {?s ?p ?o}}";
+        Query query = QueryFactory.create(queryString);
 
-        while(results.hasNext()) {
+        try (QueryExecution qexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/PatentDataset/", query)) {
+            ResultSet resultSet = qexec.execSelect();
 
-            // A single answer from a SELECT query
-            QuerySolution querySolution = results.next() ;
-            Iterator<String> variableBindings = querySolution.varNames();
-
-            // Retrieve variable bindings
-            while (variableBindings.hasNext()) {
-
-                varName = variableBindings.next();
-                varValue = querySolution.get(varName);
-
-                System.out.println(varName + ": " + varValue);
+            while (resultSet.hasNext()) {
+                QuerySolution solution = resultSet.next();
+                String s = solution.get("s").toString();
+                String p = solution.get("p").toString();
+                String o = solution.get("o").toString();
+                if (p.contains("Datum_prijave")) {
+                    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(o);
+                    if (startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0) {
+                        zahtevi++;
+                    }
+                }
             }
-            System.out.println();
+            ResenjeZahtevaDatabase resenjeZahtevaDatabase = new ResenjeZahtevaDatabase();
+            List<ResenjeZahteva> resenjaZahteva = resenjeZahtevaDatabase.getAll();
+            for (ResenjeZahteva resenjeZahteva : resenjaZahteva) {
+                Date resenjeZahtevaDate = new SimpleDateFormat("yyyy-MM-dd").parse(resenjeZahteva.getDatumResenja());
+                if (startDate.compareTo(resenjeZahtevaDate) <= 0 && endDate.compareTo(resenjeZahtevaDate) >= 0) {
+                    if (resenjeZahteva.isZahtevJePrihvacen()) {
+                        prihvaceniZahtevi++;
+                    } else {
+                        odbijeniZahtevi++;
+                    }
+                }
+            }
+
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/static/pdf/izvestaj.pdf"));
+            document.open();
+            Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 20, BaseColor.BLACK);
+            Chunk chunk = new Chunk("IZVESTAJ U PERIODU OD " + startDateString + " DO " + endDateString, font);
+            document.add(chunk);
+            document.add(new Paragraph("\n\n"));
+
+            PdfPTable table = new PdfPTable(3);
+            addTableHeader(table);
+            addRows(table, zahtevi, prihvaceniZahtevi, odbijeniZahtevi);
+            document.add(table);
+            document.close();
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+    }
 
-        query.close() ;
+    private void addRows(PdfPTable table, int zahtevi, int prihvaceniZahtevi, int odbijeniZahtevi) {
+        table.addCell(String.valueOf(zahtevi));
+        table.addCell(String.valueOf(prihvaceniZahtevi));
+        table.addCell(String.valueOf(odbijeniZahtevi));
+    }
 
-        System.out.println("[INFO] End.");
+    private void addTableHeader(PdfPTable table) {
+        Stream.of("Broj podnetih zahteva", "Broj prihvacenih zahteva", "Broj odbijenih zahteva")
+                .forEach(columnTitle -> {
+                    PdfPCell header = new PdfPCell();
+                    header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                    header.setBorderWidth(2);
+                    header.setPhrase(new Phrase(columnTitle));
+                    table.addCell(header);
+                });
     }
 
     //Vrv drugacije
@@ -153,9 +208,9 @@ public class RDFDatabase {
         file.close();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         RDFDatabase rdfDatabase = new RDFDatabase();
-        rdfDatabase.generateReport();
+        rdfDatabase.generateReport("23.12.2022.", "25.12.2022.");
     }
 
 }
