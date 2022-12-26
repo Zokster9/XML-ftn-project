@@ -1,10 +1,23 @@
-<table class="table table-light table-hover text-center">
-    <thead>
-        <th></th>
-        <th rowspan="2" class="arial_font">Zahtevi za priznanje patenta</th>
-        <th></th>
-    </thead>
-    <!-- uredi tabelu -->
+<div class="margin-bot-3">
+    <h3 class="margin-left-2 arial_font">Generisi izvestaj</h3>
+    <input type="text" name="startDate" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="startDate" placeholder="Pocetni datum">
+    <input type="text" name="endDate" class="float-right bg_gray borderless_input input_size" [(ngModel)]="endDate" placeholder="Krajnji datum">
+    <button class="btn btn-dark float-right" (click)="createReport()">Generisi izvestaj</button>
+</div>
+<div class="margin-bot-3 new-line">
+    <h3 class="margin-left-2 arial_font">Pretraga po tekstualnom sadrzaju</h3>
+    <input type="text" name="text" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="text" placeholder="Tekstualni sadrzaj pretrage">
+    <button class="btn btn-dark float-right" (click)="findPatentsByText()">Pretrazi po tekstu</button>
+    <button class="btn btn-dark float-right" (click)="reset()">Svi zahtevi/patenti</button>
+</div>
+<div class="margin-bot-3 new-line">
+    <h3 class="margin-left-2 arial_font">Pretraga po metapodacima</h3>
+    <input type="text" name="text" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="query" placeholder="Upit pomocu metapodataka">
+    <button class="btn btn-dark float-right" (click)="findPatentsByMetadata()">Pretrazi po metapodacima</button>
+    <button class="btn btn-dark float-right" (click)="reset()">Svi zahtevi/patenti</button>
+</div>
+<br>
+<table class="table table-light table-hover text-center w-80">
     <thead>
         <tr>
             <th scope="col" class="arial_font">Broj patenta</th>
@@ -30,11 +43,6 @@
         </tr>
     </tbody>  
 </table>
-<div>
-    <input type="text" name="startDate" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="startDate" placeholder="Start date">
-    <input type="text" name="endDate" class="float-right bg_gray borderless_input input_size" [(ngModel)]="endDate" placeholder="End date">
-    <button class="btn btn-dark float-right" (click)="createReport()">Create a Report</button>
-</div>
 
 
 <div *ngIf="modalOpened">

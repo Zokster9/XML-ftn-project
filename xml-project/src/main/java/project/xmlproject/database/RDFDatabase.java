@@ -4,14 +4,9 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import org.apache.jena.graph.Node;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.RDFNode;
-import org.apache.jena.rdf.model.Resource;
-import org.apache.jena.sparql.core.DatasetGraph;
-import org.apache.jena.tdb.TDBFactory;
 import org.apache.jena.update.UpdateExecutionFactory;
 import org.apache.jena.update.UpdateFactory;
 import org.apache.jena.update.UpdateProcessor;
@@ -35,10 +30,9 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RDFDatabase {
@@ -105,6 +99,170 @@ public class RDFDatabase {
         } catch (TransformerException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private ArrayList<String> initializeOperators() {
+        ArrayList<String> operators = new ArrayList<>();
+        operators.add("=");
+        operators.add("<=");
+        operators.add(">=");
+        operators.add("!=");
+        operators.add(">");
+        operators.add("<");
+        return operators;
+    }
+
+    private ArrayList<String> initializeInverseOperators() {
+        ArrayList<String> operators = new ArrayList<>();
+        operators.add("!=");
+        operators.add(">");
+        operators.add("<");
+        operators.add("=");
+        operators.add("<=");
+        operators.add(">=");
+        return operators;
+    }
+    private ArrayList<String> initializeLogicalOperators() {
+        ArrayList<String> logicalOperators = new ArrayList<>();
+        logicalOperators.add("I");
+        logicalOperators.add("ILI");
+        logicalOperators.add("NE");
+        return logicalOperators;
+    }
+
+
+    public List<String> findByMetadata(String unformattedQuery) {
+        ArrayList<String> operators = initializeOperators();
+        ArrayList<String> inverseOperators = initializeInverseOperators();
+        ArrayList<String> logicalOperators = initializeLogicalOperators();
+        ArrayList<String> queryConnectors = new ArrayList<>();
+        ArrayList<ArrayList<String>> patents = new ArrayList<>();
+        boolean nextQueryIsNegative = false;
+        String[] filterElements = unformattedQuery.split(" ");
+        ArrayList<String> filterElementsPreprocessed = new ArrayList<>();
+        int indexToBeSkipped = -1;
+
+        for (int i = 0; i < filterElements.length; i++) {
+            System.out.println(filterElements[i]);
+            if (i == indexToBeSkipped) {
+                continue;
+            }
+            if (!operators.contains(filterElements[i]) && !logicalOperators.contains(filterElements[i]) && i != filterElements.length -1) {
+                if (!operators.contains(filterElements[i+1]) && !logicalOperators.contains(filterElements[i+1])) {
+                    String concatenate = filterElements[i] + ' ' + filterElements[i+1];
+                    filterElementsPreprocessed.add(concatenate);
+                    indexToBeSkipped = i + 1;
+                }
+                else
+                {
+                    filterElementsPreprocessed.add(filterElements[i]);
+                }
+            }
+            else {
+                filterElementsPreprocessed.add(filterElements[i]);
+            }
+        }
+        for (String filtere:
+             filterElementsPreprocessed) {
+            System.out.println(filtere);
+        }
+        String filter = "";
+        for (int i = 0; i < filterElementsPreprocessed.size(); i++) {
+            if (i != filterElementsPreprocessed.size() - 1 && operators.contains(filterElementsPreprocessed.get(i+1))) {
+                filter += " ?p = ex:" + filterElementsPreprocessed.get(i) + " ";
+            }
+            else if (logicalOperators.contains(filterElementsPreprocessed.get(i).toUpperCase())) {
+                    filter += "NEWQUERY";
+                if (filterElementsPreprocessed.get(i).equalsIgnoreCase("I")) {
+                    queryConnectors.add("INTERSECT");
+                    nextQueryIsNegative = false;
+                }
+                else if (filterElementsPreprocessed.get(i).equalsIgnoreCase("ILI")) {
+                    queryConnectors.add("UNION");
+                    nextQueryIsNegative = false;
+                }
+                else {
+                    queryConnectors.add("INTERSECT");
+                    nextQueryIsNegative = true;
+                }
+            }
+            else if (i > 0 && operators.contains(filterElementsPreprocessed.get(i-1))) {
+                if (!nextQueryIsNegative){
+                    filter += " ?o " + filterElementsPreprocessed.get(i-1) + " '" + filterElementsPreprocessed.get(i) + "' ";
+                }
+                else {
+                    String operator = inverseOperators.get(operators.indexOf(filterElementsPreprocessed.get(i-1)));
+                    filter += " ?o " + operator + " '" + filterElementsPreprocessed.get(i) + "' ";
+                }
+            }
+            else if (operators.contains(filterElementsPreprocessed.get(i))) {
+                filter += "&& ";
+            }
+            else {
+                filter += filterElementsPreprocessed.get(i);
+            }
+        }
+
+        String[] filters = filter.split("NEWQUERY");
+
+        for (String currentQuery : filters) {
+            String queryString = "PREFIX ex: <http://www.ftn.uns.ac.rs/patent/>\n" +
+                    "SELECT DISTINCT ?g\n" +
+                    "WHERE {\n" +
+                    "  GRAPH ?g {\n" +
+                    "    ?s ?p ?o .\n" +
+                    "    FILTER ( " + currentQuery + " )\n" +
+                    "  }\n" +
+                    "}";
+            System.out.println(queryString);
+            Query query = QueryFactory.create(queryString);
+            try (QueryExecution quexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/PatentDataset/", query)) {
+                ResultSet resultSet = quexec.execSelect();
+                ArrayList<String> patentNumbersForThisQuery = new ArrayList<>();
+                while (resultSet.hasNext()) {
+                    QuerySolution solution = resultSet.next();
+                    patentNumbersForThisQuery.add(solution.get("g").toString());
+                }
+                patents.add(patentNumbersForThisQuery);
+            }
+        }
+        ArrayList<String> finalPatentNumbers = new ArrayList<>();
+        for (int i = 0; i < patents.size(); i++) {
+            if (queryConnectors.size() == 0) {
+                finalPatentNumbers.addAll(patents.get(i));
+                break;
+            }
+            if (i == patents.size() - 1) {
+                break;
+            }
+            ArrayList<String> firstList;
+            if (i == 0) {
+                firstList = patents.get(i);
+            }
+            else {
+                firstList = finalPatentNumbers;
+            }
+            if (queryConnectors.get(i).equals("INTERSECT")) {
+                Set<String> result = firstList.stream()
+                        .distinct()
+                        .filter(patents.get(i+1)::contains)
+                        .collect(Collectors.toSet());
+                finalPatentNumbers.clear();
+                finalPatentNumbers.addAll(result);
+            }
+            else if (queryConnectors.get(i).equals("UNION")) {
+                Set<String> result = new HashSet<>();
+                result.addAll(firstList);
+                result.addAll(patents.get(i+1));
+                finalPatentNumbers.clear();
+                finalPatentNumbers.addAll(result);
+            }
+        }
+        ArrayList<String> clearedPatentNumbers = new ArrayList<>();
+        for (String patentNumber : finalPatentNumbers) {
+            clearedPatentNumbers.add(patentNumber.split("/")[patentNumber.split("/").length - 1]);
+        }
+        return clearedPatentNumbers;
     }
 
     public void generateReport(String startDateString, String endDateString) throws ParseException {
@@ -210,7 +368,9 @@ public class RDFDatabase {
 
     public static void main(String[] args) throws IOException, ParseException {
         RDFDatabase rdfDatabase = new RDFDatabase();
-        rdfDatabase.generateReport("23.12.2022.", "25.12.2022.");
+        //rdfDatabase.generateReport("23.12.2022.", "25.12.2022.");
+        //rdfDatabase.findByMetadata("Engleski_naziv_pronalaska = JSONPrimer ILI Naziv_podnosioca = Marko Markovic");
+        rdfDatabase.findByMetadata("Priznati_datum_prijave = 2022-12-24 NE Naziv_podnosioca = Nesto");
     }
 
 }

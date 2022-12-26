@@ -53,4 +53,24 @@ public class PatentController {
         patentService.createPatentPdf(zahtevZaPriznanjePatentaCreationDto);
         return new ResponseEntity<>(zahtevZaPriznanjePatentaCreationDto, HttpStatus.OK);
     }
+
+    @GetMapping(value="/get-patents-by-text/{text}", produces = "application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjePatentaCreationDto>> getPatentsByText(@PathVariable String text) throws Exception {
+        List<ZahtevZaPriznanjePatenta> zahteviZaPriznanjePatenta = patentService.getPatentsByText(text);
+        List<ZahtevZaPriznanjePatentaCreationDto> zahteviZaPriznanjePatentaCreationDto = new ArrayList<>();
+        for (ZahtevZaPriznanjePatenta z : zahteviZaPriznanjePatenta) {
+            zahteviZaPriznanjePatentaCreationDto.add(new ZahtevZaPriznanjePatentaCreationDto(z, "read"));
+        }
+        return new ResponseEntity<>(zahteviZaPriznanjePatentaCreationDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/get-patents-by-metadata/{query}", produces="application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjePatentaCreationDto>> getPatentsByMetadata(@PathVariable String query) throws Exception {
+        List<ZahtevZaPriznanjePatenta> zahtevi = patentService.getPatentsByMetadata(query);
+        List<ZahtevZaPriznanjePatentaCreationDto> zahteviDto = new ArrayList<>();
+        for (ZahtevZaPriznanjePatenta z : zahtevi) {
+            zahteviDto.add(new ZahtevZaPriznanjePatentaCreationDto(z, "read"));
+        }
+        return new ResponseEntity<>(zahteviDto, HttpStatus.OK);
+    }
 }

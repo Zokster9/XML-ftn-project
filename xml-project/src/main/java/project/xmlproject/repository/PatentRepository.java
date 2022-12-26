@@ -6,6 +6,7 @@ import project.xmlproject.database.ReadUnmarshal;
 import project.xmlproject.database.WriteMarshal;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatentRepository {
@@ -33,5 +34,19 @@ public class PatentRepository {
 
     public List<ZahtevZaPriznanjePatenta> getAllPatenti() throws Exception {
         return patentDatabase.getAll();
+    }
+
+    public List<ZahtevZaPriznanjePatenta> getPatentsByText(String text) throws Exception {
+        return patentDatabase.getByText(text);
+    }
+
+    public List<ZahtevZaPriznanjePatenta> getPatentsByMetadata(String query) throws Exception {
+        List<String> patentNumbers = rdfDatabase.findByMetadata(query);
+        List<ZahtevZaPriznanjePatenta> zahtevi = new ArrayList<>();
+        for (String patentNumber : patentNumbers) {
+            ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = patentDatabase.read("patenti", patentNumber + ".xml");
+            zahtevi.add(zahtevZaPriznanjePatenta);
+        }
+        return zahtevi;
     }
 }

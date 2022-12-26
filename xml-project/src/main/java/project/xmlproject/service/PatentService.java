@@ -42,4 +42,12 @@ public class PatentService {
         String pdfFile = "src/main/resources/static/pdf/" + zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave() + ".pdf";
         patentTransformation.generatePDF(htmlFile, pdfFile);
     }
+
+    public List<ZahtevZaPriznanjePatenta> getPatentsByText(String text) throws Exception {
+        return patentRepository.getPatentsByText(text);
+    }
+
+    public List<ZahtevZaPriznanjePatenta> getPatentsByMetadata(String query) throws Exception {
+        return patentRepository.getPatentsByMetadata(query);
+    }
 }
