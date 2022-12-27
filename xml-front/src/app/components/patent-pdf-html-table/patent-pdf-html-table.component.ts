@@ -5,6 +5,7 @@ import { ZahtevZaPriznanjePatentaDto } from 'src/app/models/ZahtevZaPriznanjePat
 import { PatentService } from 'src/app/services/patent.service';
 import { ResenjeZahtevaService } from 'src/app/services/resenje-zahteva.service';
 import * as xml2js from 'xml2js';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-patent-pdf-html-table',
@@ -64,12 +65,28 @@ export class PatentPdfHtmlTableComponent implements OnInit {
 
   showRDF(zahtev : ZahtevZaPriznanjePatentaDto) {
     const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
-    window.open('http://localhost:9000/rdf/' + patentNumber + '.rdf');
+    const fileName = patentNumber + '.rdf';
+    this.patentService.showRDF(zahtev).subscribe(data => {
+      const blob = new Blob([data], {type:'text/xml'});
+      saveAs(blob, fileName);
+    })
+    //const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
+    //window.open('http://localhost:9000/rdf/' + patentNumber + '.rdf');
   }
 
   showJSON(zahtev : ZahtevZaPriznanjePatentaDto) {
     const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
-    window.open('http://localhost:9000/json/' + patentNumber + '.json');
+    const fileName = patentNumber + '.json';
+    this.patentService.showRDF(zahtev).subscribe(data => {
+      xml2js.parseString(data, (error, result) => {
+        const jsonString = JSON.stringify(result);
+        const blob = new Blob([jsonString], {type:'application/json'});
+        saveAs(blob, fileName);
+      })
+
+    })
+    //const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
+    //window.open('http://localhost:9000/json/' + patentNumber + '.json');
   }
 
   openModal(zahtev : ZahtevZaPriznanjePatentaDto) {

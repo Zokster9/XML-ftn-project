@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:p1="http://www.ftn.uns.ac.rs/patent/">
+<rdf:Description rdf:about="Patent">
+<p1:Broj_prijave>P1672130885538</p1:Broj_prijave>
+<p1:Datum_prijave>2022-12-27</p1:Datum_prijave>
+<p1:Srpski_naziv_pronalaska>Decembarski pronalazak</p1:Srpski_naziv_pronalaska>
+<p1:Engleski_naziv_pronalaska>December discovery</p1:Engleski_naziv_pronalaska>
+<p1:Naziv_podnosioca>Jovan Jovanovic</p1:Naziv_podnosioca>
+</rdf:Description>
+</rdf:RDF>

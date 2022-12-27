@@ -1,1 +1,76 @@
-<?xmlversion="1.0" encoding="UTF-8"?><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:p1="http://www.ftn.uns.ac.rs/patent/"><rdf:Description rdf:about="Patent"><p1:Broj_prijave>P1671907119478</p1:Broj_prijave><p1:Datum_prijave>2022-12-24</p1:Datum_prijave><p1:Priznati_datum_prijave>2022-12-24</p1:Priznati_datum_prijave><p1:Srpski_naziv_pronalaska>Nesto</p1:Srpski_naziv_pronalaska><p1:Engleski_naziv_pronalaska>Nesto</p1:Engleski_naziv_pronalaska><p1:Naziv_podnosioca>Nesto</p1:Naziv_podnosioca></rdf:Description></rdf:RDF>
+<?xml version="1.0"?>
+<sparql xmlns="http://www.w3.org/2005/sparql-results#">
+  <head>
+    <variable name="s"/>
+    <variable name="p"/>
+    <variable name="o"/>
+  </head>
+  <results>
+    <result>
+      <binding name="s">
+        <uri>file:///C:/Users/teodor/Desktop/xml/XML-ftn-project/xml-project/src/main/resources/static/rdf/Patent</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/patent/Naziv_podnosioca</uri>
+      </binding>
+      <binding name="o">
+        <literal>Nesto</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>file:///C:/Users/teodor/Desktop/xml/XML-ftn-project/xml-project/src/main/resources/static/rdf/Patent</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/patent/Engleski_naziv_pronalaska</uri>
+      </binding>
+      <binding name="o">
+        <literal>Nesto</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>file:///C:/Users/teodor/Desktop/xml/XML-ftn-project/xml-project/src/main/resources/static/rdf/Patent</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/patent/Srpski_naziv_pronalaska</uri>
+      </binding>
+      <binding name="o">
+        <literal>Nesto</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>file:///C:/Users/teodor/Desktop/xml/XML-ftn-project/xml-project/src/main/resources/static/rdf/Patent</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/patent/Priznati_datum_prijave</uri>
+      </binding>
+      <binding name="o">
+        <literal>2022-12-24</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>file:///C:/Users/teodor/Desktop/xml/XML-ftn-project/xml-project/src/main/resources/static/rdf/Patent</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/patent/Datum_prijave</uri>
+      </binding>
+      <binding name="o">
+        <literal>2022-12-24</literal>
+      </binding>
+    </result>
+    <result>
+      <binding name="s">
+        <uri>file:///C:/Users/teodor/Desktop/xml/XML-ftn-project/xml-project/src/main/resources/static/rdf/Patent</uri>
+      </binding>
+      <binding name="p">
+        <uri>http://www.ftn.uns.ac.rs/patent/Broj_prijave</uri>
+      </binding>
+      <binding name="o">
+        <literal>P1671907119478</literal>
+      </binding>
+    </result>
+  </results>
+</sparql>

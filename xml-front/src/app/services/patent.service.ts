@@ -198,6 +198,17 @@ export class PatentService {
     return this.httpClient.post(this.url + '/patenti/create-patent-pdf', xmlZahtev, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
   }
 
+  public showRDF(zahtev: ZahtevZaPriznanjePatentaDto) {
+    const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtev);
+    return this.httpClient.post(this.url + '/patenti/create-patent-rdf', xmlZahtev, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+  }
+
+  public showJSON(zahtev: ZahtevZaPriznanjePatentaDto) {
+    const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtev);
+    return this.httpClient.post(this.url + '/patenti/create-patent-json', xmlZahtev, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+
+  }
+
   public getPatentsByText(text : string) {
     const xmlOdgovor = this.httpClient.get(`http://localhost:9000/patenti/get-patents-by-text/${text}`, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
     return xmlOdgovor;

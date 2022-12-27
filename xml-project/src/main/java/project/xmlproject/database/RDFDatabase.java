@@ -28,6 +28,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.nio.file.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -89,6 +90,8 @@ public class RDFDatabase {
             UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, conn.updateEndpoint);
             processor.execute();
 
+            deleteFile(rdfFile);
+
 
         } catch (TransformerConfigurationException e) {
             throw new RuntimeException(e);
@@ -122,6 +125,7 @@ public class RDFDatabase {
         operators.add(">=");
         return operators;
     }
+
     private ArrayList<String> initializeLogicalOperators() {
         ArrayList<String> logicalOperators = new ArrayList<>();
         logicalOperators.add("I");
@@ -147,58 +151,48 @@ public class RDFDatabase {
             if (i == indexToBeSkipped) {
                 continue;
             }
-            if (!operators.contains(filterElements[i]) && !logicalOperators.contains(filterElements[i]) && i != filterElements.length -1) {
-                if (!operators.contains(filterElements[i+1]) && !logicalOperators.contains(filterElements[i+1])) {
-                    String concatenate = filterElements[i] + ' ' + filterElements[i+1];
+            if (!operators.contains(filterElements[i]) && !logicalOperators.contains(filterElements[i]) && i != filterElements.length - 1) {
+                if (!operators.contains(filterElements[i + 1]) && !logicalOperators.contains(filterElements[i + 1])) {
+                    String concatenate = filterElements[i] + ' ' + filterElements[i + 1];
                     filterElementsPreprocessed.add(concatenate);
                     indexToBeSkipped = i + 1;
-                }
-                else
-                {
+                } else {
                     filterElementsPreprocessed.add(filterElements[i]);
                 }
-            }
-            else {
+            } else {
                 filterElementsPreprocessed.add(filterElements[i]);
             }
         }
-        for (String filtere:
-             filterElementsPreprocessed) {
+        for (String filtere :
+                filterElementsPreprocessed) {
             System.out.println(filtere);
         }
         String filter = "";
         for (int i = 0; i < filterElementsPreprocessed.size(); i++) {
-            if (i != filterElementsPreprocessed.size() - 1 && operators.contains(filterElementsPreprocessed.get(i+1))) {
+            if (i != filterElementsPreprocessed.size() - 1 && operators.contains(filterElementsPreprocessed.get(i + 1))) {
                 filter += " ?p = ex:" + filterElementsPreprocessed.get(i) + " ";
-            }
-            else if (logicalOperators.contains(filterElementsPreprocessed.get(i).toUpperCase())) {
-                    filter += "NEWQUERY";
+            } else if (logicalOperators.contains(filterElementsPreprocessed.get(i).toUpperCase())) {
+                filter += "NEWQUERY";
                 if (filterElementsPreprocessed.get(i).equalsIgnoreCase("I")) {
                     queryConnectors.add("INTERSECT");
                     nextQueryIsNegative = false;
-                }
-                else if (filterElementsPreprocessed.get(i).equalsIgnoreCase("ILI")) {
+                } else if (filterElementsPreprocessed.get(i).equalsIgnoreCase("ILI")) {
                     queryConnectors.add("UNION");
                     nextQueryIsNegative = false;
-                }
-                else {
+                } else {
                     queryConnectors.add("INTERSECT");
                     nextQueryIsNegative = true;
                 }
-            }
-            else if (i > 0 && operators.contains(filterElementsPreprocessed.get(i-1))) {
-                if (!nextQueryIsNegative){
-                    filter += " ?o " + filterElementsPreprocessed.get(i-1) + " '" + filterElementsPreprocessed.get(i) + "' ";
-                }
-                else {
-                    String operator = inverseOperators.get(operators.indexOf(filterElementsPreprocessed.get(i-1)));
+            } else if (i > 0 && operators.contains(filterElementsPreprocessed.get(i - 1))) {
+                if (!nextQueryIsNegative) {
+                    filter += " ?o " + filterElementsPreprocessed.get(i - 1) + " '" + filterElementsPreprocessed.get(i) + "' ";
+                } else {
+                    String operator = inverseOperators.get(operators.indexOf(filterElementsPreprocessed.get(i - 1)));
                     filter += " ?o " + operator + " '" + filterElementsPreprocessed.get(i) + "' ";
                 }
-            }
-            else if (operators.contains(filterElementsPreprocessed.get(i))) {
+            } else if (operators.contains(filterElementsPreprocessed.get(i))) {
                 filter += "&& ";
-            }
-            else {
+            } else {
                 filter += filterElementsPreprocessed.get(i);
             }
         }
@@ -238,22 +232,20 @@ public class RDFDatabase {
             ArrayList<String> firstList;
             if (i == 0) {
                 firstList = patents.get(i);
-            }
-            else {
+            } else {
                 firstList = finalPatentNumbers;
             }
             if (queryConnectors.get(i).equals("INTERSECT")) {
                 Set<String> result = firstList.stream()
                         .distinct()
-                        .filter(patents.get(i+1)::contains)
+                        .filter(patents.get(i + 1)::contains)
                         .collect(Collectors.toSet());
                 finalPatentNumbers.clear();
                 finalPatentNumbers.addAll(result);
-            }
-            else if (queryConnectors.get(i).equals("UNION")) {
+            } else if (queryConnectors.get(i).equals("UNION")) {
                 Set<String> result = new HashSet<>();
                 result.addAll(firstList);
-                result.addAll(patents.get(i+1));
+                result.addAll(patents.get(i + 1));
                 finalPatentNumbers.clear();
                 finalPatentNumbers.addAll(result);
             }
@@ -263,6 +255,24 @@ public class RDFDatabase {
             clearedPatentNumbers.add(patentNumber.split("/")[patentNumber.split("/").length - 1]);
         }
         return clearedPatentNumbers;
+    }
+
+    public String findRdfByPatentNumberAndGenerateFile(String patentNumber) {
+
+        String queryString1 = "PREFIX ex:<http://localhost:9001/fuseki/PatentDataset/data/>\n" +
+                "SELECT ?s ?p ?o\n" +
+                "FROM ex:" + patentNumber + "\n" +
+                "WHERE {\n" +
+                "  ?s ?p ?o .\n" +
+                "}";
+        Query query = QueryFactory.create(queryString1);
+        try (QueryExecution quexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/PatentDataset/", query)) {
+            ResultSet resultSet = quexec.execSelect();
+                //FileOutputStream out = new FileOutputStream("src/main/resources/static/rdf/" + patentNumber + ".rdf");
+                //ResultSetFormatter.outputAsXML(out, resultSet);
+                //out.close();
+            return ResultSetFormatter.asXMLString(resultSet);
+        }
     }
 
     public void generateReport(String startDateString, String endDateString) throws ParseException {
@@ -366,11 +376,28 @@ public class RDFDatabase {
         file.close();
     }
 
+    public void deleteFile(String filePath) {
+        //"src/main/resources/static/rdf/P1671907119478.rdf"
+        Path path = Paths.get(filePath);
+        try {
+            // Delete file or directory
+            Files.delete(path);
+            System.out.println("File or directory deleted successfully");
+        } catch (NoSuchFileException ex) {
+            System.out.printf("No such file or directory: %s\n", path);
+        } catch (DirectoryNotEmptyException ex) {
+            System.out.printf("Directory %s is not empty\n", path);
+        } catch (IOException ex) {
+            System.out.println(ex);
+        }
+    }
+
     public static void main(String[] args) throws IOException, ParseException {
         RDFDatabase rdfDatabase = new RDFDatabase();
         //rdfDatabase.generateReport("23.12.2022.", "25.12.2022.");
         //rdfDatabase.findByMetadata("Engleski_naziv_pronalaska = JSONPrimer ILI Naziv_podnosioca = Marko Markovic");
-        rdfDatabase.findByMetadata("Priznati_datum_prijave = 2022-12-24 NE Naziv_podnosioca = Nesto");
+        //rdfDatabase.findByMetadata("Priznati_datum_prijave = 2022-12-24 NE Naziv_podnosioca = Nesto");
+        String json = rdfDatabase.findRdfByPatentNumberAndGenerateFile("P1671907119478");
+        System.out.println(json);
     }
-
 }

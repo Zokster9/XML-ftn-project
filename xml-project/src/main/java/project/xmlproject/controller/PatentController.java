@@ -54,6 +54,18 @@ public class PatentController {
         return new ResponseEntity<>(zahtevZaPriznanjePatentaCreationDto, HttpStatus.OK);
     }
 
+    @PostMapping(value="/create-patent-rdf", produces="application/xml")
+    public ResponseEntity<String> getPatentRDF(@RequestBody ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {
+        String rdf = patentService.createPatentRdfJson(zahtevZaPriznanjePatentaCreationDto);
+        return new ResponseEntity<>(rdf, HttpStatus.OK);
+    }
+
+    @PostMapping(value="/create-patent-json", produces = "application/json")
+    public ResponseEntity<String> getPatentJSON(@RequestBody ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {
+        String json = patentService.createPatentRdfJson(zahtevZaPriznanjePatentaCreationDto);
+        return new ResponseEntity<>(json, HttpStatus.OK);
+    }
+
     @GetMapping(value="/get-patents-by-text/{text}", produces = "application/xml")
     public ResponseEntity<List<ZahtevZaPriznanjePatentaCreationDto>> getPatentsByText(@PathVariable String text) throws Exception {
         List<ZahtevZaPriznanjePatenta> zahteviZaPriznanjePatenta = patentService.getPatentsByText(text);

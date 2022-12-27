@@ -43,6 +43,10 @@ public class PatentService {
         patentTransformation.generatePDF(htmlFile, pdfFile);
     }
 
+    public String createPatentRdfJson(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {
+        return rdfDatabase.findRdfByPatentNumberAndGenerateFile(zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave());
+    }
+
     public List<ZahtevZaPriznanjePatenta> getPatentsByText(String text) throws Exception {
         return patentRepository.getPatentsByText(text);
     }
