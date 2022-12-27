@@ -2,12 +2,15 @@ package project.xmlproject.dto.creationDto;
 
 import project.xmlproject.model.resenjeZahteva.ResenjeZahteva;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class ResenjeZahtevaDto {
 
+    @XmlAttribute(name="refid")
+    protected String refid;
     private String datumResenja;
 
     private boolean zahtevJePrihvacen;
@@ -17,6 +20,8 @@ public class ResenjeZahtevaDto {
     private String obrazlozenje;
 
     private String referenca;
+
+    private String naziv;
 
     public ResenjeZahtevaDto() {
 
@@ -28,15 +33,10 @@ public class ResenjeZahtevaDto {
         this.sifra = resenjeZahteva.getSifra();
         this.obrazlozenje = resenjeZahteva.getObrazlozenje();
         this.referenca = resenjeZahteva.getReferenca();
+        this.refid = resenjeZahteva.getRefid();
+        this.naziv = resenjeZahteva.getNaziv();
     }
 
-    public ResenjeZahtevaDto(String datumResenja, boolean zahtevJePrihvacen, String sifra, String obrazlozenje, String referenca) {
-        this.datumResenja = datumResenja;
-        this.zahtevJePrihvacen = zahtevJePrihvacen;
-        this.sifra = sifra;
-        this.obrazlozenje = obrazlozenje;
-        this.referenca = referenca;
-    }
 
     public String getDatumResenja() {
         return datumResenja;
@@ -76,5 +76,21 @@ public class ResenjeZahtevaDto {
 
     public void setReferenca(String referenca) {
         this.referenca = referenca;
+    }
+
+    public String getRefid() {
+        return refid;
+    }
+
+    public void setRefid(String refid) {
+        this.refid = refid;
+    }
+
+    public String getNaziv() {
+        return naziv;
+    }
+
+    public void setNaziv(String naziv) {
+        this.naziv = naziv;
     }
 }

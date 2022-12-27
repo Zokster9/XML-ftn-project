@@ -49,6 +49,7 @@ public class MarshalPatent {
         zahtevZaPriznanjePatenta.setPodnosilac(podnosilac);
         zahtevZaPriznanjePatenta.setPronalazac(pronalazac);
         zahtevZaPriznanjePatenta.setPunomocnik(punomocnik);
+        zahtevZaPriznanjePatenta.setId(podaciOPrijavama.getNovaPrijava().getBrojPrijave());
 
         return zahtevZaPriznanjePatenta;
     }

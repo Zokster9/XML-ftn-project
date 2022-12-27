@@ -24,7 +24,7 @@ public class PatentRepository {
         rdfDatabase.createAndInsertRDF(
                 "src/main/resources/static/rdf/" + zahtevZaPriznanjePatentaSaved.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave() + ".rdf",
                 zahtevZaPriznanjePatentaSaved);
-        rdfDatabase.createJSONFromRDF(zahtevZaPriznanjePatenta);
+        //rdfDatabase.createJSONFromRDF(zahtevZaPriznanjePatenta);
         return zahtevZaPriznanjePatentaSaved;
     }
 

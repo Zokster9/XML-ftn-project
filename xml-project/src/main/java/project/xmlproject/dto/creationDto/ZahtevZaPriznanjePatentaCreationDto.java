@@ -12,6 +12,7 @@ public class ZahtevZaPriznanjePatentaCreationDto {
     private PodnosilacCreationDto podnosilac;
     private PronalazacCreationDto pronalazac;
     private PunomocnikCreationDto punomocnik;
+    private String id;
 
     public ZahtevZaPriznanjePatentaCreationDto() {
 
@@ -31,6 +32,7 @@ public class ZahtevZaPriznanjePatentaCreationDto {
         this.podnosilac = new PodnosilacCreationDto(zahtevZaPriznanjePatenta.getPodnosilac());
         this.pronalazac = new PronalazacCreationDto(zahtevZaPriznanjePatenta.getPronalazac());
         this.punomocnik = new PunomocnikCreationDto(zahtevZaPriznanjePatenta.getPunomocnik());
+        this.id = this.podaciOPrijavama.getNovaPrijava().getBrojPrijave();
     }
 
     public PodaciOPrijavamaCreationDto getPodaciOPrijavama() {
@@ -71,5 +73,13 @@ public class ZahtevZaPriznanjePatentaCreationDto {
 
     public void setPunomocnik(PunomocnikCreationDto punomocnik) {
         this.punomocnik = punomocnik;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId() {
+        this.id = id;
     }
 }

@@ -8,11 +8,7 @@
 
 package project.xmlproject.model.resenjeZahteva;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 
 /**
@@ -46,11 +42,14 @@ import javax.xml.bind.annotation.XmlType;
     "zahtevJePrihvacen",
     "sifra",
     "obrazlozenje",
-    "referenca"
+    "referenca",
+    "naziv"
 })
 @XmlRootElement(name = "Resenje_zahteva")
 public class ResenjeZahteva {
 
+    @XmlAttribute(name="refid")
+    protected String refid;
     @XmlElement(name = "Datum_resenja", required = true)
     protected String datumResenja;
     @XmlElement(name = "Zahtev_je_prihvacen")
@@ -61,6 +60,17 @@ public class ResenjeZahteva {
     protected String obrazlozenje;
     @XmlElement(name = "Referenca", required = true)
     protected String referenca;
+
+    @XmlElement(name= "naziv", required = true)
+    protected String naziv;
+
+    public String getRefid() {
+        return refid;
+    }
+
+    public void setRefId(String refid) {
+        this.refid = refid;
+    }
 
     /**
      * Gets the value of the datumResenja property.
@@ -173,5 +183,6 @@ public class ResenjeZahteva {
     public void setReferenca(String value) {
         this.referenca = value;
     }
-
+    public String getNaziv() {return naziv;}
+    public void setNaziv(String naziv) {this.naziv = naziv;}
 }

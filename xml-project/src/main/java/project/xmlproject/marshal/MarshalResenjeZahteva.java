@@ -28,6 +28,8 @@ public class MarshalResenjeZahteva {
         resenjeZahteva.setZahtevJePrihvacen(resenjeZahtevaDto.isZahtevJePrihvacen());
         resenjeZahteva.setObrazlozenje(resenjeZahtevaDto.getObrazlozenje());
         resenjeZahteva.setReferenca(resenjeZahtevaDto.getReferenca());
+        resenjeZahteva.setNaziv("Teodor");
+        resenjeZahteva.setRefId(resenjeZahteva.getReferenca());
         return resenjeZahteva;
     }
 
