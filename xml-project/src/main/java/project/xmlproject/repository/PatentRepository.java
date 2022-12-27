@@ -4,6 +4,7 @@ import project.xmlproject.database.PatentDatabase;
 import project.xmlproject.database.RDFDatabase;
 import project.xmlproject.database.ReadUnmarshal;
 import project.xmlproject.database.WriteMarshal;
+import project.xmlproject.model.patent.PriznanjePravaPrvenstva;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
 
 import java.util.ArrayList;
@@ -48,5 +49,37 @@ public class PatentRepository {
             zahtevi.add(zahtevZaPriznanjePatenta);
         }
         return zahtevi;
+    }
+
+    public List<ZahtevZaPriznanjePatenta> getReferencedPatents(String patentNumber) throws Exception {
+        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = patentDatabase.getByBrojPrijave(patentNumber);
+        List<ZahtevZaPriznanjePatenta> referenciraniZahtevi = new ArrayList<>();
+        ZahtevZaPriznanjePatenta prvobitnaPrijava;
+        try{
+            prvobitnaPrijava = patentDatabase.getByBrojPrijave(zahtevZaPriznanjePatenta.getPodaciOPrijavama().getDodatnaPrijava().getBrojPrvobitnePrijave());
+            referenciraniZahtevi.add(prvobitnaPrijava);
+        } catch (NullPointerException e) {
+            System.out.println("Non existing patent");
+        }
+
+        for (PriznanjePravaPrvenstva priznanjePravaPrvenstva :
+                zahtevZaPriznanjePatenta.getPodaciOPrijavama().getPriznanjaPravaPrvenstva().getPriznanjePravaPrvenstva()) {
+            try {
+                ZahtevZaPriznanjePatenta zahtev = patentDatabase.getByBrojPrijave(priznanjePravaPrvenstva.getBrojRanijePrijave());
+                referenciraniZahtevi.add(zahtev);
+            } catch (NullPointerException e) {
+                System.out.println("Non existing patent");
+            }
+
+        }
+        for (ZahtevZaPriznanjePatenta zahtev : referenciraniZahtevi) {
+            System.out.println(zahtev.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave());
+        }
+        return referenciraniZahtevi;
+    }
+
+    public static void main(String[] args) throws Exception {
+        PatentRepository patentRepository = new PatentRepository();
+        patentRepository.getReferencedPatents("P1671903952390");
     }
 }

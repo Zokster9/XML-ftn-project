@@ -15,7 +15,9 @@ import { saveAs } from 'file-saver';
 export class PatentPdfHtmlTableComponent implements OnInit {
 
   zahteviZaPriznanjePatenta: ZahtevZaPriznanjePatentaDto[] = [];
+  linkovi: ZahtevZaPriznanjePatentaDto[] = [];
   modalOpened = false;
+  modalLinksOpened = false;
   odabraniZahtev!: ZahtevZaPriznanjePatentaDto;
   startDate!: string;
   endDate!: string;
@@ -26,7 +28,6 @@ export class PatentPdfHtmlTableComponent implements OnInit {
     this.patentService.getAllPatenti().subscribe(data => {
       const parser = new xml2js.Parser({strict: true, trim: true});
       parser.parseString(data.toString(), (err, result) => {
-        console.log(result);
         let zahtevi = result.List.item;
         for (var zahtev of zahtevi) {
           let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
@@ -89,6 +90,51 @@ export class PatentPdfHtmlTableComponent implements OnInit {
     //window.open('http://localhost:9000/json/' + patentNumber + '.json');
   }
 
+  showReferencedDocuments(zahtev: ZahtevZaPriznanjePatentaDto) {
+    const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
+    this.linkovi.splice(0, this.linkovi.length);
+    this.patentService.showReferencedDocuments(patentNumber).subscribe(data => {
+      const parser = new xml2js.Parser({strict: true, trim: true});
+      parser.parseString(data.toString(), (err, result) => {
+        let zahtevi = result.List.item;
+        if (zahtevi != undefined) {
+          for (var zahtev of zahtevi) {
+            let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
+            zahtevZaPriznanjePatenta = this.patentService.convertResponseToPatent(zahtev);
+            this.linkovi.push(zahtevZaPriznanjePatenta);
+          }
+          this.modalLinksOpened = true;
+        }
+      })
+    })
+  }
+
+  showPatentsThatReferenceTo(zahtev: ZahtevZaPriznanjePatentaDto) {
+    const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
+    this.linkovi.splice(0, this.linkovi.length);
+    this.patentService.showPatentsThatReferenceTo(patentNumber).subscribe(data => {
+      const parser = new xml2js.Parser({strict: true, trim: true});
+      parser.parseString(data.toString(), (err, result) => {
+        let zahtevi = result.List.item;
+        if (zahtevi != undefined) {
+          for (var zahtev of zahtevi) {
+            let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
+            zahtevZaPriznanjePatenta = this.patentService.convertResponseToPatent(zahtev);
+            this.linkovi.push(zahtevZaPriznanjePatenta);
+          }
+          this.modalLinksOpened = true;
+        }
+      })
+    })
+  }
+
+  showResenjeZahtevaThatReferencesTo(zahtev: ZahtevZaPriznanjePatentaDto) {
+    const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
+    this.resenjeZahtevaService.showResenjeZahtevaThatReferencesTo(patentNumber).subscribe(data => {
+      console.log(data);
+    })
+  }
+
   openModal(zahtev : ZahtevZaPriznanjePatentaDto) {
     this.odabraniZahtev = zahtev;
     this.modalOpened = true;
@@ -96,6 +142,10 @@ export class PatentPdfHtmlTableComponent implements OnInit {
 
   closeModal() {
     this.modalOpened = false;
+  }
+
+  closeModalLinks() {
+    this.modalLinksOpened = false;
   }
 
   createReport() {

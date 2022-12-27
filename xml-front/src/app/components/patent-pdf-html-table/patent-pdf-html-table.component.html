@@ -26,6 +26,9 @@
             <th scope="col" class="arial_font">PDF</th>
             <th scope="col" class="arial_font">RDF</th>
             <th scope="col" class="arial_font">JSON</th>
+            <th scope="col" class="arial_font">Referncirani dokumenti</th>
+            <th scope="col" class="arial_font">Patenti koji referenciraju na</th>
+            <th scope="col" class="arial_font">Resenje zahteva koje referencira na</th>
             <th scope="col" class="arial_font">Podnesi resenje</th>
         </tr>
     </thead>
@@ -37,6 +40,11 @@
             <td><button class="btn btn-dark arial_font" (click)="showPDF(zahtev)">PDF</button></td>
             <td><button class="btn btn-dark arial_font" (click)="showRDF(zahtev)">RDF</button></td>
             <td><button class="btn btn-dark arial_font" (click)="showJSON(zahtev)">JSON</button></td>
+            <td><button class="btn btn-dark arial_font" (click)="showReferencedDocuments(zahtev)">Referencirani dokumenti</button></td>
+            <td><button class="btn btn-dark arial_font" (click)="showPatentsThatReferenceTo(zahtev)">Patenti koji referenciraju na</button></td>
+            <td>
+                <button *ngIf="zahtev.podaciOPrijavama.novaPrijava.priznatiDatumPrijave !== ''" class="btn btn-dark arial_font" (click)="showResenjeZahtevaThatReferencesTo(zahtev)">Resenje zahteva koje referencira na</button>
+            </td>
             <td>
                 <button *ngIf="zahtev.podaciOPrijavama.novaPrijava.priznatiDatumPrijave === ''" class="btn btn-dark arial_font" (click)="openModal(zahtev)">Podnesi resenje</button>
             </td>
@@ -47,4 +55,7 @@
 
 <div *ngIf="modalOpened">
     <app-modal-accept-decline-request (modalClosed)="closeModal()" [zahtev]="odabraniZahtev"></app-modal-accept-decline-request>
+</div>
+<div *ngIf="modalLinksOpened">
+    <app-modal-show-reference (modalLinksClosed)="closeModalLinks()" [zahtevi]="linkovi"></app-modal-show-reference>
 </div>

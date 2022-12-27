@@ -26,4 +26,8 @@ public class ResenjeZahtevaService {
     public void createReport(ReportDatesDto reportDatesDto) throws ParseException {
         rdfDatabase.generateReport(reportDatesDto.getStartDate(), reportDatesDto.getEndDate());
     }
+
+    public ResenjeZahteva getResenjeZahtevaByReferenca(String patentNumber) throws Exception {
+        return resenjeZahtevaRepository.findByReferenca(patentNumber);
+    }
 }

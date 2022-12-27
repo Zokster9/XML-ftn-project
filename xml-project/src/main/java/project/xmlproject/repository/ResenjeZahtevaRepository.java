@@ -29,4 +29,8 @@ public class ResenjeZahtevaRepository {
         return resenjeZahtevaDatabase.write("resenja-zahteva-patenti", resenjeZahtevaNaziv + ".xml", resenjeZahteva);
 
     }
+
+    public ResenjeZahteva findByReferenca(String patentNumber) throws Exception {
+        return resenjeZahtevaDatabase.getByPatentNumber(patentNumber);
+    }
 }

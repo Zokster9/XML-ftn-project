@@ -25,4 +25,8 @@ export class ResenjeZahtevaService {
         const xmlOdgovor = this.httpClient.post(this.url + '/resenja-zahteva/create-report', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
         return xmlOdgovor;
     }
+
+    public showResenjeZahtevaThatReferencesTo(number: string) {
+        return this.httpClient.get(`http://localhost:9000/resenja-zahteva/get-resenje-zahteva-that-references-to/${number}`,{headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+      }
 }

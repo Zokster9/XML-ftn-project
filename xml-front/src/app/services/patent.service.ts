@@ -206,7 +206,14 @@ export class PatentService {
   public showJSON(zahtev: ZahtevZaPriznanjePatentaDto) {
     const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtev);
     return this.httpClient.post(this.url + '/patenti/create-patent-json', xmlZahtev, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+  }
 
+  public showReferencedDocuments(number: string) {
+    return this.httpClient.get(`http://localhost:9000/patenti/get-referenced-patents/${number}`, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+  }
+
+  public showPatentsThatReferenceTo(number: string) {
+    return this.httpClient.get(`http://localhost:9000/patenti/get-patents-that-reference-to/${number}`, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
   }
 
   public getPatentsByText(text : string) {

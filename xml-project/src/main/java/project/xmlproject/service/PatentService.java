@@ -54,4 +54,8 @@ public class PatentService {
     public List<ZahtevZaPriznanjePatenta> getPatentsByMetadata(String query) throws Exception {
         return patentRepository.getPatentsByMetadata(query);
     }
+
+    public List<ZahtevZaPriznanjePatenta> getReferencedPatents(String patentNumber) throws Exception {
+        return patentRepository.getReferencedPatents(patentNumber);
+    }
 }

@@ -3,10 +3,7 @@ package project.xmlproject.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.xmlproject.dto.creationDto.ReportDatesDto;
 import project.xmlproject.dto.creationDto.ResenjeZahtevaDto;
 import project.xmlproject.model.resenjeZahteva.ResenjeZahteva;
@@ -31,6 +28,12 @@ public class ResenjeZahtevaController {
     public ResponseEntity<ReportDatesDto> createReport(@RequestBody ReportDatesDto reportDatesDto) throws ParseException {
         resenjeZahtevaService.createReport(reportDatesDto);
         return new ResponseEntity<>(reportDatesDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/get-resenje-zahteva-that-references-to/{number}", produces = "application/xml")
+    public ResponseEntity<ResenjeZahtevaDto> getResenjeZahtevaThatReferencesTo(@PathVariable String number) throws Exception {
+        ResenjeZahteva resenjeZahteva = resenjeZahtevaService.getResenjeZahtevaByReferenca(number);
+        return new ResponseEntity<>(new ResenjeZahtevaDto(resenjeZahteva), HttpStatus.OK);
     }
 
 }

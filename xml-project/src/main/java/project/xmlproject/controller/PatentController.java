@@ -6,6 +6,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import project.xmlproject.dto.creationDto.ZahtevZaPriznanjePatentaCreationDto;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
+import project.xmlproject.model.resenjeZahteva.ResenjeZahteva;
 import project.xmlproject.service.PatentService;
 
 import java.util.ArrayList;
@@ -85,4 +86,27 @@ public class PatentController {
         }
         return new ResponseEntity<>(zahteviDto, HttpStatus.OK);
     }
+
+    @GetMapping(value="/get-referenced-patents/{number}", produces = "application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjePatentaCreationDto>> getReferencedPatents(@PathVariable String number) throws Exception {
+        List<ZahtevZaPriznanjePatenta> zahtevi = patentService.getReferencedPatents(number);
+        List<ZahtevZaPriznanjePatentaCreationDto> zahteviDto = new ArrayList<>();
+        for (ZahtevZaPriznanjePatenta z : zahtevi) {
+            zahteviDto.add(new ZahtevZaPriznanjePatentaCreationDto(z, "read"));
+        }
+        return new ResponseEntity<>(zahteviDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/get-patents-that-reference-to/{number}", produces = "application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjePatentaCreationDto>> getPatentsThatReferenceTo(@PathVariable String number) throws Exception {
+        List<ZahtevZaPriznanjePatenta> zahtevi = patentService.getPatentsByText(number);
+        List<ZahtevZaPriznanjePatentaCreationDto> zahteviDto = new ArrayList<>();
+        for (ZahtevZaPriznanjePatenta z : zahtevi) {
+            if (!z.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave().equals(number)){
+                zahteviDto.add(new ZahtevZaPriznanjePatentaCreationDto(z, "read"));
+            }
+        }
+        return new ResponseEntity<>(zahteviDto, HttpStatus.OK);
+    }
+
 }
