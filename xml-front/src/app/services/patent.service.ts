@@ -15,6 +15,7 @@ import { NacinDostavljanjaDto } from '../models/NacinDostavljanjaDto';
 import { PronalazacDto } from '../models/PronalazacDto';
 import { PunomocnikDto } from '../models/PunomocnikDto';
 import { PriznanjaPravaPrvenstvaDto } from '../models/PriznanjaPravaPrvenstvaDto';
+import { Entity } from '../models/Entity';
 
 
 @Injectable({
@@ -176,6 +177,10 @@ export class PatentService {
     console.log(xmlZahtev);
     const xmlOdgovor = this.httpClient.post(this.url + '/patenti/add-patent', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
     return xmlOdgovor;
+  }
+
+  public addPatentXonomy(entity: Entity) {
+    return this.httpClient.post(this.url + '/patenti/add-patent', entity, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
   }
 
   public getPatent() {

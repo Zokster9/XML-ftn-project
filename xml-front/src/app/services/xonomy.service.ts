@@ -337,6 +337,7 @@ export class XonomyService {
                 }]
             },
             naziv : {
+                mustBeBefore: ['drzavljanstvo', 'adresa', 'kontaktPodaci', 'podnosilacJePronalazac', 'nacinDostavljanja'],
                 hasText: true,
                 oneliner: true,
                 asker: Xonomy.askString,
@@ -347,6 +348,7 @@ export class XonomyService {
                 ]
             },
             drzavljanstvo : {
+                mustBeBefore: ['adresa', 'kontaktPodaci', 'podnosilacJePronalazac', 'nacinDostavljanja'],
                 hasText: true,
                 oneliner: true,
                 asker: Xonomy.askString,
@@ -357,6 +359,7 @@ export class XonomyService {
                 ]
             },
             adresa : {
+                mustBeBefore: ['kontaktPodaci', 'podnosilacJePronalazac', 'nacinDostavljanja'],
                 asker: Xonomy.askString,
                 menu:[
                 {
@@ -397,30 +400,309 @@ export class XonomyService {
                 }
                 ]
             },
-/*
-    naziv: string;
-    drzavljanstvo: string;
-    adresa: AdresaDto;
-    kontaktPodaci: KontaktPodaciDto;
-    podnosilacJePronalazac: boolean;
-    nacinDostavljanja: NacinDostavljanjaDto;
-*/
+            ulicaIBroj : {
+                mustBeBefore: ['postanskiBroj', 'mesto', 'drzava'],
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi ulicu i broj',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            postanskiBroj : {
+                mustBeBefore: ['mesto', 'drzava'],
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi postanski broj',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            mesto : {
+                mustBeBefore: ['drzava'],
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi mesto',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            drzava : {
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi drzavu',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            kontaktPodaci : {
+                mustBeBefore: ['podnosilacJePronalazac', 'nacinDostavljanja'],
+                asker: Xonomy.askString,
+                menu:[
+                {
+                    caption:'Dodaj <brojTelefona>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<brojTelefona></brojTelefona>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("brojTelefona")
+                    },
+                },
+                {
+                    caption:'Dodaj <brojFaksa>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<brojFaksa></brojFaksa>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("brojFaksa")
+                    },
+                },
+                {
+                    caption:'Dodaj <ePosta>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<ePosta></ePosta>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("ePosta")
+                    },
+                },
+                {
+                  caption:'Obrisi kontakt podatke',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            brojTelefona : {
+                mustBeBefore: ['brojFaksa', 'ePosta'],
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi broj telefona',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            brojFaksa : {
+                mustBeBefore: ['ePosta'],
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi broj faksa',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            ePosta : {
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi ePostu',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            podnosilacJePronalazac : {
+                mustBeBefore: ['nacinDostavljanja'],
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askPicklist,
+                askerParameter: ["true" , "false"],
+                menu:[{
+                  caption:'Obrisi podnosilac je pronalazac',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            nacinDostavljanja : {
+                asker: Xonomy.askString,
+                menu:[
+                {
+                    caption:'Dodaj <nacinDostavljanjaStr>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<nacinDostavljanjaStr></nacinDostavljanjaStr>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("nacinDostavljanjaStr")
+                    },
+                },
+                {
+                    caption:'Dodaj <email>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<email></email>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("email")
+                    },
+                },
+                {
+                    caption:'Dodaj <adresa>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<adresa></adresa>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("adresa")
+                    },
+                },
+                {
+                  caption:'Obrisi nacin dostavljanja',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            nacinDostavljanjaStr : {
+                mustBeBefore: ['email', 'adresa'],
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askPicklist,
+                askerParameter: ["elektronski" , "papirni"],
+                menu:[{
+                  caption:'Obrisi nacin dostavljanja',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            email : {
+                mustBeBefore: ['adresa'],
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi email',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
 
+            /* PRONALAZAC */
             pronalazac : {
                 mustBeBefore: ['punomocnik'],
                 asker: Xonomy.askString,
-                menu:[{
+                menu:[
+                {
+                    caption:'Dodaj <naziv>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<naziv></naziv>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("naziv")
+                    },
+                },
+                {
+                    caption:'Dodaj <adresa>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<adresa></adresa>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("adresa")
+                    },
+                },
+                {
+                    caption:'Dodaj <kontaktPodaci>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<kontaktPodaci></kontaktPodaci>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("kontaktPodaci")
+                    },
+                },
+                {
+                    caption:'Dodaj <zeliBitiUPrijavi>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<zeliBitiUPrijavi></zeliBitiUPrijavi>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("zeliBitiUPrijavi")
+                    },
+                },
+                {
                     caption: 'Obrisi pronalazaca',
                     action: Xonomy.deleteElement
                 }]
             },
+            zeliBitiUPrijavi : {
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askPicklist,
+                askerParameter: ["true" , "false"],
+                menu:[{
+                  caption:'Obrisi zeli biti u prijavi',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+
+            /* PUNOMOCNIK */
             punomocnik : {
                 asker: Xonomy.askString,
-                menu:[{
+                menu:[
+                {
+                    caption:'Dodaj <tipPunomocnika>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<tipPunomocnika></tipPunomocnika>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("tipPunomocnika")
+                    },
+                },
+                {
+                    caption:'Dodaj <zajednickiPredstavnik>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<zajednickiPredstavnik></zajednickiPredstavnik>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("zajednickiPredstavnik")
+                    },
+                },
+                {
+                    caption:'Dodaj <naziv>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<naziv></naziv>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("naziv")
+                    },
+                },
+                {
+                    caption:'Dodaj <adresa>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<adresa></adresa>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("adresa")
+                    },
+                },
+                {
+                    caption:'Dodaj <kontaktPodaci>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<kontaktPodaci></kontaktPodaci>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("kontaktPodaci")
+                    },
+                },                
+                {
                     caption: 'Obrisi punomocnika',
                     action: Xonomy.deleteElement
                 }]
-            }
+            },
+            tipPunomocnika : {
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askPicklist,
+                askerParameter: ["zastupanje" , "prijem"],
+                menu:[{
+                  caption:'Obrisi tip punomocnika',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            zajednickiPredstavnik : {
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askPicklist,
+                askerParameter: ["true" , "false"],
+                menu:[{
+                  caption:'Obrisi zajednicki predstavnik',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
         },
     }
 }

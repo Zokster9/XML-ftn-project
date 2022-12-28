@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Entity } from 'src/app/models/Entity';
+import { PatentService } from 'src/app/services/patent.service';
 import { XonomyService } from 'src/app/services/xonomy.service';
 
 declare const Xonomy: any
@@ -8,7 +10,7 @@ declare const Xonomy: any
   styleUrls: ['./patent-form-xonomy.component.css']
 })
 export class PatentFormXonomyComponent implements OnInit, AfterViewInit{
-  constructor(private xonomyService: XonomyService){
+  constructor(private xonomyService: XonomyService, private patentService: PatentService){
 
   }
   ngOnInit(): void {
@@ -21,4 +23,12 @@ export class PatentFormXonomyComponent implements OnInit, AfterViewInit{
     Xonomy.render(xmlString, element, specification);
   }
   
+  send() {
+    let text = Xonomy.harvest();
+    const entity = new Entity();
+    entity.text = text;
+    this.patentService.addPatentXonomy(entity).subscribe(data => {
+      console.log(data);
+    })
+  }
 }
