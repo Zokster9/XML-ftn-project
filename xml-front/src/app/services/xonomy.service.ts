@@ -229,22 +229,183 @@ export class XonomyService {
                 }
                 ]
             },
+
+            /* NAZIV PRONALASKA */
             nazivPronalaska : {
                 mustBeBefore: ['podnosilac', 'pronalazac', 'punomocnik'],
                 asker: Xonomy.askString,
-                menu:[{
+                menu:[
+                {
+                    caption:'Dodaj <srpskiNaziv>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<srpskiNaziv></srpskiNaziv>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("srpskiNaziv")
+                    },
+                },
+                {
+                    caption:'Dodaj <engleskiNaziv>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<engleskiNaziv></engleskiNaziv>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("engleskiNaziv")
+                    },
+                },
+                {
                     caption: 'Obrisi naziv pronalaska',
                     action: Xonomy.deleteElement
                 }]
             },
+            srpskiNaziv : {
+                mustBeBefore: ['engleskiNaziv'],
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi srpski naziv',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            engleskiNaziv : {
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi engleski naziv',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+
+            /* PODNOSILAC */
             podnosilac : {
                 mustBeBefore: ['pronalazac', 'punomocnik'],
                 asker: Xonomy.askString,
-                menu:[{
+                menu:[
+                {
+                    caption:'Dodaj <naziv>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<naziv></naziv>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("naziv")
+                    },
+                },
+                {
+                    caption:'Dodaj <drzavljanstvo>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<drzavljanstvo></drzavljanstvo>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("drzavljanstvo")
+                    },
+                },
+                {
+                    caption:'Dodaj <adresa>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<adresa></adresa>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("adresa")
+                    },
+                },
+                {
+                    caption:'Dodaj <kontaktPodaci>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<kontaktPodaci></kontaktPodaci>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("kontaktPodaci")
+                    },
+                },
+                {
+                    caption:'Dodaj <podnosilacJePronalazac>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<podnosilacJePronalazac></podnosilacJePronalazac>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("podnosilacJePronalazac")
+                    },
+                },
+                {
+                    caption:'Dodaj <nacinDostavljanja>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<nacinDostavljanja></nacinDostavljanja>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("nacinDostavljanja")
+                    },
+                },
+                {
                     caption: 'Obrisi podnosioca',
                     action: Xonomy.deleteElement
                 }]
             },
+            naziv : {
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi naziv',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            drzavljanstvo : {
+                hasText: true,
+                oneliner: true,
+                asker: Xonomy.askString,
+                menu:[{
+                  caption:'Obrisi drzavljanstvo',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            adresa : {
+                asker: Xonomy.askString,
+                menu:[
+                {
+                    caption:'Dodaj <ulicaIBroj>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<ulicaIBroj></ulicaIBroj>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("ulicaIBroj")
+                    },
+                },
+                {
+                    caption:'Dodaj <postanskiBroj>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<postanskiBroj></postanskiBroj>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("postanskiBroj")
+                    },
+                },
+                {
+                    caption:'Dodaj <mesto>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<mesto></mesto>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("mesto")
+                    },
+                },
+                {
+                    caption:'Dodaj <drzava>',
+                    action: Xonomy.newElementChild,
+                    actionParameter: '<drzava></drzava>',
+                    hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                        return jsElement.hasChildElement("drzava")
+                    },
+                },
+                {
+                  caption:'Obrisi adresu',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+/*
+    naziv: string;
+    drzavljanstvo: string;
+    adresa: AdresaDto;
+    kontaktPodaci: KontaktPodaciDto;
+    podnosilacJePronalazac: boolean;
+    nacinDostavljanja: NacinDostavljanjaDto;
+*/
+
             pronalazac : {
                 mustBeBefore: ['punomocnik'],
                 asker: Xonomy.askString,
