@@ -173,6 +173,7 @@ export class PatentService {
 
   public addPatent(zahtevZaPriznanjePatentaCreationDto: ZahtevZaPriznanjePatentaDto) {
     const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtevZaPriznanjePatentaCreationDto);
+    console.log(xmlZahtev);
     const xmlOdgovor = this.httpClient.post(this.url + '/patenti/add-patent', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
     return xmlOdgovor;
   }
