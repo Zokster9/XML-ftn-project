@@ -180,7 +180,7 @@ export class PatentService {
   }
 
   public addPatentXonomy(entity: Entity) {
-    return this.httpClient.post(this.url + '/patenti/add-patent', entity, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
+    return this.httpClient.post(this.url + '/patenti/add-patent', entity.text, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
   }
 
   public getPatent() {

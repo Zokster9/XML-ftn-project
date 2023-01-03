@@ -27,6 +27,9 @@ export class PatentFormXonomyComponent implements OnInit, AfterViewInit{
     let text = Xonomy.harvest();
     const entity = new Entity();
     entity.text = text;
+    entity.text = entity.text?.replaceAll("nacinDostavljanjaStr", "nacinDostavljanja");
+    entity.text = entity.text?.replaceAll("priznanjePravaPrvenstva", "priznanjaPravaPrvenstva");
+    console.log(entity.text);
     this.patentService.addPatentXonomy(entity).subscribe(data => {
       console.log(data);
     })

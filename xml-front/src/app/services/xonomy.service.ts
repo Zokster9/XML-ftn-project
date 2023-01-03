@@ -89,6 +89,51 @@ export class XonomyService {
                 }
                 ]
             },
+            novaPrijava: {
+                mustBeBefore: ['dodatnaPrijava','priznanjaPravaPrvenstva'],
+                asker: Xonomy.askString,
+                menu: [
+                    {
+                        caption:'Dodaj <brojPrijave>',
+                        action: Xonomy.newElementChild,
+                        actionParameter: '<brojPrijave></brojPrijave>',
+                        hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                            return jsElement.hasChildElement("brojPrijave")
+                        },
+                    },
+                    {
+                        caption:'Dodaj <datumPrijave>',
+                        action: Xonomy.newElementChild,
+                        actionParameter: '<datumPrijave></datumPrijave>',
+                        hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                            return jsElement.hasChildElement("datumPrijave")
+                        },
+                    },
+                    {
+                        caption:'Dodaj <priznatiDatumPrijave>',
+                        action: Xonomy.newElementChild,
+                        actionParameter: '<priznatiDatumPrijave></priznatiDatumPrijave>',
+                        hideIf: function (jsElement: { hasChildElement: (arg0: string) => any; }) {
+                            return jsElement.hasChildElement("priznatiDatumPrijave")
+                        },
+                    },
+                ]
+            },
+            brojPrijave : {
+                mustBeBefore: ['datumPrijave', 'priznatiDatumPrijave'],
+                menu:[{
+                  caption:'Obrisi broj prijave',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
+            priznatiDatumPrijave : {
+                menu:[{
+                  caption:'Obrisi priznati datum prijave',
+                  action:Xonomy.deleteElement
+                }
+                ]
+            },
             dodatnaPrijava : {
                 mustBeBefore: ['priznanjaPravaPrvenstva'],
                 asker: Xonomy.askString,
@@ -198,7 +243,7 @@ export class XonomyService {
                     ]
             },
             datumPrijave: {
-                mustBeBefore: ['brojRanijePrijave', 'dvoslovnaOznakaDrzaveOrganizacije'],
+                mustBeBefore: ['priznatiDatumPrijave','brojRanijePrijave', 'dvoslovnaOznakaDrzaveOrganizacije'],
                 hasText: true,
                 oneliner: true,
                 asker: Xonomy.askString,
