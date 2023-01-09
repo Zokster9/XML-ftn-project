@@ -1,31 +1,18 @@
 package project.xmlproject.transformXML;
-import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.update.UpdateExecutionFactory;
-import org.apache.jena.update.UpdateFactory;
-import org.apache.jena.update.UpdateProcessor;
-import org.apache.jena.update.UpdateRequest;
-import project.xmlproject.Util.AuthenticationUtilities;
-import project.xmlproject.Util.ConnectionUtilities;
-import project.xmlproject.XmlProjectApplication;
 import project.xmlproject.dto.creationDto.ZahtevZaPriznanjePatentaCreationDto;
 import project.xmlproject.marshal.MarshalPatent;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
-import project.xmlproject.repository.PatentRepository;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.util.JAXBSource;
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
