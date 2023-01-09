@@ -56,10 +56,7 @@ public class RDFDatabase {
             Transformer transformer = factory.newTransformer(xslt);
 
             JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjePatenta.class);
-            //MarshalPatent marshalPatent = new MarshalPatent();
-            //ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = marshalPatent.marshalPatent(zahtevZaPriznanjePatentaCreationDto, "read");
             JAXBSource source = new JAXBSource(context, zahtevZaPriznanjePatenta);
-            System.out.println("Source" + source);
             StreamResult result = new StreamResult(new FileOutputStream(rdfFile));
 
             transformer.transform(source, result);
@@ -69,8 +66,7 @@ public class RDFDatabase {
             // Creates a default model
             Model model = ModelFactory.createDefaultModel();
             String brojPrijave = zahtevZaPriznanjePatenta.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave();
-            String RDF_FILE = "src/main/resources/static/rdf/" + brojPrijave + ".rdf";
-            model.read(RDF_FILE);
+            model.read(rdfFile);
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -82,14 +78,12 @@ public class RDFDatabase {
             // Creating the first named graph and updating it with RDF data
             System.out.println("[INFO] Writing the triples to a named graph \"" + brojPrijave + "\".");
             String sparqlUpdate = insertData(conn.dataEndpoint + brojPrijave, new String(out.toByteArray()));
-            System.out.println(sparqlUpdate);
 
             // UpdateRequest represents a unit of execution
             UpdateRequest update = UpdateFactory.create(sparqlUpdate);
 
             UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, conn.updateEndpoint);
             processor.execute();
-
             deleteFile(rdfFile);
 
 

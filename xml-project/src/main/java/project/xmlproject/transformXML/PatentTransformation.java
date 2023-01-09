@@ -6,12 +6,14 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import project.xmlproject.dto.creationDto.ZahtevZaPriznanjePatentaCreationDto;
 import project.xmlproject.marshal.MarshalPatent;
 import project.xmlproject.model.patent.ZahtevZaPriznanjePatenta;
+import project.xmlproject.model.resenjeZahteva.ResenjeZahteva;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.util.JAXBSource;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -64,7 +66,31 @@ public class PatentTransformation {
         HtmlConverter.convertToPdf(Files.newInputStream(Paths.get(html)), pdfDocument);
     }
 
-    public void generateHTML(String htmlFile, ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {
+    public void generateResenjeZahtevaHTML(String htmlFile, ResenjeZahteva resenjeZahteva) {
+        try {
+            TransformerFactory factory = TransformerFactory.newInstance();
+            InputStream resourceAsStream = getClass().getResourceAsStream("/xslt/resenjeZahteva.xsl");
+            StreamSource xslt = new StreamSource(resourceAsStream);
+            Transformer transformer = factory.newTransformer(xslt);
+
+            JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
+            JAXBSource source = new JAXBSource(context, resenjeZahteva);
+            StreamResult result = new StreamResult(new FileOutputStream(htmlFile));
+
+            transformer.transform(source, result);
+
+        } catch (TransformerConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (TransformerException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void generateHTML(String htmlFile, ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
         //actimem.com/java/xslt-with-jaxb
         try {
             TransformerFactory factory = TransformerFactory.newInstance();
@@ -74,8 +100,8 @@ public class PatentTransformation {
             Transformer transformer = factory.newTransformer(xslt);
 
             JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjePatenta.class);
-            MarshalPatent marshalPatent = new MarshalPatent();
-            ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = marshalPatent.marshalPatent(zahtevZaPriznanjePatentaCreationDto, "read");
+            //MarshalPatent marshalPatent = new MarshalPatent();
+            //ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = marshalPatent.marshalPatent(zahtevZaPriznanjePatentaCreationDto, "read");
             JAXBSource source = new JAXBSource(context, zahtevZaPriznanjePatenta);
             System.out.println("Source" + source);
             StreamResult result = new StreamResult(new FileOutputStream(htmlFile));

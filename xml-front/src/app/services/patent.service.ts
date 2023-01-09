@@ -193,15 +193,15 @@ export class PatentService {
     return xmlOdgovor;
   }
 
-  public showHTML(zahtev : ZahtevZaPriznanjePatentaDto) {
-    const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtev);
-    const xmlOdgovor = this.httpClient.post(this.url + '/patenti/create-patent-html', xmlZahtev, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+  public showHTML(brojPrijave : string) {
+    //const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtev);
+    const xmlOdgovor = this.httpClient.get(`http://localhost:9000/patenti/create-patent-html/${brojPrijave}`, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
     return xmlOdgovor;
   }
 
-  public showPDF(zahtev : ZahtevZaPriznanjePatentaDto) {
-    const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtev);
-    return this.httpClient.post(this.url + '/patenti/create-patent-pdf', xmlZahtev, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+  public showPDF(brojPrijave : string) {
+    //const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtev);
+    return this.httpClient.get(`http://localhost:9000/patenti/create-patent-pdf/${brojPrijave}`, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
   }
 
   public showRDF(zahtev: ZahtevZaPriznanjePatentaDto) {

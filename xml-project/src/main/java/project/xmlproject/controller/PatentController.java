@@ -43,16 +43,16 @@ public class PatentController {
         return new ResponseEntity<>(zahteviZaPriznanjePatentaCreationDto, HttpStatus.OK);
     }
 
-    @PostMapping(value="/create-patent-html", produces = "application/xml")
-    public ResponseEntity<ZahtevZaPriznanjePatentaCreationDto> getPatentHTML(@RequestBody ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) throws Exception {
-        patentService.createPatentHtml(zahtevZaPriznanjePatentaCreationDto);
-        return new ResponseEntity<>(zahtevZaPriznanjePatentaCreationDto, HttpStatus.OK);
+    @GetMapping(value="/create-patent-html/{brojPrijave}", produces = "application/xml")
+    public ResponseEntity<ZahtevZaPriznanjePatentaCreationDto> getPatentHTML(@PathVariable String brojPrijave) throws Exception {
+        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = patentService.createPatentHtml(brojPrijave);
+        return new ResponseEntity<>(new ZahtevZaPriznanjePatentaCreationDto(zahtevZaPriznanjePatenta, "read"), HttpStatus.OK);
     }
 
-    @PostMapping(value="/create-patent-pdf", produces = "application/xml")
-    public ResponseEntity<ZahtevZaPriznanjePatentaCreationDto> getPatentPDF(@RequestBody ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) throws Exception {
-        patentService.createPatentPdf(zahtevZaPriznanjePatentaCreationDto);
-        return new ResponseEntity<>(zahtevZaPriznanjePatentaCreationDto, HttpStatus.OK);
+    @GetMapping(value="/create-patent-pdf/{brojPrijave}", produces = "application/xml")
+    public ResponseEntity<ZahtevZaPriznanjePatentaCreationDto> getPatentPDF(@PathVariable String brojPrijave) throws Exception {
+        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = patentService.createPatentPdf(brojPrijave);
+        return new ResponseEntity<>(new ZahtevZaPriznanjePatentaCreationDto(zahtevZaPriznanjePatenta, "read"), HttpStatus.OK);
     }
 
     @PostMapping(value="/create-patent-rdf", produces="application/xml")

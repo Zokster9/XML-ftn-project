@@ -1,5 +1,6 @@
 package project.xmlproject.service;
 
+import project.xmlproject.database.PatentDatabase;
 import project.xmlproject.database.RDFDatabase;
 import project.xmlproject.marshal.MarshalPatent;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class PatentService {
     PatentTransformation patentTransformation = new PatentTransformation();
     RDFDatabase rdfDatabase = new RDFDatabase();
 
+    PatentDatabase patentDatabase = new PatentDatabase();
+
     MarshalPatent marshalPatent = new MarshalPatent();
     public ZahtevZaPriznanjePatenta addPatent(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) throws Exception {
         ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = marshalPatent.marshalPatent(zahtevZaPriznanjePatentaCreationDto, "create");
@@ -32,15 +35,20 @@ public class PatentService {
         return patentRepository.getAllPatenti();
     }
 
-    public void createPatentHtml(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {
-        String htmlFile = "src/main/resources/static/html/" + zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave() + ".html";
-        patentTransformation.generateHTML(htmlFile, zahtevZaPriznanjePatentaCreationDto);
+    public ZahtevZaPriznanjePatenta createPatentHtml(String brojPrijave) throws Exception {
+        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = patentDatabase.getByBrojPrijave(brojPrijave);
+        String htmlFile = "src/main/resources/static/html/" + brojPrijave + ".html";
+        patentTransformation.generateHTML(htmlFile, zahtevZaPriznanjePatenta);
+        return zahtevZaPriznanjePatenta;
     }
 
-    public void createPatentPdf(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) throws IOException {
-        String htmlFile = "src/main/resources/static/html/" + zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave() + ".html";
-        String pdfFile = "src/main/resources/static/pdf/" + zahtevZaPriznanjePatentaCreationDto.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave() + ".pdf";
+    public ZahtevZaPriznanjePatenta createPatentPdf(String brojPrijave) throws Exception {
+        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = patentDatabase.getByBrojPrijave(brojPrijave);
+        String htmlFile = "src/main/resources/static/html/" + brojPrijave + ".html";
+        String pdfFile = "src/main/resources/static/pdf/" + brojPrijave + ".pdf";
+        patentTransformation.generateHTML(htmlFile, zahtevZaPriznanjePatenta);
         patentTransformation.generatePDF(htmlFile, pdfFile);
+        return zahtevZaPriznanjePatenta;
     }
 
     public String createPatentRdfJson(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {

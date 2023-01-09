@@ -7,6 +7,7 @@ import project.xmlproject.dto.creationDto.ResenjeZahtevaDto;
 import project.xmlproject.marshal.MarshalResenjeZahteva;
 import project.xmlproject.model.resenjeZahteva.ResenjeZahteva;
 import project.xmlproject.repository.ResenjeZahtevaRepository;
+import project.xmlproject.transformXML.PatentTransformation;
 
 import java.text.ParseException;
 
@@ -18,6 +19,8 @@ public class ResenjeZahtevaService {
     MarshalResenjeZahteva marshalResenjeZahteva = new MarshalResenjeZahteva();
     RDFDatabase rdfDatabase = new RDFDatabase();
 
+    PatentTransformation patentTransformation = new PatentTransformation();
+
     public ResenjeZahteva addResenjeZahteva(ResenjeZahtevaDto resenjeZahtevaDto) throws Exception {
         ResenjeZahteva resenjeZahteva = marshalResenjeZahteva.marshalResenjeZahteva(resenjeZahtevaDto, "create");
         return resenjeZahtevaRepository.save(resenjeZahteva);
@@ -28,6 +31,10 @@ public class ResenjeZahtevaService {
     }
 
     public ResenjeZahteva getResenjeZahtevaByReferenca(String patentNumber) throws Exception {
-        return resenjeZahtevaRepository.findByReferenca(patentNumber);
+        ResenjeZahteva resenjeZahteva = resenjeZahtevaRepository.findByReferenca(patentNumber);
+        patentTransformation.generateResenjeZahtevaHTML("src/main/resources/static/html/"
+                + resenjeZahteva.getReferenca() +
+                "_resenje.html", resenjeZahteva);
+        return resenjeZahteva;
     }
 }

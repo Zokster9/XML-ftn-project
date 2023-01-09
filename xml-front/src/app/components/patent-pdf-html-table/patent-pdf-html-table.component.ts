@@ -45,9 +45,10 @@ export class PatentPdfHtmlTableComponent implements OnInit {
   ) {}
 
   showHTML(zahtev : ZahtevZaPriznanjePatentaDto) {
-    this.patentService.showHTML(zahtev).subscribe(data => {
+    this.patentService.showHTML(zahtev.podaciOPrijavama.novaPrijava.brojPrijave).subscribe(data => {
       const parser = new xml2js.Parser({strict: true, trim: true});
       parser.parseString(data.toString(), (err, result) => {
+        console.log(result);
         const patentNumber = result.ZahtevZaPriznanjePatentaCreationDto.podaciOPrijavama[0].novaPrijava[0].brojPrijave[0];
         window.open('http://localhost:9000/html/' + patentNumber + '.html');
       })
@@ -55,7 +56,7 @@ export class PatentPdfHtmlTableComponent implements OnInit {
   }
 
   showPDF(zahtev : ZahtevZaPriznanjePatentaDto) {
-    this.patentService.showPDF(zahtev).subscribe(data => {
+    this.patentService.showPDF(zahtev.podaciOPrijavama.novaPrijava.brojPrijave).subscribe(data => {
       const parser = new xml2js.Parser({strict: true, trim: true});
       parser.parseString(data.toString(), (err, result) => {
         const patentNumber = result.ZahtevZaPriznanjePatentaCreationDto.podaciOPrijavama[0].novaPrijava[0].brojPrijave[0];
@@ -131,7 +132,12 @@ export class PatentPdfHtmlTableComponent implements OnInit {
   showResenjeZahtevaThatReferencesTo(zahtev: ZahtevZaPriznanjePatentaDto) {
     const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
     this.resenjeZahtevaService.showResenjeZahtevaThatReferencesTo(patentNumber).subscribe(data => {
-      console.log(data);
+      const parser = new xml2js.Parser({strict: true, trim: true});
+      parser.parseString(data.toString(), (err, result) => {
+        console.log(result);
+        const patentNumber = result.ResenjeZahtevaDto.referenca[0];
+        window.open('http://localhost:9000/html/' + patentNumber + '_resenje.html');
+      })
     })
   }
 

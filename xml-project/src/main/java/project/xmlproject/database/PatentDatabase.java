@@ -256,7 +256,7 @@ public class PatentDatabase {
 
             System.out.println("[INFO] Retrieving the document: " + documentId);
             res = (XMLResource) col.getResource(documentId);
-            System.out.println(res.getContent().toString());
+            //System.out.println(res.getContent().toString());
 
             if (res == null) {
                 System.out.println("[WARNING] Document '" + documentId + "' can not be found!");

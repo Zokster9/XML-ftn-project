@@ -34,7 +34,7 @@ export class ModalShowReferenceComponent {
 
   showHTML(zahtev: ZahtevZaPriznanjePatentaDto) {
     event?.preventDefault();
-    this.patentService.showHTML(zahtev).subscribe(data => {
+    this.patentService.showHTML(zahtev.podaciOPrijavama.novaPrijava.brojPrijave).subscribe(data => {
       const parser = new xml2js.Parser({strict: true, trim: true});
       parser.parseString(data.toString(), (err, result) => {
         const patentNumber = result.ZahtevZaPriznanjePatentaCreationDto.podaciOPrijavama[0].novaPrijava[0].brojPrijave[0];
