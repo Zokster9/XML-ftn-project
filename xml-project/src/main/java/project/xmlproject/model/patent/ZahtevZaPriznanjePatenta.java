@@ -10,11 +10,7 @@ package project.xmlproject.model.patent;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 
 /**
@@ -168,6 +164,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Zahtev_za_priznanje_patenta")
 public class ZahtevZaPriznanjePatenta {
 
+    @XmlAttribute(name="id",required = true)
+    protected String id;
     @XmlElement(name = "Podaci_o_prijavama", required = true)
     protected ZahtevZaPriznanjePatenta.PodaciOPrijavama podaciOPrijavama;
     @XmlElement(name = "Naziv_pronalaska", required = true)
@@ -320,6 +318,13 @@ public class ZahtevZaPriznanjePatenta {
      * 
      * 
      */
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = {
         "srpskiNaziv",

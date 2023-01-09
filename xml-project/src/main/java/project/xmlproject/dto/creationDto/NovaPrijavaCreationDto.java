@@ -2,15 +2,13 @@ package project.xmlproject.dto.creationDto;
 
 import project.xmlproject.model.patent.NovaPrijava;
 
+import java.sql.Timestamp;
+
 public class NovaPrijavaCreationDto {
 
     private String brojPrijave;
     private String datumPrijave;
     private String priznatiDatumPrijave;
-
-    public NovaPrijavaCreationDto(){
-
-    }
 
     public NovaPrijavaCreationDto(String brojPrijave, String datumPrijave, String priznatiDatumPrijave) {
         this.brojPrijave = brojPrijave;
@@ -22,6 +20,15 @@ public class NovaPrijavaCreationDto {
         this.brojPrijave = novaPrijava.getBrojPrijave();
         this.datumPrijave = novaPrijava.getDatumPrijave();
         this.priznatiDatumPrijave = novaPrijava.getPriznatiDatumPrijave();
+    }
+
+    public NovaPrijavaCreationDto() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String dateAndTime = timestamp.toString().substring(0, 19);
+        String date = timestamp.toString().substring(0, 10);
+        this.brojPrijave = 'P' + dateAndTime;
+        this.datumPrijave = date;
+        this.priznatiDatumPrijave = "";
     }
 
     public String getBrojPrijave() {
