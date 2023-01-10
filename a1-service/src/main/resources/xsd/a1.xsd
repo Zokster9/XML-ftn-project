@@ -11,6 +11,7 @@
                 <xs:element name="broj_prijave" type="xs:string"/>
                 <xs:element name="datum_prijave" type="xs:date"/>
                 <xs:element name="prilozi_uz_prijavu" type="a1:PriloziUzPrijavu"/>
+                <xs:element name="podnosilac_autor" type="xs:boolean"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -62,6 +63,7 @@
             </xs:element>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="autori" type="a1:Podaci_o_autoru"/>
             <xs:element minOccurs="0" name="naslov_autorskog_dela_prerade" type="xs:string"/>
+            <xs:element minOccurs="0" name="nacin_koriscenja" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="Adresa">

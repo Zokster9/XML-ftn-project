@@ -9,4 +9,5 @@ export interface PodaciOAutorskomDeluDTO {
     anonimniAutor: boolean;
     autori: PodaciOAutoruDTO[];
     naslovAutorskogDelaPrerade: string;
+    nacinKoriscenja?:string;
 }

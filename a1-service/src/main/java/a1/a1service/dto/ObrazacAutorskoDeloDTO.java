@@ -32,6 +32,9 @@ public class ObrazacAutorskoDeloDTO {
     @XmlElement
     private XMLGregorianCalendar datumPrijave;
 
+    @XmlElement
+    private boolean podnosilacAutor;
+
     public ObrazacAutorskoDeloDTO() {
     }
 
@@ -43,6 +46,7 @@ public class ObrazacAutorskoDeloDTO {
         this.brojPrijave = obrazacAutorskoDelo.getBrojPrijave();
         this.datumPrijave = obrazacAutorskoDelo.getDatumPrijave();
         this.priloziUzPrijavuDTO = new PriloziUzPrijavuDTO(obrazacAutorskoDelo.getPriloziUzPrijavu());
+        this.podnosilacAutor = obrazacAutorskoDelo.isPodnosilacAutor();
     }
 
     public FizickoLiceDTO getFizickoLiceDTO() {
@@ -71,5 +75,9 @@ public class ObrazacAutorskoDeloDTO {
 
     public XMLGregorianCalendar getDatumPrijave() {
         return datumPrijave;
+    }
+
+    public boolean isPodnosilacAutor() {
+        return podnosilacAutor;
     }
 }

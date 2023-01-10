@@ -12,4 +12,5 @@ export interface ObrazacAutorskoDeloDTO {
     punomocnikDTO?: PunomocnikDTO;
     podaciOAutorskomDeluDTO: PodaciOAutorskomDeluDTO;
     priloziUzPrijavuDTO?: PriloziUzPrijavuDTO;
+    podnosilacAutor: boolean;
 }

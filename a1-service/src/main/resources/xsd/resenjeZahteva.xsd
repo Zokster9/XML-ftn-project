@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           targetNamespace="http://www.ftn.uns.ac.rs/resenje">
+
+    <xs:element name="Resenje_zahteva">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Datum_resenja" type="xs:string"/>
+                <xs:element name="Zahtev_je_prihvacen" type="xs:boolean"/>
+                <xs:choice>
+                    <xs:element name="Sifra" type="xs:string"/>
+                    <xs:element name="Obrazlozenje" type="xs:string"/>
+                </xs:choice>
+                <xs:element name="Referenca" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

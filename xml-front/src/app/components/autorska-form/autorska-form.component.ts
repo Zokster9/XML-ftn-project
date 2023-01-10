@@ -67,7 +67,8 @@ export class AutorskaFormComponent implements OnInit{
       anonimniAutor: 'ne',
       autorPodnosilac: 'da',
       autori: this.formBuilder.array([]),
-      naslovAutorskogDelaPrerade: ''
+      naslovAutorskogDelaPrerade: '',
+      nacinKoriscenja: ''
     }),
     priloziUzPrijavu: this.formBuilder.group({
       opisAutorskogDela: '',
@@ -143,28 +144,26 @@ export class AutorskaFormComponent implements OnInit{
     if (this.autorskaForm.controls['punomocnik'].value.prekoPunomocnika === 'da') punomocnik = autorskaUtil.kreirajPunomocnika(this.autorskaForm.controls['punomocnik']);
     let podaciOAutorskomDelu: PodaciOAutorskomDeluDTO = autorskaUtil.kreirajPodatkeOAutorskomDelu(this.autorskaForm.controls['podaciOAutorskomDelu'], this.autorskaForm.controls['podnosilac'].controls['fizickoLice']);
     let priloziUzPrijavu: PriloziUzPrijavuDTO = autorskaUtil.kreirajPrilogeUzPrijavu(this.autorskaForm.controls['priloziUzPrijavu']);
-    return this.kreirajObrazac(fizickoLice, pravnoLice, punomocnik, podaciOAutorskomDelu, priloziUzPrijavu);
+    let autorPodnosilac: boolean = this.autorskaForm.controls['podaciOAutorskomDelu'].value.autorPodnosilac === 'da' ? true : false;
+    return this.kreirajObrazac(fizickoLice, pravnoLice, punomocnik, podaciOAutorskomDelu, priloziUzPrijavu, autorPodnosilac);
   }
 
-  kreirajObrazac(fizickoLice: FizickoLiceDTO | undefined, pravnoLice: PravnoLiceDTO | undefined, punomocnik: PunomocnikDTO | undefined, podaciOAutorskomDelu: PodaciOAutorskomDeluDTO, priloziUzPrijavu: PriloziUzPrijavuDTO): ObrazacAutorskoDeloCreationDTO {
+  kreirajObrazac(fizickoLice: FizickoLiceDTO | undefined, pravnoLice: PravnoLiceDTO | undefined, punomocnik: PunomocnikDTO | undefined, podaciOAutorskomDelu: PodaciOAutorskomDeluDTO, priloziUzPrijavu: PriloziUzPrijavuDTO, podnosilacAutor: boolean): ObrazacAutorskoDeloCreationDTO {
     if (fizickoLice === undefined) {
-      if (punomocnik === undefined) return {pravnoLiceDTO: pravnoLice, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu};
-      else return {pravnoLiceDTO: pravnoLice, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu};
+      if (punomocnik === undefined) return {pravnoLiceDTO: pravnoLice, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu, podnosilacAutor: podnosilacAutor};
+      else return {pravnoLiceDTO: pravnoLice, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu, podnosilacAutor: podnosilacAutor};
     } else {
-      if (punomocnik === undefined) return {fizickoLiceDTO: fizickoLice, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu};
-      else return {fizickoLiceDTO: fizickoLice, punomocnikDTO: punomocnik, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu};
+      if (punomocnik === undefined) return {fizickoLiceDTO: fizickoLice, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu, podnosilacAutor: podnosilacAutor};
+      else return {fizickoLiceDTO: fizickoLice, punomocnikDTO: punomocnik, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu, podnosilacAutor: podnosilacAutor};
     }
   }
 
   dobaviZahtev() {
-    let obrazacAutorskoDeloDTO: ObrazacAutorskoDeloDTO;
-    this.autorskaService.dobaviObrazacAutorska('A-1670846129123').subscribe((xmlText) => {
-      console.log(xmlText);
+    this.autorskaService.dobaviPDF('A-1673282816046').subscribe(data => {
       const parser = new xml2js.Parser({strict: true, trim: true});
-        parser.parseString(xmlText.toString(), (err, result) => {
-          obrazacAutorskoDeloDTO = result.ObrazacAutorskoDeloDTO;
-          console.log(obrazacAutorskoDeloDTO);
-        })
+      parser.parseString(data.toString(), (err, result) => {
+        window.open('http://localhost:9002/pdf/' + 'A-1673282816046' + '.pdf');
+      })
     })
   }
 }

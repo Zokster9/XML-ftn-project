@@ -39,7 +39,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
         "podaciOAutorskomDelu",
         "brojPrijave",
         "datumPrijave",
-        "priloziUzPrijavu"
+        "priloziUzPrijavu",
+        "podnosilacAutor"
 })
 @XmlRootElement(name = "obrazac_autorsko_delo")
 public class ObrazacAutorskoDelo {
@@ -56,6 +57,8 @@ public class ObrazacAutorskoDelo {
     protected XMLGregorianCalendar datumPrijave;
     @XmlElement(name = "prilozi_uz_prijavu", required = true)
     protected PriloziUzPrijavu priloziUzPrijavu;
+    @XmlElement(name = "podnosilac_autor", required = true)
+    protected boolean podnosilacAutor;
 
     /**
      * Gets the value of the podnosilac property.
@@ -201,4 +204,11 @@ public class ObrazacAutorskoDelo {
         this.priloziUzPrijavu = value;
     }
 
+    public boolean isPodnosilacAutor() {
+        return podnosilacAutor;
+    }
+
+    public void setPodnosilacAutor(boolean podnosilacAutor) {
+        this.podnosilacAutor = podnosilacAutor;
+    }
 }

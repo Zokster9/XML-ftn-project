@@ -36,6 +36,9 @@ public class PodaciOAutorskomDeluDTO {
     @XmlElement
     private String naslovAutorskogDelaPrerade;
 
+    @XmlElement
+    private String nacinKoriscenja;
+
     public PodaciOAutorskomDeluDTO() {
         autori = new ArrayList<>();
     }
@@ -54,6 +57,7 @@ public class PodaciOAutorskomDeluDTO {
             }
         }
         this.naslovAutorskogDelaPrerade = podaciOAutorskomDelu.getNaslovAutorskogDelaPrerade();
+        this.nacinKoriscenja = podaciOAutorskomDelu.getNacinKoriscenja();
     }
 
     public String getNaslov() {
@@ -86,5 +90,9 @@ public class PodaciOAutorskomDeluDTO {
 
     public String getNaslovAutorskogDelaPrerade() {
         return naslovAutorskogDelaPrerade;
+    }
+
+    public String getNacinKoriscenja() {
+        return nacinKoriscenja;
     }
 }

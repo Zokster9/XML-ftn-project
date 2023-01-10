@@ -48,7 +48,8 @@ import javax.xml.bind.annotation.XmlType;
         "stvorenoURadnomOdnosu",
         "anonimniAutor",
         "autori",
-        "naslovAutorskogDelaPrerade"
+        "naslovAutorskogDelaPrerade",
+        "nacinKoriscenja"
 })
 public class PodaciOAutorskomDelu {
 
@@ -67,6 +68,8 @@ public class PodaciOAutorskomDelu {
     protected List<PodaciOAutoru> autori;
     @XmlElement(name = "naslov_autorskog_dela_prerade")
     protected String naslovAutorskogDelaPrerade;
+    @XmlElement(name = "nacin_koriscenja")
+    protected String nacinKoriscenja;
 
     /**
      * Gets the value of the naslov property.
@@ -259,4 +262,11 @@ public class PodaciOAutorskomDelu {
         this.naslovAutorskogDelaPrerade = value;
     }
 
+    public String getNacinKoriscenja() {
+        return nacinKoriscenja;
+    }
+
+    public void setNacinKoriscenja(String nacinKoriscenja) {
+        this.nacinKoriscenja = nacinKoriscenja;
+    }
 }

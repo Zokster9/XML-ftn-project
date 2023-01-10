@@ -31,6 +31,8 @@ public class MarshalAutorska {
 
         obrazacAutorskoDelo.setDatumPrijave(marshalGenerisanjeDatumaPrijave());
 
+        obrazacAutorskoDelo.setPodnosilacAutor(obrazacAutorskoDeloCreationDTO.isPodnosilacAutor());
+
         return obrazacAutorskoDelo;
     }
 
@@ -93,6 +95,7 @@ public class MarshalAutorska {
         podaciOAutorskomDelu.setNaslovAutorskogDelaPrerade(podaciOAutorskomDeluDTO.getNaslovAutorskogDelaPrerade());
         podaciOAutorskomDelu.setStvorenoURadnomOdnosu(podaciOAutorskomDeluDTO.getStvorenoURadnomOdnosu());
         podaciOAutorskomDelu.setAnonimniAutor(podaciOAutorskomDeluDTO.isAnonimniAutor());
+        podaciOAutorskomDelu.setNacinKoriscenja(podaciOAutorskomDeluDTO.getNacinKoriscenja());
         if (!podaciOAutorskomDeluDTO.isAnonimniAutor()) {
             podaciOAutorskomDelu.setAutori(marshalPodaciOAutorima(podaciOAutorskomDeluDTO.getAutori()));
         }

@@ -21,6 +21,9 @@ public class ObrazacAutorskoDeloCreationDTO {
     @XmlElement
     private PriloziUzPrijavuDTO priloziUzPrijavuDTO;
 
+    @XmlElement
+    private boolean podnosilacAutor;
+
     public ObrazacAutorskoDeloCreationDTO() {
     }
 
@@ -42,5 +45,9 @@ public class ObrazacAutorskoDeloCreationDTO {
 
     public PriloziUzPrijavuDTO getPriloziUzPrijavuDTO() {
         return priloziUzPrijavuDTO;
+    }
+
+    public boolean isPodnosilacAutor() {
+        return podnosilacAutor;
     }
 }

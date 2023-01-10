@@ -75,7 +75,8 @@ export default class AutorskaUtil {
             stvorenoURadnomOdnosu: (podaciOAutorskomDeluForm.value.stvorenoURadnomOdnosu as string) === 'da' ? true : false,
             anonimniAutor: (podaciOAutorskomDeluForm.value.anonimniAutor as string) === 'da' ? true : false,
             naslovAutorskogDelaPrerade: podaciOAutorskomDeluForm.value.naslovAutorskogDelaPrerade,
-            autori: this.krerajPodatkeOAutoru(podaciOAutorskomDeluForm, (podaciOAutorskomDeluForm.controls['autori'] as FormArray).controls as FormControl[], fizickoLiceForm)
+            autori: this.krerajPodatkeOAutoru(podaciOAutorskomDeluForm, (podaciOAutorskomDeluForm.controls['autori'] as FormArray).controls as FormControl[], fizickoLiceForm),
+            nacinKoriscenja: podaciOAutorskomDeluForm.value.nacinKoriscenja
         }
         return podaciOAutorskomDelu;
     }

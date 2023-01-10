@@ -24,5 +24,14 @@ export class AutorskaService {
         const xmlOdgovor = this.httpClient.get(this.url + '/autorska/dobavi-autorsko/' + brojPrijave, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
         return xmlOdgovor;
     }
-    
+
+    dobaviHTML(brojPrijave: string) {
+        const xmlOdgovor = this.httpClient.get(this.url + '/autorska/dobavi-html/' + brojPrijave, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
+        return xmlOdgovor;
+    }
+
+    dobaviPDF(brojPrijave: string) {
+        const xmlOdgovor = this.httpClient.get(this.url + '/autorska/dobavi-pdf/' + brojPrijave, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
+        return xmlOdgovor;
+    }
 }
