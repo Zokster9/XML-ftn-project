@@ -1,0 +1,57 @@
+package a1.a1service.dto;
+
+import a1.a1service.model.ResenjeZahteva;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+
+public class ResenjeZahtevaDTO {
+
+    protected XMLGregorianCalendar datumResenja;
+    protected boolean zahtevJePrihvacen;
+    protected String sifra;
+    protected String obrazlozenje;
+    protected String referenca;
+    protected String imeSluzbenika;
+    protected String prezimeSluzbenika;
+
+    public ResenjeZahtevaDTO() {
+    }
+
+    public ResenjeZahtevaDTO(ResenjeZahteva resenjeZahteva) {
+        this.datumResenja = resenjeZahteva.getDatumResenja();
+        this.zahtevJePrihvacen = resenjeZahteva.isZahtevJePrihvacen();
+        this.sifra = resenjeZahteva.getSifra();
+        this.obrazlozenje = resenjeZahteva.getObrazlozenje();
+        this.referenca = resenjeZahteva.getReferenca();
+        this.imeSluzbenika = resenjeZahteva.getImeSluzbenika();
+        this.prezimeSluzbenika = resenjeZahteva.getPrezimeSluzbenika();
+    }
+
+    public XMLGregorianCalendar getDatumResenja() {
+        return datumResenja;
+    }
+
+    public boolean isZahtevJePrihvacen() {
+        return zahtevJePrihvacen;
+    }
+
+    public String getSifra() {
+        return sifra;
+    }
+
+    public String getObrazlozenje() {
+        return obrazlozenje;
+    }
+
+    public String getReferenca() {
+        return referenca;
+    }
+
+    public String getImeSluzbenika() {
+        return imeSluzbenika;
+    }
+
+    public String getPrezimeSluzbenika() {
+        return prezimeSluzbenika;
+    }
+}

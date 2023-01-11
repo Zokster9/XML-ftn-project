@@ -1,0 +1,56 @@
+.w-80 {
+    width: 80%;
+    margin: auto;
+}
+
+.margin-left-2 {
+    margin-left: 2%;
+}
+
+.margin-bot-3 {
+    margin-bottom: 3%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.arial_font {
+    font-family: Arial;
+}
+
+.float-right {
+    float: left;
+    width: 30%;
+    margin-right: 2%;
+}
+
+.float-first-right {
+    float: left;
+    width: 30%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+::placeholder {
+    font-family: Arial;
+}
+
+.borderless_input {
+    border: none;
+    outline: none;
+}
+
+.input_size {
+    padding: 12px;
+    line-height: 2px;
+    width: 30%;
+}
+
+.bg_gray {
+    background: rgb(238, 237, 237);
+}
+
+.new-line {
+    clear: both;
+}

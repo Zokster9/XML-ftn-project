@@ -6,7 +6,7 @@ import { PunomocnikDTO } from "./PunomocnikDTO";
 
 export interface ObrazacAutorskoDeloDTO {
     brojPrijave: string;
-    datumPrijave: number;
+    datumPrijave: Date;
     fizickoLiceDTO?: FizickoLiceDTO;
     pravnoLiceDTO?: PravnoLiceDTO;
     punomocnikDTO?: PunomocnikDTO;

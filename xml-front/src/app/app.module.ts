@@ -11,6 +11,7 @@ import { ModalAcceptDeclineRequestComponent } from './components/modal-accept-de
 import { ModalShowReferenceComponent } from './components/modal-show-reference/modal-show-reference.component';
 import { PatentFormXonomyComponent } from './components/patent-form-xonomy/patent-form-xonomy.component';
 import { AutorskaFormComponent } from './components/autorska-form/autorska-form.component';
+import { AutorskaTableComponent } from './components/autorska-table/autorska-table.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AutorskaFormComponent } from './components/autorska-form/autorska-form.
     ModalAcceptDeclineRequestComponent,
     ModalShowReferenceComponent,
     PatentFormXonomyComponent,
-    AutorskaFormComponent
+    AutorskaFormComponent,
+    AutorskaTableComponent
   ],
   imports: [
     BrowserModule,
