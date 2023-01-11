@@ -1,0 +1,337 @@
+<form class="card p-3 bg-light w-75 mt-3 margin-left-30" [formGroup]="autorskaForm">
+    <section formGroupName="podnosilac">
+        <h5 class="mb-2 arial_font title-left new-line"><b>Podnosliac</b></h5>
+        <div class="form-check title-left mt-1">
+            <input class="form-check-input" type="radio" name="vrstaPodnosioca" id="fizickoLice" value="fizickoLice" formControlName="vrstaPodnosioca" checked>
+            <label class="form-check-label arial_font" for="fizickoLice">Fizicko lice</label>
+        </div>
+        <div class="form-check title-right mt-1">
+            <input class="form-check-input" type="radio" name="vrstaPodnosioca" id="pravnoLice" value="pravnoLice" formControlName="vrstaPodnosioca">
+            <label class="form-check-label arial_font" for="pravnoLice">Pravno lice</label>
+        </div>
+    </section>
+    <br>
+    <section formGroupName="podnosilac">
+        <div class="left_element">
+            <label for="emailPodnosioca" class="arial_font">Email adresa</label>
+            <input formControlName="email" type="email" id="emailPodnosioca" name="emailPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite email adresu" required>
+        </div>
+        <div class="right_element">
+            <label for="telefonPodnosioca" class="arial_font">Broj telefona</label>
+            <input formControlName="telefon" type="text" id="telefonPodnosioca" name="telefonPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj telefona" required>
+        </div>
+    </section>
+
+    <!--Ako je odabrano fizicko lice-->
+    <div *ngIf="autorskaForm.get('podnosilac')?.get('vrstaPodnosioca')?.value === 'fizickoLice'">
+        <section formGroupName="podnosilac">
+            <div class="left-elem-three" formGroupName="fizickoLice">
+                <label for="imePodnosioca" class="arial_font">Ime</label>
+                <input formControlName="ime" type="text" id="imePodnosioca" name="imePodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ime" required>
+            </div>
+            <div class="left-elem-three" formGroupName="fizickoLice">
+                <label for="prezimePodnosioca" class="arial_font">Prezime</label>
+                <input formControlName="prezime" type="text" id="prezimePodnosioca" name="prezimePodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite prezime" required>
+            </div>
+            <div class="right-elem-three" formGroupName="fizickoLice">
+                <label for="drzavljanstvoPodnosioca" class="arial_font">Drzavljanstvo</label>
+                <input formControlName="drzavljanstvo" type="text" id="drzavljanstvoPodnosioca" name="drzavljanstvoPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite drzavljanstvo" required>
+            </div>
+        </section>
+
+        <h6 class="mb-2 arial_font"><b>Adresa podnosioca</b></h6>
+        <section formGroupName="podnosilac">
+            <div formGroupName="fizickoLice">
+                <div class="left_element" formGroupName="adresaLica">
+                    <label for="mestoPodnosioca" class="arial_font">Grad</label>
+                    <input formControlName="grad" type="text" id="mestoPodnosioca" name="mestoPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+                </div>
+                <div class="right_element" formGroupName="adresaLica">
+                    <label for="drzavaPodnosioca" class="arial_font">Država</label>
+                    <input formControlName="drzava" type="text" id="drzavaPodnosioca" name="drzavaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
+                </div>
+            </div>
+            <div formGroupName="fizickoLice">
+                <div class="left-elem-three" formGroupName="adresaLica">
+                    <label for="ulicaPodnosioca" class="arial_font">Ulica</label>
+                    <input formControlName="ulica" type="text" id="ulicaPodnosioca" name="ulicaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu" required>
+                </div>
+                <div class="left-elem-three" formGroupName="adresaLica">
+                    <label for="brojPodnosioca" class="arial_font">Broj</label>
+                    <input formControlName="broj" type="number" id="brojPodnosioca" name="brojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj" required>
+                </div>
+                <div class="right-elem-three" formGroupName="adresaLica">
+                    <label for="postanskiBrojPodnosioca" class="arial_font">Poštanski broj</label>
+                    <input formControlName="postanskiBroj" type="number" id="postanskiBrojPodnosioca" name="postanskiBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <!--Ako je odabrano pravno lice-->
+    <div *ngIf="autorskaForm.get('podnosilac')?.get('vrstaPodnosioca')?.value === 'pravnoLice'">
+        <section formGroupName="podnosilac">
+            <div formGroupName="pravnoLice">
+                <label for="poslovnoImePodnosioca" class="arial_font">Poslovno ime</label>
+                <input formControlName="poslovnoIme" type="text" id="poslovnoImePodnosioca" name="poslovnoImePodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poslovno ime" required>
+            </div>
+        </section>
+        <h6 class="mb-2 arial_font"><b>Sediste podnosioca</b></h6>
+        <section formGroupName="podnosilac">
+            <div formGroupName="pravnoLice">
+                <div class="left_element" formGroupName="sediste">
+                    <label for="mestoPodnosioca" class="arial_font">Grad</label>
+                    <input formControlName="grad" type="text" id="mestoPodnosioca" name="mestoPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+                </div>
+                <div class="right_element" formGroupName="sediste">
+                    <label for="drzavaPodnosioca" class="arial_font">Država</label>
+                    <input formControlName="drzava" type="text" id="drzavaPodnosioca" name="drzavaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
+                </div>
+            </div>
+            <div formGroupName="pravnoLice">
+                <div class="left-elem-three" formGroupName="sediste">
+                    <label for="ulicaPodnosioca" class="arial_font">Ulica</label>
+                    <input formControlName="ulica" type="text" id="ulicaPodnosioca" name="ulicaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu" required>
+                </div>
+                <div class="left-elem-three" formGroupName="sediste">
+                    <label for="brojPodnosioca" class="arial_font">Broj</label>
+                    <input formControlName="broj" type="number" id="brojPodnosioca" name="brojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj" required>
+                </div>
+                <div class="right-elem-three" formGroupName="sediste">
+                    <label for="postanskiBrojPodnosioca" class="arial_font">Poštanski broj</label>
+                    <input formControlName="postanskiBroj" type="number" id="postanskiBrojPodnosioca" name="postanskiBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+                </div>
+            </div>
+        </section>
+    </div>
+    <hr>
+
+    <!-- PUNOMOCNIK -->
+    <section formGroupName="punomocnik">
+        <h5 class="mb-2 arial_font title-left new-line"><b>Punomocnik</b></h5>
+        <div class="form-check title-left mt-1">
+            <input class="form-check-input" type="radio" name="prekoPunomocnika" id="da" value="da" formControlName="prekoPunomocnika">
+            <label class="form-check-label arial_font" for="da">Prijava se podnosi preko punomocnika</label>
+        </div>
+        <div class="form-check title-right mt-1">
+            <input class="form-check-input" type="radio" name="prekoPunomocnika" id="ne" value="ne" formControlName="prekoPunomocnika" checked>
+            <label class="form-check-label arial_font" for="ne">Prijava se NE podnosi preko punomocnika</label>
+        </div>
+    </section>
+
+    <div *ngIf="autorskaForm.get('punomocnik')?.get('prekoPunomocnika')?.value === 'da'">
+        <section formGroupName="punomocnik">
+            <div class="left_element">
+                <label for="imePunomocnika" class="arial_font">Ime</label>
+                <input formControlName="ime" type="text" id="imePunomocnika" name="imePunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ime" required>
+            </div>
+            <div class="right_element">
+                <label for="prezimePunomocnika" class="arial_font">Prezime</label>
+                <input formControlName="prezime" type="text" id="prezimePunomocnika" name="prezimePunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite prezime" required>
+            </div>
+        </section>
+
+        <h6 class="mb-2 arial_font"><b>Adresa punomocnika</b></h6>
+        <section formGroupName="punomocnik">
+            <div>
+                <div class="left_element" formGroupName="adresa">
+                    <label for="mestoPunomocnika" class="arial_font">Grad</label>
+                    <input formControlName="grad" type="text" id="mestoPunomocnika" name="mestoPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+                </div>
+                <div class="right_element" formGroupName="adresa">
+                    <label for="drzavaPunomocnika" class="arial_font">Država</label>
+                    <input formControlName="drzava" type="text" id="drzavaPunomocnika" name="drzavaPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
+                </div>
+            </div>
+            <div>
+                <div class="left-elem-three" formGroupName="adresa">
+                    <label for="ulicaPunomocnika" class="arial_font">Ulica</label>
+                    <input formControlName="ulica" type="text" id="ulicaPunomocnika" name="ulicaPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu" required>
+                </div>
+                <div class="left-elem-three" formGroupName="adresa">
+                    <label for="brojPunomocnika" class="arial_font">Broj</label>
+                    <input formControlName="broj" type="number" id="brojPunomocnika" name="brojPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj" required>
+                </div>
+                <div class="right-elem-three" formGroupName="adresa">
+                    <label for="postanskiBrojPunomocnika" class="arial_font">Poštanski broj</label>
+                    <input formControlName="postanskiBroj" type="number" id="postanpostanskiBrojPunomocnikaskiBrojPodnosioca" name="postanskiBrojPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+                </div>
+            </div>
+        </section>
+    </div>
+    <hr>
+
+    <!-- PUDACI O AUTORSKOM DELU -->
+    <section formGroupName="podaciOAutorskomDelu">
+        <h5 class="mb-2 arial_font title-left new-line"><b>Podaci o autorskom delu</b></h5>
+        <div class="form-check title-left mt-1">
+            <input class="form-check-input" type="radio" name="stvorenoURadnomOdnosu" id="da" value='da' formControlName="stvorenoURadnomOdnosu" checked>
+            <label class="form-check-label arial_font" for='da'>Autorsko delo stvoreno u radnom odnosu</label>
+        </div>
+        <div class="form-check title-right mt-1">
+            <input class="form-check-input" type="radio" name="stvorenoURadnomOdnosu" id="ne" value='ne' formControlName="stvorenoURadnomOdnosu">
+            <label class="form-check-label arial_font" for='ne'>Autorsko delo nije stvoreno u radnom odnosu</label>
+        </div>
+    </section>
+    <br>
+
+    <div formGroupName="podaciOAutorskomDelu">
+        <label for="naslovAutorskogDela" class="arial_font">Naslov autorskog dela</label>
+        <input formControlName="naslov" type="text" id="naslovAutorskogDela" name="naslovAutorskogDela" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite naslov autorskog dela" required>
+    </div>
+    <div formGroupName="podaciOAutorskomDelu">
+        <div class="left_element">
+            <label for="alternativniNaslogDela" class="arial_font">Alternativni naslov autorskog dela (ako postoji)</label>
+            <input formControlName="alternativniNaslov" type="text" id="alternativniNaslogDela" name="alternativniNaslogDela" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite alternativni naslov">
+        </div>
+        <div class="right_element">
+            <label for="naslovDelaPrerade" class="arial_font">Naslov autorskog dela na kome se zasniva delo prerade (ako postoji)</label>
+            <input formControlName="naslovAutorskogDelaPrerade" type="text" id="naslovDelaPrerade" name="naslovDelaPrerade" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite naslov autorskog dela polaznog autorskog dela">
+        </div>
+    </div>
+    <div formGroupName="podaciOAutorskomDelu">
+        <div class="left_element">
+            <label for="vrstaAutorskogDela" class="arial_font">Vrsta autorskog dela</label>
+            <input formControlName="vrsta" type="text" id="vrstaAutorskogDela" name="vrstaAutorskogDela" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite vrstu autorskog dela" required>
+        </div>
+        <div class="right_element">
+            <label for="formaZapisaAutorskogDela" class="arial_font">Forma zapisa autorskog dela</label>
+            <input formControlName="formaZapisa" type="text" id="formaZapisaAutorskogDela" name="formaZapisaAutorskogDela" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite formu zapisa autorskog dela">
+        </div>
+    </div>
+    <div formGroupName="podaciOAutorskomDelu">
+        <label for="nacinKoriscenja" class="arial_font">Nacin koriscenja autorskog dela</label>
+        <input formControlName="nacinKoriscenja" type="text" id="nacinKoriscenja" name="nacinKoriscenja" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite nacin koriscenja autorskog dela" required>
+    </div>
+    <!-- AUTORI -->
+    <br>
+    <div formGroupName="podaciOAutorskomDelu">
+        <div class="left-elem-three arial_font"><b>Autorsko delo je delo anonimnog autora:</b></div>
+        <div class="form-check left-elem-three mt-1">
+            <input class="form-check-input" type="radio" name="anonimniAutor" id="da" value='da' formControlName="anonimniAutor" checked>
+            <label class="form-check-label arial_font" for='da'>Da</label>
+        </div>
+        <div class="form-check right-elem-three mt-1">
+            <input class="form-check-input" type="radio" name="anonimniAutor" id="ne" value='ne' formControlName="anonimniAutor">
+            <label class="form-check-label arial_font" for='ne'>Ne</label>
+        </div>
+    </div>
+    <br>
+    <div formGroupName="podaciOAutorskomDelu">
+        <div class="left-elem-three arial_font"><b>Podnosilac zahteva je autor:</b></div>
+        <div class="form-check left-elem-three mt-1">
+            <input class="form-check-input" type="radio" name="autorPodnosilac" id="da" value='da' formControlName="autorPodnosilac" (click)="autorJePodnosilacClick()" checked>
+            <label class="form-check-label arial_font" for='da'>Da</label>
+        </div>
+        <div class="form-check right-elem-three mt-1">
+            <input class="form-check-input" type="radio" name="autorPodnosilac" id="ne" value='ne' formControlName="autorPodnosilac" (click)="autorNijePodnosilacClick()">
+            <label class="form-check-label arial_font" for='ne'>Ne</label>
+        </div>
+    </div>
+
+    <div *ngIf="autorskaForm.get('podaciOAutorskomDelu')?.get('autorPodnosilac')?.value === 'ne' && autorskaForm.get('podaciOAutorskomDelu')?.get('anonimniAutor')?.value === 'ne'">
+        <section formGroupName="podaciOAutorskomDelu">
+            <div formArrayName="autori">
+                <div *ngFor="let autor of autori.controls; let i = index">
+                    <hr>
+                    <br>
+                    <section [formGroupName]="i">
+                        <h6 class="mb-2 arial_font title-left new-line"><b>Autor</b></h6>
+                        <div class="form-check title-left mt-1">
+                            <input class="form-check-input" type="radio" name="autorZiv" id="da" value="da" formControlName="autorZiv" checked>
+                            <label class="form-check-label arial_font" for="da">Autor je ziv</label>
+                        </div>
+                        <div class="form-check title-right mt-1">
+                            <input class="form-check-input" type="radio" name="autorZiv" id="ne" value="ne" formControlName="autorZiv">
+                            <label class="form-check-label arial_font" for="ne">Autor je preminuo</label>
+                        </div>
+                    </section>
+                    <br><br>
+                    <div *ngIf="autorskaForm.get('podaciOAutorskomDelu')?.get('autori')?.get([i])?.get('autorZiv')?.value === 'da'">
+                        <section [formGroupName]="i">
+                            <div class="left-elem-three">
+                                <label for="imeAutora" class="arial_font">Ime</label>
+                                <input formControlName="ime" type="text" id="imeAutora" name="imeAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ime" required>
+                            </div>
+                            <div class="left-elem-three">
+                                <label for="prezimeAutora" class="arial_font">Prezime</label>
+                                <input formControlName="prezime" type="text" id="prezimeAutora" name="prezimeAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite prezime" required>
+                            </div>
+                            <div class="right-elem-three">
+                                <label for="drzavljanstvoAutora" class="arial_font">Drzavljanstvo</label>
+                                <input formControlName="drzavljanstvo" type="text" id="drzavljanstvoAutora" name="drzavljanstvoAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite drzavljanstvo" required>
+                            </div>
+                        </section>
+                        <h6 class="mb-2 arial_font"><b>Adresa autora</b></h6>
+                        <section [formGroupName]="i">
+                            <div formGroupName="adresa">
+                                <div class="left_element">
+                                    <label for="gradAutora" class="arial_font">Grad</label>
+                                    <input formControlName="grad" type="text" id="gradAutora" name="gradAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+                                </div>
+                                <div class="right_element">
+                                    <label for="drzavaAutora" class="arial_font">Država</label>
+                                    <input formControlName="drzava" type="text" id="drzavaAutora" name="drzavaAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
+                                </div>
+                            </div>
+                            <div formGroupName="adresa">
+                                <div class="left-elem-three">
+                                    <label for="ulicaAutora" class="arial_font">Ulica</label>
+                                    <input formControlName="ulica" type="text" id="ulicaAutora" name="ulicaAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu" required>
+                                </div>
+                                <div class="left-elem-three">
+                                    <label for="brojAutora" class="arial_font">Broj</label>
+                                    <input formControlName="broj" type="number" id="brojAutora" name="brojAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj" required>
+                                </div>
+                                <div class="right-elem-three">
+                                    <label for="postanskiBrojAutora" class="arial_font">Poštanski broj</label>
+                                    <input formControlName="postanskiBroj" type="number" id="postanskiBrojAutora" name="postanskiBrojAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div *ngIf="autorskaForm.get('podaciOAutorskomDelu')?.get('autori')?.get([i])?.get('autorZiv')?.value === 'ne'">
+                        <div class="left-elem-three" [formGroupName]="i">
+                            <label for="imeAutora" class="arial_font">Ime</label>
+                            <input formControlName="ime" type="text" id="imeAutora" name="imeAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ime" required>
+                        </div>
+                        <div class="left-elem-three" [formGroupName]="i">
+                            <label for="prezimeAutora" class="arial_font">Prezime</label>
+                            <input formControlName="prezime" type="text" id="prezimeAutora" name="prezimeAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite prezime" required>
+                        </div>
+                        <div class="right-elem-three" [formGroupName]="i">
+                            <label for="godinaSmrtiAutora" class="arial_font">Godina smrti</label>
+                            <input formControlName="godinaSmrti" type="text" id="godinaSmrtiAutora" name="godinaSmrtiAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite godinu smrti" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <hr>
+
+    <!-- PRILOZI UZ PRIJAVU -->
+    <section formGroupName="priloziUzPrijavu">
+        <h5 class="mb-2 arial_font title-left new-line"><b>Prilozi uz prijavu</b></h5>
+    </section>
+    <br>
+
+    <div formGroupName="priloziUzPrijavu">
+        <div class="left_element">
+            <label for="opisAutorskogDela" class="arial_font">Opis autorskog dela</label>
+            <input formControlName="opisAutorskogDela" type="file" id="opisAutorskogDela" name="opisAutorskogDela">
+        </div>
+        <div class="right_element">
+            <label for="primerAutorskogDela" class="arial_font">Primer autorskog dela</label>
+            <input formControlName="primerAutorskogDela" type="file" id="primerAutorskogDela" name="primerAutorskogDela">
+        </div>
+    </div>
+    <br>
+    <hr>
+
+    <button type="submit" class="btn btn-primary arial_font btn-block mb-3" (click)="dodajZahtev()">Pošalji</button>
+    <br>
+    <hr>
+    <button type="submit" class="btn btn-dark arial_font btn-block mb-3" (click)="dobaviZahtev()">Dobavi iz baze</button>
+
+</form>

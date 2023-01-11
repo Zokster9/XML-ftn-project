@@ -10,6 +10,8 @@ import { PatentPdfHtmlTableComponent } from './components/patent-pdf-html-table/
 import { ModalAcceptDeclineRequestComponent } from './components/modal-accept-decline-request/modal-accept-decline-request.component';
 import { ModalShowReferenceComponent } from './components/modal-show-reference/modal-show-reference.component';
 import { PatentFormXonomyComponent } from './components/patent-form-xonomy/patent-form-xonomy.component';
+import { AutorskaFormComponent } from './components/autorska-form/autorska-form.component';
+import { AutorskaTableComponent } from './components/autorska-table/autorska-table.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { PatentFormXonomyComponent } from './components/patent-form-xonomy/paten
     PatentPdfHtmlTableComponent,
     ModalAcceptDeclineRequestComponent,
     ModalShowReferenceComponent,
-    PatentFormXonomyComponent
+    PatentFormXonomyComponent,
+    AutorskaFormComponent,
+    AutorskaTableComponent
   ],
   imports: [
     BrowserModule,
