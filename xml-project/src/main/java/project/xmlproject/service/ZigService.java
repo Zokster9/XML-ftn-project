@@ -2,13 +2,19 @@ package project.xmlproject.service;
 
 
 import org.springframework.stereotype.Service;
+import project.xmlproject.database.ZigDatabase;
 import project.xmlproject.model.zig.ZahtevZaPriznanjeZiga;
 import project.xmlproject.repository.ZigRepository;
+import project.xmlproject.transformXML.ZigTransformation;
 
 @Service
 public class ZigService {
 
     private final ZigRepository zigRepository = new ZigRepository();
+
+    private final ZigDatabase zigDatabase = new ZigDatabase();
+
+    private final ZigTransformation zigTransformation = new ZigTransformation();
 
     public ZahtevZaPriznanjeZiga addZig(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) throws Exception {
         return zigRepository.save(zahtevZaPriznanjeZiga);
@@ -16,5 +22,21 @@ public class ZigService {
 
     public ZahtevZaPriznanjeZiga getZig() throws Exception {
         return zigRepository.getZig();
+    }
+
+    public ZahtevZaPriznanjeZiga createZigHtml(String brojPrijave) throws Exception {
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigDatabase.getByBrojPrijave(brojPrijave);
+        String htmlFile = "src/main/resources/static/html/" + brojPrijave + ".html";
+        zigTransformation.generateHTML(htmlFile, zahtevZaPriznanjeZiga);
+        return zahtevZaPriznanjeZiga;
+    }
+
+    public ZahtevZaPriznanjeZiga createZigPdf(String brojPrijave) throws Exception {
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigDatabase.getByBrojPrijave(brojPrijave);
+        String htmlFile = "src/main/resources/static/html/" + brojPrijave + ".html";
+        String pdfFile = "src/main/resources/static/pdf/" + brojPrijave + ".pdf";
+        zigTransformation.generateHTML(htmlFile, zahtevZaPriznanjeZiga);
+        zigTransformation.generatePDF(htmlFile, pdfFile);
+        return zahtevZaPriznanjeZiga;
     }
 }

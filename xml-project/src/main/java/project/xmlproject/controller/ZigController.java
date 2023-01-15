@@ -4,9 +4,7 @@ package project.xmlproject.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.xmlproject.Util.ZigExample;
 import project.xmlproject.model.zig.*;
 import project.xmlproject.service.ZigService;
@@ -24,7 +22,7 @@ public class ZigController {
     @Autowired
     private ZigService zigService;
 
-    @GetMapping(value = "/create")
+    @PostMapping(value = "/create")
     public ResponseEntity<Void> createZig() throws Exception {
         // root
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = new ZahtevZaPriznanjeZiga();
@@ -87,7 +85,14 @@ public class ZigController {
         // 3. element: KlaseRobeIUsluga
         // sub elements: klasa
         ZahtevZaPriznanjeZiga.KlaseRobeIUsluga klaseRobeIUsluga = new ZahtevZaPriznanjeZiga.KlaseRobeIUsluga();
-        Collections.addAll(klaseRobeIUsluga.getKlasa(), 1, 2, 12);
+        for (int i = 0; i < 45; i++) {
+            klaseRobeIUsluga.getKlasa().add(0);
+        }
+        //Collections.addAll(klaseRobeIUsluga.getKlasa(), 1, 2, 12);
+
+        klaseRobeIUsluga.getKlasa().set(0, 1);
+        klaseRobeIUsluga.getKlasa().set(1, 2);
+        klaseRobeIUsluga.getKlasa().set(11, 12);
 
         // 4. element: PlaceneTakse
         // sub elements: osnovnaTaksa, taksaZaKlase, taksaZaGrafickoResenje, ukupnaTaksa
@@ -148,14 +153,13 @@ public class ZigController {
         priloziUzZahtev.setSpisakRobeIUsluga(spisakRobeIUsluga);
         priloziUzZahtev.setDokazOUplatiTakse(dokazOUplatiTakse);
 
-        podaciOPrijavi.setBrojPrijaveZiga("Z-23456/23");
+        podaciOPrijavi.setBrojPrijaveZiga("Z-23456-24");
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(new Date());
         XMLGregorianCalendar xCal = DatatypeFactory.newInstance()
                 .newXMLGregorianCalendar(cal);
         podaciOPrijavi.setDatumPodnosenja(xCal);
         podaciOPrijavi.setPriloziUzZahtev(priloziUzZahtev);
-
         zahtevZaPriznanjeZiga.setPodnosiociPrijave(podnosiociPrijave);
         zahtevZaPriznanjeZiga.setZig(zig);
         zahtevZaPriznanjeZiga.setKlaseRobeIUsluga(klaseRobeIUsluga);
@@ -192,6 +196,18 @@ public class ZigController {
         zahtevZaPriznanjeZiga.getPodnosiociPrijave().getPodnosilacPrijave().add(pravnoLice);
 
         zigExample.printZahtevZaPriznanjeZiga(zahtevZaPriznanjeZiga);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value="/create-zig-html/{brojPrijave}", produces = "application/xml")
+    public ResponseEntity<Void> getZigHTML(@PathVariable String brojPrijave) throws Exception {
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjePatenta = zigService.createZigHtml(brojPrijave);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value="/create-zig-pdf/{brojPrijave}", produces = "application/xml")
+    public ResponseEntity<Void> getZigPDF(@PathVariable String brojPrijave) throws Exception {
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjePatenta = zigService.createZigPdf(brojPrijave);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
