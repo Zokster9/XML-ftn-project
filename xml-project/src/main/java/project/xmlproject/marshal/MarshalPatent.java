@@ -127,7 +127,7 @@ public class MarshalPatent {
     public ZahtevZaPriznanjePatenta.Pronalazac marshalPronalazac(ZahtevZaPriznanjePatentaCreationDto zahtevZaPriznanjePatentaCreationDto) {
         ZahtevZaPriznanjePatenta.Pronalazac pronalazac = new ZahtevZaPriznanjePatenta.Pronalazac();
         pronalazac.setAdresa(marshalAdresa(zahtevZaPriznanjePatentaCreationDto.getPronalazac().getAdresa()));
-        pronalazac.setKontaktPodaci(marshalKontaktPodaci(zahtevZaPriznanjePatentaCreationDto.getPunomocnik().getKontaktPodaci()));
+        pronalazac.setKontaktPodaci(marshalKontaktPodaci(zahtevZaPriznanjePatentaCreationDto.getPronalazac().getKontaktPodaci()));
         pronalazac.setNaziv(zahtevZaPriznanjePatentaCreationDto.getPronalazac().getNaziv());
         pronalazac.setZeliBitiUPrijavi(zahtevZaPriznanjePatentaCreationDto.getPronalazac().getZeliBitiUPrijavi());
         return pronalazac;

@@ -24,8 +24,7 @@ public class ResenjeZahtevaRepository {
         }
         zahtevZaPriznanjePatenta.getPodaciOPrijavama().getNovaPrijava().setPriznatiDatumPrijave(priznatiDatumPrijave);
         ZahtevZaPriznanjePatenta updatedZahtev = patentDatabase.write("patenti", resenjeZahteva.getReferenca() + ".xml", zahtevZaPriznanjePatenta);
-        //rdfDatabase.createAndInsertRDF("src/main/resources/static/rdf/" + updatedZahtev.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave() + ".rdf", updatedZahtev);
-        //rdfDatabase.createJSONFromRDF(updatedZahtev);
+        rdfDatabase.createAndInsertRDF("src/main/resources/static/rdf/" + updatedZahtev.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave() + ".rdf", updatedZahtev);
         return resenjeZahtevaDatabase.write("resenja-zahteva-patenti", resenjeZahtevaNaziv + ".xml", resenjeZahteva);
 
     }

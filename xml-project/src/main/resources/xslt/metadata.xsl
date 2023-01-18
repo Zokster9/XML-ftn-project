@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xsl:stylesheet version="1.0"
+<xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                 xmlns:p1="http://www.ftn.uns.ac.rs/patent/"
@@ -33,7 +33,7 @@
                     <xsl:value-of select="$Datum_prijave"/>
                 </p1:Datum_prijave>
                 <xsl:choose>
-                    <xsl:when test="string-length($Priznati_datum_prijave) > 0 ">
+                    <xsl:when test="string-length($Priznati_datum_prijave) > 0 and string-length($Priznati_datum_prijave) != 12">
                         <p1:Priznati_datum_prijave>
                             <xsl:value-of select="$Priznati_datum_prijave"/>
                         </p1:Priznati_datum_prijave>

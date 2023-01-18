@@ -69,7 +69,7 @@ export class PatentFormComponent implements OnInit{
     }),
     pronalazac: this.formBuilder.group({
       naziv: [''],
-      zeliBitiUPrijavi: true,
+      zeliBitiUPrijavi: false,
       adresa: this.formBuilder.group({
         ulicaIBroj: [''],
         postanskiBroj: [null],
@@ -219,11 +219,38 @@ export class PatentFormComponent implements OnInit{
       ePosta: this.patentForm.controls['pronalazac'].controls['kontaktPodaci'].value.ePosta as string,
     }
 
+    const pocetnaAdresaPronalazac: AdresaDto = {
+      ulicaIBroj: '',
+      postanskiBroj: 0,
+      mesto: '',
+      drzava: ''
+    }
+
+    const pocetniKontaktPodaciPronalazac: KontaktPodaciDto = {
+      brojTelefona: '',
+      brojFaksa: '',
+      ePosta: ''
+    }
+
     const pronalazac: PronalazacDto = {
-      naziv: this.patentForm.controls['pronalazac'].value.naziv as string,
-      zeliBitiUPrijavi: this.patentForm.controls['pronalazac'].value.zeliBitiUPrijavi as boolean,
-      adresa: adresaPronalazac,
-      kontaktPodaci: kontaktPodaciPronalazac
+      naziv: '',
+      zeliBitiUPrijavi: false,
+      adresa: pocetnaAdresaPronalazac,
+      kontaktPodaci: pocetniKontaktPodaciPronalazac
+    };
+    if (this.patentForm.controls['podnosilac'].value.podnosilacJePronalazac === false) {
+      if (!this.patentForm.controls['pronalazac'].value.zeliBitiUPrijavi === true){
+        pronalazac.naziv = this.patentForm.controls['pronalazac'].value.naziv as string;
+        pronalazac.zeliBitiUPrijavi = true,
+        pronalazac.adresa = adresaPronalazac;
+        pronalazac.kontaktPodaci = kontaktPodaciPronalazac;
+      }
+    }
+    else {
+        pronalazac.naziv = this.patentForm.controls['podnosilac'].value.naziv as string;
+        pronalazac.adresa = adresaPodnosilac;
+        pronalazac.kontaktPodaci = kontaktPodaciPodnosilac;
+        pronalazac.zeliBitiUPrijavi = true;
     }
 
     const adresaPunomocnik: AdresaDto = {

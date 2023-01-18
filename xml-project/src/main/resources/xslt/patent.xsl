@@ -762,85 +762,89 @@
                                 <span style="font-weight: bold; min-height: 9pt; font-size: 9pt;">Polje broj III        PRONALAZAC</span>
                             </td>
                         </tr>
-                        <tr style="height: 15.4pt;">
-                            <td rowspan="3" style="width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
-                                <p style="margin-bottom: 2pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.15pt;">
-                                    <span style="min-height: 9pt; font-size: 9pt;">Ime i prezime: </span>
-                                    <span>(prezime upisati velikim slovima)</span>
-                                </p>
-                                <p>
-                                    <span id="bookmark=id.2s8eyo1"></span>
-                                    <span style="min-height: 9pt; font-size: 9pt;"> </span>
-                                </p>
-                                <p>
-                                    <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Naziv"/> </span>
-                                </p>
-                            </td>
-                            <td rowspan="3" colspan="2" style="width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
-                                <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;">
-                                    <span style="min-height: 9pt; font-size: 9pt;">Ulica i broj, postanski broj, mesto i drzava:</span>
-                                </p>
-                                <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;"></p>
-                                <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;">
-                                    <span id="bookmark=id.17dp8vu"></span>
-                                    <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Adresa/Ulica_i_broj"/></span>
-                                </p>
-                                <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;">
-                                    <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Adresa/Postanski_broj"/> </span>
-                                </p>
-                                <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;">
-                                    <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Adresa/Mesto"/> </span>
-                                </p>
-                                <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;">
-                                    <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Adresa/Drzava"/> </span>
-                                </p>
-                            </td>
-                            <td colspan="2" style="width: 159.7pt; border-width: 0.75pt 1.5pt 0.75pt 0.75pt; border-style: solid; border-color: rgb(0, 0, 0);">
-                                <p style="margin-bottom: 2pt; text-indent: -0.55pt; margin-left: 0.55pt;">
-                                    <span style="min-height: 9pt; font-size: 9pt;">Broj telefona:</span>
-                                </p>
-                                <p style="text-indent: 0pt; margin-left: 0pt;">
-                                    <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Kontakt_podaci/Broj_telefona"/></span>
-                                </p>
-                            </td>
-                        </tr>
-                        <tr style="height: 23.25pt;">
-                            <td style="display: none; width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
-                                <p style="border-width: initial; border-style: none; border-color: initial; margin-bottom: 0pt; line-height: 1.15; text-indent: 0pt; margin-left: 0pt;"></p>
-                            </td>
-                            <td colspan="2" style="display: none; width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
-                                <p style="border-width: initial; border-style: none; border-color: initial; margin-bottom: 0pt; line-height: 1.15; text-indent: 0pt; margin-left: 0pt;"></p>
-                            </td>
-                            <td colspan="2" style="width: 159.7pt; border-width: 0.75pt 1.5pt 1.5pt 0.75pt; border-style: solid; border-color: rgb(0, 0, 0);">
-                                <p style="margin-bottom: 0pt; text-indent: -0.7pt; margin-left: 0pt; margin-right: 1.45pt;">
-                                    <span style="min-height: 9pt; font-size: 9pt;">Broj faksa:</span>
-                                </p>
-                                <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 0pt; margin-right: 1.45pt;">
-                                    <span id="bookmark=id.3rdcrjn"></span>
-                                    <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Kontakt_podaci/Broj_faksa"/></span>
-                                    <span style="min-height: 9pt; font-size: 9pt;">     </span>
-                                    <span id="bookmark=id.26in1rg"></span>
-                                    <span style="min-height: 9pt; font-size: 9pt;">               </span>
-                                </p>
-                            </td>
-                        </tr>
-                        <tr style="height: 23.25pt;"><td style="display: none; width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
-                            <p style="border-width: initial; border-style: none; border-color: initial; margin-bottom: 0pt; line-height: 1.15; text-indent: 0pt; margin-left: 0pt;"></p>
-                        </td>
-                            <td colspan="2" style="display: none; width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
-                                <p style="border-width: initial; border-style: none; border-color: initial; margin-bottom: 0pt; line-height: 1.15; text-indent: 0pt; margin-left: 0pt;"></p>
-                            </td>
-                            <td colspan="2" style="width: 159.7pt; border-width: 0.75pt 1.5pt 1.5pt 0.75pt; border-style: solid; border-color: rgb(0, 0, 0);">
-                                <p style="margin-bottom: 2pt; text-indent: 0pt; margin-left: 0pt; margin-right: 1.45pt;">
-                                    <span style="min-height: 9pt; font-size: 9pt;">E-posta:</span>
-                                </p>
-                                <p style="margin-bottom: 2pt; text-indent: 0pt; margin-left: 0pt; margin-right: 1.45pt;">
-                                    <span id="bookmark=id.lnxbz9"></span>
-                                    <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Kontakt_podaci/E_posta"/></span>
-                                    <span style="min-height: 9pt; font-size: 9pt;">     </span>
-                                </p>
-                            </td>
-                        </tr>
+                        <xsl:choose>
+                            <xsl:when test="//Pronalazac/Adresa/Postanski_broj != '0'">
+                                <tr style="height: 15.4pt;">
+                                    <td rowspan="3" style="width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
+                                        <p style="margin-bottom: 2pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.15pt;">
+                                            <span style="min-height: 9pt; font-size: 9pt;">Ime i prezime: </span>
+                                            <span>(prezime upisati velikim slovima)</span>
+                                        </p>
+                                        <p>
+                                            <span id="bookmark=id.2s8eyo1"></span>
+                                            <span style="min-height: 9pt; font-size: 9pt;"> </span>
+                                        </p>
+                                        <p>
+                                            <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Naziv"/> </span>
+                                        </p>
+                                    </td>
+                                    <td rowspan="3" colspan="2" style="width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
+                                        <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;">
+                                            <span style="min-height: 9pt; font-size: 9pt;">Ulica i broj, postanski broj, mesto i drzava:</span>
+                                        </p>
+                                        <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;"></p>
+                                        <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;">
+                                            <span id="bookmark=id.17dp8vu"></span>
+                                            <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Adresa/Ulica_i_broj"/></span>
+                                        </p>
+                                        <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;">
+                                            <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Adresa/Postanski_broj"/> </span>
+                                        </p>
+                                        <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;">
+                                            <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Adresa/Mesto"/> </span>
+                                        </p>
+                                        <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 1.7pt; margin-right: 1.25pt;">
+                                            <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Adresa/Drzava"/> </span>
+                                        </p>
+                                    </td>
+                                    <td colspan="2" style="width: 159.7pt; border-width: 0.75pt 1.5pt 0.75pt 0.75pt; border-style: solid; border-color: rgb(0, 0, 0);">
+                                        <p style="margin-bottom: 2pt; text-indent: -0.55pt; margin-left: 0.55pt;">
+                                            <span style="min-height: 9pt; font-size: 9pt;">Broj telefona:</span>
+                                        </p>
+                                        <p style="text-indent: 0pt; margin-left: 0pt;">
+                                            <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Kontakt_podaci/Broj_telefona"/></span>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr style="height: 23.25pt;">
+                                    <td style="display: none; width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
+                                        <p style="border-width: initial; border-style: none; border-color: initial; margin-bottom: 0pt; line-height: 1.15; text-indent: 0pt; margin-left: 0pt;"></p>
+                                    </td>
+                                    <td colspan="2" style="display: none; width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
+                                        <p style="border-width: initial; border-style: none; border-color: initial; margin-bottom: 0pt; line-height: 1.15; text-indent: 0pt; margin-left: 0pt;"></p>
+                                    </td>
+                                    <td colspan="2" style="width: 159.7pt; border-width: 0.75pt 1.5pt 1.5pt 0.75pt; border-style: solid; border-color: rgb(0, 0, 0);">
+                                        <p style="margin-bottom: 0pt; text-indent: -0.7pt; margin-left: 0pt; margin-right: 1.45pt;">
+                                            <span style="min-height: 9pt; font-size: 9pt;">Broj faksa:</span>
+                                        </p>
+                                        <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 0pt; margin-right: 1.45pt;">
+                                            <span id="bookmark=id.3rdcrjn"></span>
+                                            <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Kontakt_podaci/Broj_faksa"/></span>
+                                            <span style="min-height: 9pt; font-size: 9pt;">     </span>
+                                            <span id="bookmark=id.26in1rg"></span>
+                                            <span style="min-height: 9pt; font-size: 9pt;">               </span>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr style="height: 23.25pt;"><td style="display: none; width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
+                                    <p style="border-width: initial; border-style: none; border-color: initial; margin-bottom: 0pt; line-height: 1.15; text-indent: 0pt; margin-left: 0pt;"></p>
+                                </td>
+                                    <td colspan="2" style="display: none; width: 185.1pt; border-width: 0.75pt 0.75pt 1.5pt; border-style: solid; border-color: rgb(0, 0, 0);">
+                                        <p style="border-width: initial; border-style: none; border-color: initial; margin-bottom: 0pt; line-height: 1.15; text-indent: 0pt; margin-left: 0pt;"></p>
+                                    </td>
+                                    <td colspan="2" style="width: 159.7pt; border-width: 0.75pt 1.5pt 1.5pt 0.75pt; border-style: solid; border-color: rgb(0, 0, 0);">
+                                        <p style="margin-bottom: 2pt; text-indent: 0pt; margin-left: 0pt; margin-right: 1.45pt;">
+                                            <span style="min-height: 9pt; font-size: 9pt;">E-posta:</span>
+                                        </p>
+                                        <p style="margin-bottom: 2pt; text-indent: 0pt; margin-left: 0pt; margin-right: 1.45pt;">
+                                            <span id="bookmark=id.lnxbz9"></span>
+                                            <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Pronalazac/Kontakt_podaci/E_posta"/></span>
+                                            <span style="min-height: 9pt; font-size: 9pt;">     </span>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </xsl:when>
+                        </xsl:choose>
                     </table>
                     <p style="margin-bottom: 8pt; text-indent: 0pt; margin-left: 0pt;"></p>
                     <p style="text-indent: 0pt; margin-left: 0pt;"></p>

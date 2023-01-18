@@ -92,7 +92,7 @@ export class PatentService {
     else {
       adresaNacinDostavljanja  = {
         drzava : response.podnosilac[0].nacinDostavljanja[0].adresa[0].drzava[0],
-        mesto : response.podnosilac[0].nacinDostavljanjaesa[0].adresa[0].mesto[0],
+        mesto : response.podnosilac[0].nacinDostavljanja[0].adresa[0].mesto[0],
         postanskiBroj : response.podnosilac[0].nacinDostavljanja[0].adresa[0].postanskiBroj[0],
         ulicaIBroj : response.podnosilac[0].nacinDostavljanja[0].adresa[0].ulicaIBroj[0],
       }

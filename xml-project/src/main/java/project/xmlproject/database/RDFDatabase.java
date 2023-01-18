@@ -50,6 +50,7 @@ public class RDFDatabase {
 
     public void createAndInsertRDF(String rdfFile, ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
         try {
+            System.out.println(zahtevZaPriznanjePatenta.getNazivPronalaska().getSrpskiNaziv());
             TransformerFactory factory = TransformerFactory.newInstance();
             InputStream resourceAsStream = getClass().getResourceAsStream(XSL_TO_RDF_FILE);
             StreamSource xslt = new StreamSource(resourceAsStream);
@@ -204,7 +205,7 @@ public class RDFDatabase {
                     "}";
             System.out.println(queryString);
             Query query = QueryFactory.create(queryString);
-            try (QueryExecution quexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/PatentDataset/", query)) {
+            try (QueryExecution quexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/PatentFinalDataset/", query)) {
                 ResultSet resultSet = quexec.execSelect();
                 ArrayList<String> patentNumbersForThisQuery = new ArrayList<>();
                 while (resultSet.hasNext()) {
@@ -253,14 +254,14 @@ public class RDFDatabase {
 
     public String findRdfByPatentNumberAndGenerateFile(String patentNumber) {
 
-        String queryString1 = "PREFIX ex:<http://localhost:9001/fuseki/PatentDataset/data/>\n" +
+        String queryString1 = "PREFIX ex:<http://localhost:9001/fuseki/PatentFinalDataset/data/>\n" +
                 "SELECT ?s ?p ?o\n" +
                 "FROM ex:" + patentNumber + "\n" +
                 "WHERE {\n" +
                 "  ?s ?p ?o .\n" +
                 "}";
         Query query = QueryFactory.create(queryString1);
-        try (QueryExecution quexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/PatentDataset/", query)) {
+        try (QueryExecution quexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/PatentFinalDataset/", query)) {
             ResultSet resultSet = quexec.execSelect();
                 //FileOutputStream out = new FileOutputStream("src/main/resources/static/rdf/" + patentNumber + ".rdf");
                 //ResultSetFormatter.outputAsXML(out, resultSet);
@@ -275,13 +276,13 @@ public class RDFDatabase {
         int prihvaceniZahtevi = 0;
         int odbijeniZahtevi = 0;
 
-        Date startDate = new SimpleDateFormat("dd.MM.yyyy.").parse(startDateString);
-        Date endDate = new SimpleDateFormat("dd.MM.yyyy.").parse(endDateString);
+        Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDateString);
+        Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDateString);
 
         String queryString = "select ?s ?p ?o {graph ?g {?s ?p ?o}}";
         Query query = QueryFactory.create(queryString);
 
-        try (QueryExecution qexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/PatentDataset/", query)) {
+        try (QueryExecution qexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/PatentFinalDataset/", query)) {
             ResultSet resultSet = qexec.execSelect();
 
             while (resultSet.hasNext()) {
