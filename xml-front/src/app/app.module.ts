@@ -13,6 +13,8 @@ import { PatentFormXonomyComponent } from './components/patent-form-xonomy/paten
 import { AutorskaFormComponent } from './components/autorska-form/autorska-form.component';
 import { AutorskaTableComponent } from './components/autorska-table/autorska-table.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     PatentFormXonomyComponent,
     AutorskaFormComponent,
     AutorskaTableComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,25 @@
+<app-navbar></app-navbar>
+<form class="card p-3 bg-light border-dark mb-5 center w-50" [formGroup]="registrationForm" (ngSubmit)="register()">
+    <h2 class="arial_font center_text"><b>Registracija</b></h2>
+    <div class="mt-3">
+        <label for="ime" class="arial_font">Ime</label>
+        <input formControlName="ime" type="text" id="ime" name="ime" class="bg_gray borderless_input input_size" placeholder="Unos imena" required>
+    </div>
+    <div class="mt-3">
+        <label for="prezime" class="arial_font">Prezime</label>
+        <input formControlName="prezime" type="text" id="prezime" name="prezime" class="bg_gray borderless_input input_size" placeholder="Unos prezimena" required>
+    </div>
+    <div class="mt-3">
+        <label for="mejl" class="arial_font">Mejl adresa</label>
+        <input formControlName="mejl" type="text" id="mejl" name="mejl" class="bg_gray borderless_input input_size" placeholder="Unos mejla" required>
+    </div>
+    <div class="mt-3">
+        <label for="sifra" class="arial_font">Sifra</label>
+        <input formControlName="sifra" type="sifra" id="sifra" name="sifra" class="bg_gray borderless_input input_size" placeholder="Unos sifre" required>
+    </div>
+    <div class="form-check mt-3">
+        <input class="form-check-input" type="checkbox" id="korisnikJeSluzbenik" formControlName="korisnikJeSluzbenik">
+        <label class="form-check-label arial_font" for="korisnikJeSluzbenik"> Korisnik je sluzbenik (u suprotnom je gradjanin) </label>
+    </div>
+    <button type="submit" class="btn btn-dark arial_font mt-3">Registracija</button>
+</form>

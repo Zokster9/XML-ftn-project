@@ -1,0 +1,13 @@
+<app-navbar></app-navbar>
+<form class="card p-3 bg-light border-dark w-30 center" [formGroup]="loginForm" (ngSubmit)="login()">
+    <h2 class="arial_font center_text"><b>Prijava</b></h2>
+    <div>
+        <label for="email" class="arial_font">Mejl adresa</label>
+        <input type="email" id="email" name="email" class="bg_gray borderless_input input_size mb-3" placeholder="Unos mejla" formControlName="email" required>
+    </div>
+    <div>
+        <label for="password" class="arial_font">Sifra</label>
+        <input type="password" id="password" name="password" class="bg_gray borderless_input input_size mb-1" placeholder="Unos sifre" formControlName="password" required>
+    </div>
+    <button type="submit" class="btn btn-dark arial_font mt-2">Login</button>
+</form>
