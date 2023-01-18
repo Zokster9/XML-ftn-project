@@ -8,9 +8,9 @@ import { PatentPdfHtmlTableComponent } from './components/patent-pdf-html-table/
 
 const routes: Routes = [
   {path: 'kreiraj-autorska', component: AutorskaFormComponent},
-  {path: 'add-patent', component: PatentFormComponent},
-  {path: 'view-patent-pdf-html', component: PatentPdfHtmlTableComponent},
-  {path: 'add-patent-xonomy', component:PatentFormXonomyComponent},
+  {path: 'kreiraj-patent', component: PatentFormComponent},
+  {path: 'pregledaj-patente', component: PatentPdfHtmlTableComponent},
+  {path: 'kreiraj-patent-xonomy', component:PatentFormXonomyComponent},
   {path: 'pregledaj-autorska', component: AutorskaTableComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];

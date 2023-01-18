@@ -12,6 +12,7 @@ import { ModalShowReferenceComponent } from './components/modal-show-reference/m
 import { PatentFormXonomyComponent } from './components/patent-form-xonomy/patent-form-xonomy.component';
 import { AutorskaFormComponent } from './components/autorska-form/autorska-form.component';
 import { AutorskaTableComponent } from './components/autorska-table/autorska-table.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AutorskaTableComponent } from './components/autorska-table/autorska-tab
     ModalShowReferenceComponent,
     PatentFormXonomyComponent,
     AutorskaFormComponent,
-    AutorskaTableComponent
+    AutorskaTableComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

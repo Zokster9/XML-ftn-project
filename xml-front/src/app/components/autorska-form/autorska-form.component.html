@@ -1,4 +1,5 @@
-<form class="card p-3 bg-light w-75 mt-3 margin-left-30" [formGroup]="autorskaForm">
+<app-navbar></app-navbar>
+<form class="card p-3 bg-light w-75 mt-3 mb-3 margin-left-30" [formGroup]="autorskaForm">
     <section formGroupName="podnosilac">
         <h5 class="mb-2 arial_font title-left new-line"><b>Podnosliac</b></h5>
         <div class="form-check title-left mt-1">
@@ -329,9 +330,6 @@
     <br>
     <hr>
 
-    <button type="submit" class="btn btn-primary arial_font btn-block mb-3" (click)="dodajZahtev()">Pošalji</button>
-    <br>
-    <hr>
-    <button type="submit" class="btn btn-dark arial_font btn-block mb-3" (click)="dobaviZahtev()">Dobavi iz baze</button>
+    <button type="submit" class="btn btn-primary arial_font btn-block" (click)="dodajZahtev()">Pošalji</button>
 
 </form>
