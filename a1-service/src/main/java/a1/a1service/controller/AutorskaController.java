@@ -4,6 +4,7 @@ import a1.a1service.dto.ObrazacAutorskoDeloCreationDTO;
 import a1.a1service.dto.ObrazacAutorskoDeloDTO;
 import a1.a1service.model.ObrazacAutorskoDelo;
 import a1.a1service.service.AutorskaService;
+import a1.a1service.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,18 @@ public class AutorskaController {
     @Autowired
     private AutorskaService autorskaService;
 
+    @Autowired
+    private TokenUtils tokenUtils;
+
     @PostMapping(value = "/dodaj-autorska", consumes = "application/xml", produces = "application/xml")
-    public ResponseEntity<ObrazacAutorskoDeloDTO> kreirajZahtev(@RequestBody ObrazacAutorskoDeloCreationDTO obrazacAutorskoDeloCreationDTO) {
+    public ResponseEntity<ObrazacAutorskoDeloDTO> kreirajZahtev(@RequestBody ObrazacAutorskoDeloCreationDTO obrazacAutorskoDeloCreationDTO, HttpServletRequest request) {
         try {
-            ObrazacAutorskoDelo obrazacAutorskoDelo = autorskaService.kreirajZahtev(obrazacAutorskoDeloCreationDTO);
-            return new ResponseEntity<>(new ObrazacAutorskoDeloDTO(obrazacAutorskoDelo), HttpStatus.CREATED);
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            if (autorskaService.proveriKorisnika(token, false)) {
+                ObrazacAutorskoDelo obrazacAutorskoDelo = autorskaService.kreirajZahtev(obrazacAutorskoDeloCreationDTO);
+                return new ResponseEntity<>(new ObrazacAutorskoDeloDTO(obrazacAutorskoDelo), HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

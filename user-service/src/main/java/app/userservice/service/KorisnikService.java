@@ -20,4 +20,8 @@ public class KorisnikService {
         korisnik = marshalKorisnik.marshalKorisnik(korisnikDTO);
         return korisnikRepository.kreiraj(korisnik);
     }
+
+    public Korisnik dobaviKorisnika(String korisnickoIme) throws Exception {
+        return korisnikRepository.dobaviKorisnika(korisnickoIme);
+    }
 }
