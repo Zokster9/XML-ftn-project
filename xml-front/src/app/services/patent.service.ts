@@ -172,15 +172,15 @@ export class PatentService {
     
   }
 
-  public addPatent(zahtevZaPriznanjePatentaCreationDto: ZahtevZaPriznanjePatentaDto) {
+  public addPatent(zahtevZaPriznanjePatentaCreationDto: ZahtevZaPriznanjePatentaDto, token: string) {
     const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtevZaPriznanjePatentaCreationDto);
     console.log(xmlZahtev);
-    const xmlOdgovor = this.httpClient.post(this.url + '/patenti/add-patent', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
+    const xmlOdgovor = this.httpClient.post(this.url + '/patenti/add-patent', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml').set('Authorization', token), responseType:'text'});
     return xmlOdgovor;
   }
 
-  public addPatentXonomy(entity: Entity) {
-    return this.httpClient.post(this.url + '/patenti/add-patent', entity.text, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
+  public addPatentXonomy(entity: Entity, token: string) {
+    return this.httpClient.post(this.url + '/patenti/add-patent', entity.text, {headers: new HttpHeaders().set('Content-Type', 'application/xml').set('Authorization', token), responseType:'text'});
   }
 
   public getPatent() {
@@ -188,8 +188,13 @@ export class PatentService {
     return xmlOdgovor;
   }
 
-  public getAllPatenti() {
-    const xmlOdgovor = this.httpClient.get(this.url + '/patenti/get-all-patenti', {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType: 'text'});
+  public getAllPatenti(token: string) {
+    const xmlOdgovor = this.httpClient.get(this.url + '/patenti/get-all-patenti', {headers: new HttpHeaders().set('Content-Type', 'application/xml').set('Authorization', token), responseType: 'text'});
+    return xmlOdgovor;
+  }
+
+  public getAllPatentiByKorisnik(token: string) {
+    const xmlOdgovor = this.httpClient.get(this.url + '/patenti/get-all-patenti-by-korisnik', {headers: new HttpHeaders().set('Content-Type', 'application/xml').set('Authorization', token), responseType: 'text'});
     return xmlOdgovor;
   }
 
@@ -204,14 +209,14 @@ export class PatentService {
     return this.httpClient.get(`http://localhost:9000/patenti/create-patent-pdf/${brojPrijave}`, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
   }
 
-  public showRDF(zahtev: ZahtevZaPriznanjePatentaDto) {
+  public showRDF(zahtev: ZahtevZaPriznanjePatentaDto, token: string) {
     const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtev);
-    return this.httpClient.post(this.url + '/patenti/create-patent-rdf', xmlZahtev, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+    return this.httpClient.post(this.url + '/patenti/create-patent-rdf', xmlZahtev, {headers: new HttpHeaders().set('Content-type', 'application/xml').set('Authorization', token), responseType: 'text'});
   }
 
-  public showJSON(zahtev: ZahtevZaPriznanjePatentaDto) {
+  public showJSON(zahtev: ZahtevZaPriznanjePatentaDto, token: string) {
     const xmlZahtev = JsonToXML.parse("zahtevZaPriznanjePatentaCreationDto", zahtev);
-    return this.httpClient.post(this.url + '/patenti/create-patent-json', xmlZahtev, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+    return this.httpClient.post(this.url + '/patenti/create-patent-json', xmlZahtev, {headers: new HttpHeaders().set('Content-type', 'application/xml').set('Authorization', token), responseType: 'text'});
   }
 
   public showReferencedDocuments(number: string) {
@@ -222,13 +227,13 @@ export class PatentService {
     return this.httpClient.get(`http://localhost:9000/patenti/get-patents-that-reference-to/${number}`, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
   }
 
-  public getPatentsByText(text : string) {
-    const xmlOdgovor = this.httpClient.get(`http://localhost:9000/patenti/get-patents-by-text/${text}`, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+  public getPatentsByText(text : string, token: string) {
+    const xmlOdgovor = this.httpClient.get(`http://localhost:9000/patenti/get-patents-by-text/${text}`, {headers: new HttpHeaders().set('Content-type', 'application/xml').set('Authorization', token), responseType: 'text'});
     return xmlOdgovor;
   }
 
-  public getPatentsByMetadata(query: string) {
-    const xmlOdgovor = this.httpClient.get(`http://localhost:9000/patenti/get-patents-by-metadata/${query}`, {headers: new HttpHeaders().set('Content-type', 'application/xml'), responseType: 'text'});
+  public getPatentsByMetadata(query: string, token: string) {
+    const xmlOdgovor = this.httpClient.get(`http://localhost:9000/patenti/get-patents-by-metadata/${query}`, {headers: new HttpHeaders().set('Content-type', 'application/xml').set('Authorization', token), responseType: 'text'});
     return xmlOdgovor;
   }
 }

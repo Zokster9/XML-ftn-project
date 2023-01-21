@@ -14,15 +14,15 @@ export class ResenjeZahtevaService {
 
     constructor(private httpClient: HttpClient) { }
 
-    public addResenjeZahteva(resenjeZahtevaDto: ResenjeZahtevaDto) {
+    public addResenjeZahteva(resenjeZahtevaDto: ResenjeZahtevaDto, token: string) {
         const xmlZahtev = JsonToXML.parse("resenjeZahtevaDto", resenjeZahtevaDto);
-        const xmlOdgovor = this.httpClient.post(this.url + '/resenja-zahteva/add-resenje-zahteva', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
+        const xmlOdgovor = this.httpClient.post(this.url + '/resenja-zahteva/add-resenje-zahteva', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml').set('Authorization', token), responseType:'text'});
         return xmlOdgovor;
     }
 
-    public createReport(reportDatesDto: ReportDatesDto) {
+    public createReport(reportDatesDto: ReportDatesDto, token: string) {
         const xmlZahtev = JsonToXML.parse("reportDatesDto", reportDatesDto);
-        const xmlOdgovor = this.httpClient.post(this.url + '/resenja-zahteva/create-report', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml'), responseType:'text'});
+        const xmlOdgovor = this.httpClient.post(this.url + '/resenja-zahteva/create-report', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml').set('Authorization', token), responseType:'text'});
         return xmlOdgovor;
     }
 

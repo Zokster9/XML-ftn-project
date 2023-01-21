@@ -4,46 +4,50 @@
       <ul class="navbar-nav">
 
         <!-- POPUNJAVANJE DOKUMENATA - GRADJANIN -->
-        <li class="nav-item mr-2">
-            <a class="nav-link arial_font" routerLink="/kreiraj-autorska">Novo autorsko pravo</a>
-        </li>
-        <li class="nav-item mr-2">
-            <a class="nav-link arial_font" routerLink="/kreiraj-patent">Novi patent</a>
-        </li>
-        <li class="nav-item mr-2">
-            <a class="nav-link arial_font" routerLink="/kreiraj-patent-xonomy">Novi patent (Xonomy)</a>
-        </li>
-
-        <!-- ZORAN -->
-        <li class="nav-item mr-2">
-            <a class="nav-link arial_font" routerLink="/kreiraj-zig">Novi zig</a>
-        </li>
+        <ng-container *ngIf="loggedPerson === 'korisnik'">
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font" routerLink="/kreiraj-autorska">Novo autorsko pravo</a>
+            </li>
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font" routerLink="/kreiraj-patent">Novi patent</a>
+            </li>
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font" routerLink="/kreiraj-patent-xonomy">Novi patent (Xonomy)</a>
+            </li>
+            <!-- ZORAN -->
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font" routerLink="/kreiraj-zig">Novi zig</a>
+            </li>
+        </ng-container>
 
         <!-- PREGLED DOKUMENATA - NA SAMIM STRANICAMA SE PAZI STA SE PRIKAZUJE U ODNOSU NA ULOGOVANOG KORISNIKA -->
-        <li class="nav-item mr-2">
-            <a class="nav-link arial_font" routerLink="/pregledaj-patente">Pregled patenata</a>
-        </li>
-        <li class="nav-item mr-2">
-            <a class="nav-link arial_font" routerLink="/pregledaj-autorska">Pregled autorskih prava</a>
-        </li>
-
-        <!-- ZORAN -->
-        <li class="nav-item mr-2">
-            <a class="nav-link arial_font" routerLink="/pregledaj-zigove">Pregled zigova</a>
-        </li>
-
-        <li class="nav-item mr-2">
-            <a class="nav-link arial_font" routerLink="/prijava">Odjava</a> <!-- neka ga baci na login samo -->
-        </li>
+        <ng-container *ngIf="loggedPerson !== 'neulogovan'">
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font" routerLink="/pregledaj-patente">Pregled patenata</a>
+            </li>
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font" routerLink="/pregledaj-autorska">Pregled autorskih prava</a>
+            </li>
+            <!-- ZORAN -->
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font" routerLink="/pregledaj-zigove">Pregled zigova</a>
+            </li>
+        </ng-container>
 
         <!-- NEULOGOVANI KORISNIK -->
-        <li class="nav-item mr-2">
-            <a class="nav-link arial_font" routerLink="/registracija">Registracija</a>
-        </li>
-        <li class="nav-item mr-2">
-            <a class="nav-link arial_font" routerLink="/prijava">Prijava</a>
-        </li>
-
+        <ng-container *ngIf="loggedPerson === 'neulogovan'">
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font" routerLink="/registracija">Registracija</a>
+            </li>
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font" routerLink="/prijava">Prijava</a>
+            </li>
+        </ng-container>
+        <ng-container *ngIf="loggedPerson !== 'neulogovan'">
+            <li class="nav-item mr-2">
+                <a class="nav-link arial_font mouse" (click)="logout()">Odjava</a> <!-- neka ga baci na login samo -->
+            </li>
+        </ng-container>
       </ul>
     </div>
   </nav>

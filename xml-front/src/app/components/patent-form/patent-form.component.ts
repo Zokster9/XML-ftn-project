@@ -15,6 +15,7 @@ import { PatentService } from 'src/app/services/patent.service';
 import { NovaPrijavaDto } from "./../../models/NovaPrijavaDto";
 import * as xml2js from 'xml2js';
 import { PriznanjaPravaPrvenstvaDto } from 'src/app/models/PriznanjaPravaPrvenstvaDto';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-patent-form',
@@ -102,7 +103,8 @@ export class PatentFormComponent implements OnInit{
 
   constructor(
     private formBuilder: FormBuilder,
-    private patentService: PatentService
+    private patentService: PatentService,
+    private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
@@ -283,7 +285,8 @@ export class PatentFormComponent implements OnInit{
     }
 
     let zahtevZaPriznanjePatentaPovratna : ZahtevZaPriznanjePatentaDto;
-    this.patentService.addPatent(zahtevZaPriznanjePatenta).subscribe(
+    let token = this.tokenService.getToken() as string;
+    this.patentService.addPatent(zahtevZaPriznanjePatenta, token).subscribe(
       zahtevZaPriznanjeXml => {
         const parser = new xml2js.Parser({strict: true, trim: true});
         parser.parseString(zahtevZaPriznanjeXml.toString(), (err, result) => {
@@ -292,18 +295,5 @@ export class PatentFormComponent implements OnInit{
       }
     );
 
-  }
-
-  getPatent() {
-    this.patentService.getPatent().subscribe(
-      zahtevZaPriznanjePatentaXml => {
-        console.log(zahtevZaPriznanjePatentaXml);
-        const parser = new xml2js.Parser({strict: true, trim: true});
-        parser.parseString(zahtevZaPriznanjePatentaXml.toString(), (err, result) => {
-          let zahtevZaPriznanjePatentaPovratna = result.ZahtevZaPriznanjePatentaCreationDto;
-          console.log(zahtevZaPriznanjePatentaPovratna);
-        })
-      }
-    )
   }
 }

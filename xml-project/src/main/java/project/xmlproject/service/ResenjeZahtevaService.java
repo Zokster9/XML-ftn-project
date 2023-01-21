@@ -2,6 +2,7 @@ package project.xmlproject.service;
 
 import org.springframework.stereotype.Service;
 import project.xmlproject.database.RDFDatabase;
+import project.xmlproject.dto.creationDto.KorisnikDTO;
 import project.xmlproject.dto.creationDto.ReportDatesDto;
 import project.xmlproject.dto.creationDto.ResenjeZahtevaDto;
 import project.xmlproject.marshal.MarshalResenjeZahteva;
@@ -21,8 +22,8 @@ public class ResenjeZahtevaService {
 
     PatentTransformation patentTransformation = new PatentTransformation();
 
-    public ResenjeZahteva addResenjeZahteva(ResenjeZahtevaDto resenjeZahtevaDto) throws Exception {
-        ResenjeZahteva resenjeZahteva = marshalResenjeZahteva.marshalResenjeZahteva(resenjeZahtevaDto, "create");
+    public ResenjeZahteva addResenjeZahteva(ResenjeZahtevaDto resenjeZahtevaDto, KorisnikDTO korisnikDTO) throws Exception {
+        ResenjeZahteva resenjeZahteva = marshalResenjeZahteva.marshalResenjeZahteva(resenjeZahtevaDto, korisnikDTO, "create");
         return resenjeZahtevaRepository.save(resenjeZahteva);
     }
 

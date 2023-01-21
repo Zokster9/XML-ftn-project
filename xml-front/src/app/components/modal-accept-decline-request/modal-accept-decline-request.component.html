@@ -20,7 +20,7 @@
                         </div>
                         <div *ngIf="form.get('prihvaceno')?.value === 'odbij'">
                             <label for="obrazlozenje arial_font">Obrazlozenje odbijanja zahteva</label>
-                            <input type="text" class="bg_gray borderless_input input_size mb-2" id="obrazlozenje">
+                            <input formControlName="obrazlozenje" type="text" class="bg_gray borderless_input input_size mb-2" id="obrazlozenje">
                         </div>
                         <div>
                             <button data-dismiss="modal" class="btn btn-success right_button mt-3" (click)="submit()">Posalji resenje</button>

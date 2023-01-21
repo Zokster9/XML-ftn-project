@@ -1,7 +1,13 @@
 package project.xmlproject.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 import project.xmlproject.database.PatentDatabase;
 import project.xmlproject.database.RDFDatabase;
+import project.xmlproject.dto.creationDto.KorisnikDTO;
 import project.xmlproject.marshal.MarshalPatent;
 import org.springframework.stereotype.Service;
 import project.xmlproject.dto.creationDto.ZahtevZaPriznanjePatentaCreationDto;
@@ -14,6 +20,9 @@ import java.util.List;
 
 @Service
 public class PatentService {
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     PatentRepository patentRepository = new PatentRepository();
     PatentTransformation patentTransformation = new PatentTransformation();
@@ -33,6 +42,10 @@ public class PatentService {
 
     public List<ZahtevZaPriznanjePatenta> getAllPatenti() throws Exception {
         return patentRepository.getAllPatenti();
+    }
+
+    public List<ZahtevZaPriznanjePatenta> getAllPatentiByKorisnik(String email) throws Exception {
+        return patentRepository.getAllPatentiByUlogovani(email);
     }
 
     public ZahtevZaPriznanjePatenta createPatentHtml(String brojPrijave) throws Exception {
@@ -65,5 +78,33 @@ public class PatentService {
 
     public List<ZahtevZaPriznanjePatenta> getReferencedPatents(String patentNumber) throws Exception {
         return patentRepository.getReferencedPatents(patentNumber);
+    }
+
+    public boolean proveriKorisnika(String token, boolean korisnikJeSluzbenik) {
+        final String uri = "http://localhost:9003/auth/get/" + token;
+
+        ResponseEntity<KorisnikDTO> responseEntity = restTemplate.exchange(
+                uri,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<KorisnikDTO>() {
+                });
+        KorisnikDTO korisnikDTO = responseEntity.getBody();
+        if (korisnikDTO != null) {
+            return korisnikDTO.isKorisnikJeSluzbenik() == korisnikJeSluzbenik;
+        }
+        return false;
+    }
+
+    public KorisnikDTO pronadjiKorisnika(String token) {
+        final String uri = "http://localhost:9003/auth/get/" + token;
+
+        ResponseEntity<KorisnikDTO> responseEntity = restTemplate.exchange(
+                uri,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<KorisnikDTO>() {
+                });
+        return responseEntity.getBody();
     }
 }

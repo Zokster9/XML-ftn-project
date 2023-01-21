@@ -115,6 +115,10 @@
                         </p>
                         <p class="docx_normal" style="margin-left: 136.8pt;"></p>
                         <p class="docx_normal" style="margin-left: 136.8pt; text-align: justify;">
+                            <span style="min-height: 14pt; font-size: 14pt;">Naziv sluzbenika: </span>
+                            <span style="min-height: 14pt; font-size: 14pt;"><xsl:value-of select="//naziv"/></span>
+                        </p>
+                        <p class="docx_normal" style="margin-left: 136.8pt; text-align: justify;">
                             <span style="min-height: 14pt; font-size: 14pt;">Datum resenja: </span>
                             <span style="min-height: 14pt; font-size: 14pt;"><xsl:value-of select="//Datum_resenja"/></span>
                         </p>

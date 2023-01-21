@@ -6,6 +6,7 @@ import { PatentService } from 'src/app/services/patent.service';
 import { ResenjeZahtevaService } from 'src/app/services/resenje-zahteva.service';
 import * as xml2js from 'xml2js';
 import { saveAs } from 'file-saver';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-patent-pdf-html-table',
@@ -23,24 +24,49 @@ export class PatentPdfHtmlTableComponent implements OnInit {
   endDate!: string;
   text!: string;
   query!: string;
+  loggedPerson!: string;
 
   ngOnInit(): void {
-    this.patentService.getAllPatenti().subscribe(data => {
-      const parser = new xml2js.Parser({strict: true, trim: true});
-      parser.parseString(data.toString(), (err, result) => {
-        let zahtevi = result.List.item;
-        for (var zahtev of zahtevi) {
-          let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
-          zahtevZaPriznanjePatenta = this.patentService.convertResponseToPatent(zahtev);
-          this.zahteviZaPriznanjePatenta.push(zahtevZaPriznanjePatenta);
-        }
+    
+    this.loggedPerson = this.tokenService.getRole() as string;
+    let token = this.tokenService.getToken() as string;
+
+    if (this.tokenService.getRole() === "sluzbenik"){
+      this.patentService.getAllPatenti(token).subscribe(data => {
+        const parser = new xml2js.Parser({strict: true, trim: true});
+        parser.parseString(data.toString(), (err, result) => {
+          let zahtevi = result.List.item;
+          if (zahtevi !== undefined) {
+            for (var zahtev of zahtevi) {
+              let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
+              zahtevZaPriznanjePatenta = this.patentService.convertResponseToPatent(zahtev);
+              this.zahteviZaPriznanjePatenta.push(zahtevZaPriznanjePatenta);
+            }
+          }
+        })
       })
-    })
+    }
+    else if (this.tokenService.getRole() === "korisnik") {
+      this.patentService.getAllPatentiByKorisnik(token).subscribe(data => {
+        const parser = new xml2js.Parser({strict: true, trim: true});
+        parser.parseString(data.toString(), (err, result) => {
+          let zahtevi = result.List.item;
+          if (zahtevi !== undefined) {
+            for (var zahtev of zahtevi) {
+              let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
+              zahtevZaPriznanjePatenta = this.patentService.convertResponseToPatent(zahtev);
+              this.zahteviZaPriznanjePatenta.push(zahtevZaPriznanjePatenta);
+            }
+          }
+        })
+      })
+    }
   }
 
   constructor(
     private patentService: PatentService,
     private resenjeZahtevaService: ResenjeZahtevaService,
+    private tokenService: TokenService,
     private router: Router
   ) {}
 
@@ -66,9 +92,10 @@ export class PatentPdfHtmlTableComponent implements OnInit {
   }
 
   showRDF(zahtev : ZahtevZaPriznanjePatentaDto) {
+    let token = this.tokenService.getToken() as string;
     const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
     const fileName = patentNumber + '.rdf';
-    this.patentService.showRDF(zahtev).subscribe(data => {
+    this.patentService.showRDF(zahtev, token).subscribe(data => {
       const blob = new Blob([data], {type:'text/xml'});
       saveAs(blob, fileName);
     })
@@ -77,9 +104,10 @@ export class PatentPdfHtmlTableComponent implements OnInit {
   }
 
   showJSON(zahtev : ZahtevZaPriznanjePatentaDto) {
+    let token = this.tokenService.getToken() as string;
     const patentNumber = zahtev.podaciOPrijavama.novaPrijava.brojPrijave;
     const fileName = patentNumber + '.json';
-    this.patentService.showRDF(zahtev).subscribe(data => {
+    this.patentService.showRDF(zahtev, token).subscribe(data => {
       xml2js.parseString(data, (error, result) => {
         const jsonString = JSON.stringify(result);
         const blob = new Blob([jsonString], {type:'application/json'});
@@ -155,40 +183,47 @@ export class PatentPdfHtmlTableComponent implements OnInit {
   }
 
   createReport() {
+    let token = this.tokenService.getToken() as string;
     const reportDatesDto : ReportDatesDto = {
       startDate: this.startDate,
       endDate: this.endDate
     }
-    this.resenjeZahtevaService.createReport(reportDatesDto).subscribe(data => {
+    this.resenjeZahtevaService.createReport(reportDatesDto, token).subscribe(data => {
       window.open('http://localhost:9000/pdf/izvestaj.pdf');
     })
   }
 
   findPatentsByText() {
-    this.patentService.getPatentsByText(this.text).subscribe(data => {
+    let token = this.tokenService.getToken() as string;
+    this.patentService.getPatentsByText(this.text, token).subscribe(data => {
       const parser = new xml2js.Parser({strict: true, trim: true});
       parser.parseString(data.toString(), (err, result) => {
         this.zahteviZaPriznanjePatenta.splice(0, this.zahteviZaPriznanjePatenta.length);
         let zahtevi = result.List.item;
-        for (var zahtev of zahtevi) {
-          let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
-          zahtevZaPriznanjePatenta = this.patentService.convertResponseToPatent(zahtev);
-          this.zahteviZaPriznanjePatenta.push(zahtevZaPriznanjePatenta);
+        if (zahtevi !== undefined) {
+          for (var zahtev of zahtevi) {
+            let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
+            zahtevZaPriznanjePatenta = this.patentService.convertResponseToPatent(zahtev);
+            this.zahteviZaPriznanjePatenta.push(zahtevZaPriznanjePatenta);
+          }
         }
       })
     })
   }
 
   findPatentsByMetadata() {
-    this.patentService.getPatentsByMetadata(this.query).subscribe(data => {
+    let token = this.tokenService.getToken() as string;
+    this.patentService.getPatentsByMetadata(this.query, token).subscribe(data => {
       const parser = new xml2js.Parser({strict: true, trim: true});
       parser.parseString(data.toString(), (err, result) => {
         this.zahteviZaPriznanjePatenta.splice(0, this.zahteviZaPriznanjePatenta.length);
         let zahtevi = result.List.item;
-        for (var zahtev of zahtevi) {
-          let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
-          zahtevZaPriznanjePatenta = this.patentService.convertResponseToPatent(zahtev);
-          this.zahteviZaPriznanjePatenta.push(zahtevZaPriznanjePatenta);
+        if (zahtevi !== undefined){
+          for (var zahtev of zahtevi) {
+            let zahtevZaPriznanjePatenta : ZahtevZaPriznanjePatentaDto;   
+            zahtevZaPriznanjePatenta = this.patentService.convertResponseToPatent(zahtev);
+            this.zahteviZaPriznanjePatenta.push(zahtevZaPriznanjePatenta);
+          }
         }
       })
     })
@@ -201,6 +236,6 @@ export class PatentPdfHtmlTableComponent implements OnInit {
   reloadPage() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/view-patent-pdf-html']);
+    this.router.navigate(['/pregledaj-patente']);
   }
 }

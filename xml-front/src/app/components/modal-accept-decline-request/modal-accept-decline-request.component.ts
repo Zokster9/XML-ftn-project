@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ResenjeZahtevaDto } from 'src/app/models/ResenjeZahtevaDto';
 import { ZahtevZaPriznanjePatentaDto } from 'src/app/models/ZahtevZaPriznanjePatentaDTO';
 import { ResenjeZahtevaService } from 'src/app/services/resenje-zahteva.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
   selector: 'app-modal-accept-decline-request',
@@ -26,6 +27,7 @@ export class ModalAcceptDeclineRequestComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private resenjeZahtevaService: ResenjeZahtevaService,
+    private tokenService: TokenService,
     private router: Router
   ) {}
   ngOnInit(): void {
@@ -45,14 +47,16 @@ export class ModalAcceptDeclineRequestComponent implements OnInit {
     {
       prihvaceno = false;
     }
+    let token = this.tokenService.getToken() as string;
     const resenjeZahteva : ResenjeZahtevaDto = {
       datumResenja: '',
-      obrazlozenje: this.form.controls['obrazlozenje'].value as string,
+      obrazlozenje: this.form.value.obrazlozenje as string,
       referenca : this.zahtev.podaciOPrijavama.novaPrijava.brojPrijave,
       sifra : '',
       zahtevJePrihvacen: prihvaceno
     }
-    this.resenjeZahtevaService.addResenjeZahteva(resenjeZahteva).subscribe(data => {
+    console.log(resenjeZahteva);
+    this.resenjeZahtevaService.addResenjeZahteva(resenjeZahteva, token).subscribe(data => {
       console.log(data);
       this.reloadPage();
     })
@@ -61,6 +65,6 @@ export class ModalAcceptDeclineRequestComponent implements OnInit {
   reloadPage() {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate(['/view-patent-pdf-html']);
+    this.router.navigate(['/pregledaj-patente']);
   }
 }

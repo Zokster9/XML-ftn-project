@@ -1,5 +1,6 @@
 package project.xmlproject.marshal;
 
+import project.xmlproject.dto.creationDto.KorisnikDTO;
 import project.xmlproject.dto.creationDto.ResenjeZahtevaDto;
 import project.xmlproject.model.resenjeZahteva.ResenjeZahteva;
 
@@ -11,7 +12,7 @@ public class MarshalResenjeZahteva {
 
     }
 
-    public ResenjeZahteva marshalResenjeZahteva(ResenjeZahtevaDto resenjeZahtevaDto, String option) {
+    public ResenjeZahteva marshalResenjeZahteva(ResenjeZahtevaDto resenjeZahtevaDto, KorisnikDTO korisnikDTO, String option) {
         ResenjeZahteva resenjeZahteva = new ResenjeZahteva();
 
         if (option.equals("create")){
@@ -28,7 +29,7 @@ public class MarshalResenjeZahteva {
         resenjeZahteva.setZahtevJePrihvacen(resenjeZahtevaDto.isZahtevJePrihvacen());
         resenjeZahteva.setObrazlozenje(resenjeZahtevaDto.getObrazlozenje());
         resenjeZahteva.setReferenca(resenjeZahtevaDto.getReferenca());
-        resenjeZahteva.setNaziv("Teodor");
+        resenjeZahteva.setNaziv(korisnikDTO.getIme() + ' ' + korisnikDTO.getPrezime());
         resenjeZahteva.setRefId(resenjeZahteva.getReferenca());
         return resenjeZahteva;
     }

@@ -37,6 +37,10 @@ public class PatentRepository {
         return patentDatabase.getAll();
     }
 
+    public List<ZahtevZaPriznanjePatenta> getAllPatentiByUlogovani(String email) throws Exception {
+        return patentDatabase.getAllLoggedPerson(email);
+    }
+
     public List<ZahtevZaPriznanjePatenta> getPatentsByText(String text) throws Exception {
         return patentDatabase.getByText(text);
     }

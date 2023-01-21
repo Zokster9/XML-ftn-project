@@ -17,3 +17,7 @@
 .navbar-nav { 
     margin-left: auto;
 }
+
+.mouse {
+    cursor: pointer;
+}
