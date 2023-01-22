@@ -71,10 +71,11 @@ public class PatentController {
             String token = tokenUtils.getAuthHeaderFromHeader(request);
             KorisnikDTO korisnikDTO = patentService.pronadjiKorisnika(token);
             if (korisnikDTO != null) {
-                List<ZahtevZaPriznanjePatenta> zahteviZaPriznanjePatenta = patentService.getAllPatentiByKorisnik(korisnikDTO.getKorisnickoIme());
+                //List<ZahtevZaPriznanjePatenta> zahteviZaPriznanjePatenta = patentService.getAllPatentiByKorisnik(korisnikDTO.getKorisnickoIme());
+                List<ZahtevZaPriznanjePatenta> zahteviZaPriznanjePatenta = patentService.getAllPatenti();
                 List<ZahtevZaPriznanjePatentaCreationDto> zahteviZaPriznanjePatentaCreationDto = new ArrayList<>();
                 for (ZahtevZaPriznanjePatenta z : zahteviZaPriznanjePatenta) {
-                    if (z.getPodaciOPrijavama().getNovaPrijava().getPriznatiDatumPrijave().length() > 0){
+                    if (z.getPodaciOPrijavama().getNovaPrijava().getPriznatiDatumPrijave().length() == 10){
                         zahteviZaPriznanjePatentaCreationDto.add(new ZahtevZaPriznanjePatentaCreationDto(z, "read"));
                     }
                 }

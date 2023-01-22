@@ -1,23 +1,51 @@
 package project.xmlproject;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.xmldb.api.base.XMLDBException;
 import javax.xml.bind.JAXBException;
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
 @SpringBootApplication
+@Configuration
+@EnableScheduling
 public class XmlProjectApplication {
 
 	public static void main(String[] args){
 		SpringApplication.run(XmlProjectApplication.class, args);
 	}
 
+	@Scheduled(fixedDelay = 30000)
+	public void schedule() throws IOException {
+		try {
+			FileUtils.cleanDirectory(new File("src/main/resources/static/html"));
+		} catch (Exception e) {
+			System.out.println("HTML File currently in use!");
+		}
+
+		try {
+			FileUtils.cleanDirectory(new File("src/main/resources/static/pdf"));
+		} catch (Exception e) {
+			System.out.println("PDF File currently in use!");
+		}
+
+		try {
+			FileUtils.cleanDirectory(new File("src/main/resources/static/rdf"));
+		} catch (Exception e) {
+			System.out.println("RDF File currently in use!");
+		}
+	}
 	@Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
