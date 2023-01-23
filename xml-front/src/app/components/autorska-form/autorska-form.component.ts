@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FizickoLiceDTO } from 'src/app/models/autorska/FizickoLiceDTO';
 import { ObrazacAutorskoDeloCreationDTO } from 'src/app/models/autorska/ObrazacAutorskoDeloCreationDTO';
@@ -16,7 +16,7 @@ import * as xml2js from 'xml2js';
   templateUrl: './autorska-form.component.html',
   styleUrls: ['./autorska-form.component.css']
 })
-export class AutorskaFormComponent implements OnInit{
+export class AutorskaFormComponent{
 
   autorskaForm = this.formBuilder.group({
     podnosilac : this.formBuilder.group({
@@ -83,39 +83,52 @@ export class AutorskaFormComponent implements OnInit{
     private autorskaService: AutorskaService
   ) {}
 
-  ngOnInit(): void {
-    this.autorPodnosilacClick = true;
-    this.autorNijePodnosilacClick();
-  }
-
   get autori() {
     return (this.autorskaForm.controls['podaciOAutorskomDelu'] as FormGroup).controls['autori'] as FormArray;
   }
 
   autorJePodnosilacClick() {
-    this.autorPodnosilacClick = true;
     this.autori.clear();
   }
 
   autorNijePodnosilacClick() {
-    if (this.autorPodnosilacClick) {
-      const autor = this.formBuilder.group({
-        ime: '',
-        prezime: '',
-        drzavljanstvo: '',
-        godinaSmrti: null,
-        autorZiv: 'da',
-        adresa: this.formBuilder.group({
-          drzava: '',
-          grad: '',
-          ulica: '',
-          broj: null,
-          postanskiBroj: null
-        })
-      });
-      this.autori.push(autor);
-      this.autorPodnosilacClick = false;
-    }
+    const autor = this.formBuilder.group({
+      ime: '',
+      prezime: '',
+      drzavljanstvo: '',
+      godinaSmrti: null,
+      autorZiv: 'da',
+      adresa: this.formBuilder.group({
+        drzava: '',
+        grad: '',
+        ulica: '',
+        broj: null,
+        postanskiBroj: null
+      })
+    });
+    this.autori.push(autor);
+  }
+
+  dodajAutora() {
+    const autor = this.formBuilder.group({
+      ime: '',
+      prezime: '',
+      drzavljanstvo: '',
+      godinaSmrti: null,
+      autorZiv: 'da',
+      adresa: this.formBuilder.group({
+        drzava: '',
+        grad: '',
+        ulica: '',
+        broj: null,
+        postanskiBroj: null
+      })
+    });
+    this.autori.push(autor);
+  }
+
+  obrisiAutora(i: number) {
+    this.autori.removeAt(i);
   }
 
   dodajZahtev() {
@@ -126,7 +139,6 @@ export class AutorskaFormComponent implements OnInit{
       const parser = new xml2js.Parser({strict: true, trim: true});
         parser.parseString(xmlText.toString(), (err, result) => {
           obrazacAutorskoDeloDTO = result.ObrazacAutorskoDeloDTO;
-          console.log(obrazacAutorskoDeloDTO);
         })
     })
   }
@@ -156,14 +168,5 @@ export class AutorskaFormComponent implements OnInit{
       if (punomocnik === undefined) return {fizickoLiceDTO: fizickoLice, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu, podnosilacAutor: podnosilacAutor};
       else return {fizickoLiceDTO: fizickoLice, punomocnikDTO: punomocnik, podaciOAutorskomDeluDTO: podaciOAutorskomDelu, priloziUzPrijavuDTO: priloziUzPrijavu, podnosilacAutor: podnosilacAutor};
     }
-  }
-
-  dobaviZahtev() {
-    this.autorskaService.dobaviPDF('A-1673282816046').subscribe(data => {
-      const parser = new xml2js.Parser({strict: true, trim: true});
-      parser.parseString(data.toString(), (err, result) => {
-        window.open('http://localhost:9002/pdf/' + 'A-1673282816046' + '.pdf');
-      })
-    })
   }
 }

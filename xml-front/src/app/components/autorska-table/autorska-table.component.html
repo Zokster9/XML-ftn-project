@@ -1,50 +1,63 @@
-<app-navbar></app-navbar>
-<div class="margin-bot-3 mt-4">
-    <h3 class="margin-left-2 arial_font">Generisi izvestaj</h3>
-    <input type="date" name="startDate" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="pocetniDatum" placeholder="Pocetni datum">
-    <input type="date" name="endDate" class="float-right bg_gray borderless_input input_size" [(ngModel)]="krajnjiDatum" placeholder="Krajnji datum">
-    <button class="btn btn-dark float-right" (click)="kreirajIzvestaj()">Generisi izvestaj</button>
+<div *ngIf="loaded">
+    <app-navbar></app-navbar>
+    <div class="margin-bot-3 mt-4" *ngIf="uloga === 'sluzbenik'">
+        <h3 class="margin-left-2 arial_font">Generisi izvestaj</h3>
+        <input type="date" name="startDate" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="pocetniDatum" placeholder="Pocetni datum">
+        <input type="date" name="endDate" class="float-right bg_gray borderless_input input_size" [(ngModel)]="krajnjiDatum" placeholder="Krajnji datum">
+        <button class="btn btn-dark float-right" (click)="kreirajIzvestaj()">Generisi izvestaj</button>
+    </div>
+    <div class="margin-bot-3 new-line">
+        <h3 class="margin-left-2 arial_font">Pretraga po tekstualnom sadrzaju</h3>
+        <input type="text" name="text" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="tekst" placeholder="Tekstualni sadrzaj pretrage">
+        <button class="btn btn-dark float-right" (click)="pretraziPoTekstu()">Pretrazi po tekstu</button>
+        <button class="btn btn-dark float-right" (click)="resetuj()">Svi zahtevi</button>
+    </div>
+    <div class="margin-bot-3 new-line">
+        <h3 class="margin-left-2 arial_font">Pretraga po metapodacima</h3>
+        <input type="text" name="text" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="upit" placeholder="Upit pomocu metapodataka">
+        <button class="btn btn-dark float-right" (click)="pretraziPoMetapodacima()">Pretrazi po metapodacima</button>
+        <button class="btn btn-dark float-right" (click)="resetuj()">Svi zahtevi</button>
+    </div>
+    <br>
+    <table class="table table-light table-hover text-center w-80">
+        <thead>
+            <tr>
+                <th scope="col" class="arial_font">Broj zahteva</th>
+                <th scope="col" class="arial_font">Datum prijave</th>
+                <th scope="col" class="arial_font">HTML</th>
+                <th scope="col" class="arial_font">PDF</th>
+                <ng-container *ngIf="uloga === 'sluzbenik'">
+                    <th scope="col" class="arial_font">RDF</th>
+                    <th scope="col" class="arial_font">JSON</th>
+                </ng-container>
+                <th scope="col" class="arial_font">Resenje zahteva koje referencira na</th>
+                <ng-container *ngIf="uloga === 'sluzbenik'">
+                    <th scope="col" class="arial_font">Podnesi resenje</th>
+                </ng-container>
+            </tr>
+        </thead>
+        <tbody *ngFor="let obrazac of obrasciAutorska">
+            <tr>
+                <td scope="row">{{obrazac.brojPrijave}}</td>
+                <td class="arial_font">{{obrazac.datumPrijave}}</td>
+                <td><button class="btn btn-dark arial_font" (click)="dobaviHTML(obrazac.brojPrijave)">HTML</button></td>
+                <td><button class="btn btn-dark arial_font" (click)="dobaviPDF(obrazac.brojPrijave)">PDF</button></td>
+                <ng-container *ngIf="uloga === 'sluzbenik'">
+                    <td><button class="btn btn-dark arial_font" (click)="dobaviRDF(obrazac.brojPrijave)">RDF</button></td>
+                    <td><button class="btn btn-dark arial_font" (click)="dobaviJSON(obrazac.brojPrijave)">JSON</button></td>
+                </ng-container>
+                <td>
+                    <button *ngIf="proveriPostojanjeResenja(obrazac.brojPrijave)" class="btn btn-dark arial_font" (click)="prikaziResenje(obrazac.brojPrijave)">Resenje zahteva koje referencira na</button>
+                </td>
+                <ng-container *ngIf="uloga === 'sluzbenik'">
+                    <td>
+                        <button *ngIf="!proveriPostojanjeResenja(obrazac.brojPrijave) && uloga === 'sluzbenik'" class="btn btn-dark arial_font" (click)="otvoriModal(obrazac.brojPrijave)">Podnesi resenje</button>
+                    </td>
+                </ng-container>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="modalOtvoren">
+        <app-modal-accept-decline-request (modalClosed)="samoZatvoriModal()" (autorskoResenjeDodato)="zatvoriModal($event)" [brojAutorskog]="odabranoAutorsko" [servis]="'autorska'"></app-modal-accept-decline-request>
+    </div>
 </div>
-<div class="margin-bot-3 new-line">
-    <h3 class="margin-left-2 arial_font">Pretraga po tekstualnom sadrzaju</h3>
-    <input type="text" name="text" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="tekst" placeholder="Tekstualni sadrzaj pretrage">
-    <button class="btn btn-dark float-right" (click)="pretraziPoTekstu()">Pretrazi po tekstu</button>
-    <button class="btn btn-dark float-right" (click)="resetuj()">Svi zahtevi</button>
-</div>
-<div class="margin-bot-3 new-line">
-    <h3 class="margin-left-2 arial_font">Pretraga po metapodacima</h3>
-    <input type="text" name="text" class="float-first-right bg_gray borderless_input input_size" [(ngModel)]="upit" placeholder="Upit pomocu metapodataka">
-    <button class="btn btn-dark float-right" (click)="pretraziPoMetapodacima()">Pretrazi po metapodacima</button>
-    <button class="btn btn-dark float-right" (click)="resetuj()">Svi zahtevi</button>
-</div>
-<br>
-<table class="table table-light table-hover text-center w-80">
-    <thead>
-        <tr>
-            <th scope="col" class="arial_font">Broj zahteva</th>
-            <th scope="col" class="arial_font">Datum prijave</th>
-            <th scope="col" class="arial_font">HTML</th>
-            <th scope="col" class="arial_font">PDF</th>
-            <th scope="col" class="arial_font">RDF</th>
-            <th scope="col" class="arial_font">JSON</th>
-            <th scope="col" class="arial_font">Resenje zahteva koje referencira na</th>
-            <th scope="col" class="arial_font">Podnesi resenje</th>
-        </tr>
-    </thead>
-    <tbody *ngFor="let obrazac of obrasciAutorska">
-        <tr>
-            <td scope="row">{{obrazac.brojPrijave}}</td>
-            <td class="arial_font">{{obrazac.datumPrijave}}</td>
-            <td><button class="btn btn-dark arial_font" (click)="dobaviHTML(obrazac.brojPrijave)">HTML</button></td>
-            <td><button class="btn btn-dark arial_font" (click)="dobaviPDF(obrazac.brojPrijave)">PDF</button></td>
-            <td><button class="btn btn-dark arial_font" (click)="dobaviRDF(obrazac.brojPrijave)">RDF</button></td>
-            <td><button class="btn btn-dark arial_font" (click)="dobaviJSON(obrazac.brojPrijave)">JSON</button></td>
-            <td>
-                <button *ngIf="proveriPostojanjeResenja(obrazac.brojPrijave)" class="btn btn-dark arial_font" (click)="prikaziResenje(obrazac.brojPrijave)">Resenje zahteva koje referencira na</button>
-            </td>
-            <td>
-                <button *ngIf="!proveriPostojanjeResenja(obrazac.brojPrijave)" class="btn btn-dark arial_font" (click)="otvoriModal(obrazac.brojPrijave)">Podnesi resenje</button>
-            </td>
-        </tr>
-    </tbody>
-</table>

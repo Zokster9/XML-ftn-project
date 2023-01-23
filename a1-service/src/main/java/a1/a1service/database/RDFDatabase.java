@@ -336,7 +336,7 @@ public class RDFDatabase {
             PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/static/pdf/izvestaj.pdf"));
             document.open();
             Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 20, BaseColor.BLACK);
-            Chunk chunk = new Chunk("IZVESTAJ U PERIODU OD " + pocetniDatum.toString() + " DO " + krajnjiDatum.toString(), font);
+            Chunk chunk = new Chunk("IZVESTAJ U PERIODU OD " + pocetniDatum.toString() + "\n DO " + krajnjiDatum.toString(), font);
             document.add(chunk);
             document.add(new Paragraph("\n\n"));
 

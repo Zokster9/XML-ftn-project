@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     apiUrl: 'http://localhost:9000',
-    autorskaApiUrl: 'http://localhost:9002'
+    autorskaApiUrl: 'http://localhost:9002',
+    korisniciApiUrl: 'http://localhost:9003'
   };
   
   /*

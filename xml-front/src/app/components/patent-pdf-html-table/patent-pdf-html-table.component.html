@@ -29,9 +29,9 @@
                 <th scope="col" class="arial_font">RDF</th>
                 <th scope="col" class="arial_font">JSON</th>
             </ng-container>
-                <th scope="col" class="arial_font">Referncirani dokumenti</th>
-                <th scope="col" class="arial_font">Patenti koji referenciraju na</th>
-                <th scope="col" class="arial_font">Resenje zahteva koje referencira na</th>
+            <th scope="col" class="arial_font">Referncirani dokumenti</th>
+            <th scope="col" class="arial_font">Patenti koji referenciraju na</th>
+            <th scope="col" class="arial_font">Resenje zahteva koje referencira na</th>
             <ng-container *ngIf="loggedPerson === 'sluzbenik'">
                 <th scope="col" class="arial_font">Podnesi resenje</th>
             </ng-container>
@@ -39,7 +39,7 @@
     </thead>
     <tbody *ngFor="let zahtev of zahteviZaPriznanjePatenta">
         <tr>
-            <td scope="row" >{{zahtev.podaciOPrijavama.novaPrijava.brojPrijave}}</td>
+            <td scope="row">{{zahtev.podaciOPrijavama.novaPrijava.brojPrijave}}</td>
             <td class="arial_font">{{zahtev.podaciOPrijavama.novaPrijava.datumPrijave}}</td>
             <td><button class="btn btn-dark arial_font" (click)="showHTML(zahtev)">HTML</button></td>
             <td><button class="btn btn-dark arial_font" (click)="showPDF(zahtev)">PDF</button></td>
@@ -58,12 +58,12 @@
                 </td>
             </ng-container>
         </tr>
-    </tbody>  
+    </tbody>
 </table>
 
 
 <div *ngIf="modalOpened">
-    <app-modal-accept-decline-request (modalClosed)="closeModal()" [zahtev]="odabraniZahtev"></app-modal-accept-decline-request>
+    <app-modal-accept-decline-request (modalClosed)="closeModal()" [zahtev]="odabraniZahtev" [servis]="'patent'"></app-modal-accept-decline-request>
 </div>
 <div *ngIf="modalLinksOpened">
     <app-modal-show-reference (modalLinksClosed)="closeModalLinks()" [zahtevi]="linkovi"></app-modal-show-reference>

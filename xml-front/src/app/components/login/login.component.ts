@@ -39,12 +39,7 @@ export class LoginComponent implements OnInit {
         const token = result.TokenDTO.accessToken[0];
         let decodedToken: DecodedToken = jwtDecode(token);
         this.tokenService.setToken(token, decodedToken.role);
-        if (this.tokenService.getRole() === 'korisnik') {
-          this.router.navigate(['/kreiraj-patent']);
-        }
-        else {
-          this.router.navigate(['/pregledaj-patente']);
-        }
+        this.router.navigate(['/pocetna-stranica']);
       })
     });
   }

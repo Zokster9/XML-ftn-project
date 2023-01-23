@@ -1,5 +1,6 @@
 package a1.a1service.marshal;
 
+import a1.a1service.dto.KorisnikDTO;
 import a1.a1service.dto.ResenjeZahtevaDTO;
 import a1.a1service.model.ResenjeZahteva;
 
@@ -11,18 +12,18 @@ import java.util.GregorianCalendar;
 
 public class MarshalResenjeZahteva {
 
-    public ResenjeZahteva marshalResenjeZahteva(ResenjeZahtevaDTO resenjeZahtevaDTO) throws DatatypeConfigurationException {
+    public ResenjeZahteva marshalResenjeZahteva(ResenjeZahtevaDTO resenjeZahtevaDTO, KorisnikDTO sluzbenik) throws DatatypeConfigurationException {
         ResenjeZahteva resenjeZahteva = new ResenjeZahteva();
         resenjeZahteva.setBrojResenjaZahteva(marshalGenerisanjeSifre("RZ-"));
-        if (resenjeZahteva.isZahtevJePrihvacen()) {
+        if (resenjeZahtevaDTO.isZahtevJePrihvacen()) {
             resenjeZahteva.setSifra(marshalGenerisanjeSifre("S-"));
         }else {
             resenjeZahteva.setObrazlozenje(resenjeZahtevaDTO.getObrazlozenje());
         }
         resenjeZahteva.setReferenca(resenjeZahtevaDTO.getReferenca());
         resenjeZahteva.setZahtevJePrihvacen(resenjeZahtevaDTO.isZahtevJePrihvacen());
-        resenjeZahteva.setImeSluzbenika(resenjeZahtevaDTO.getImeSluzbenika());
-        resenjeZahteva.setPrezimeSluzbenika(resenjeZahtevaDTO.getPrezimeSluzbenika());
+        resenjeZahteva.setImeSluzbenika(sluzbenik.getIme());
+        resenjeZahteva.setPrezimeSluzbenika(sluzbenik.getPrezime());
         resenjeZahteva.setDatumResenja(marshalGenerisanjeDatumaResenja());
         return resenjeZahteva;
     }

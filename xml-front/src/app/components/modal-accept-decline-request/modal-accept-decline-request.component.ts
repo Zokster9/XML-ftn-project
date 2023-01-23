@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ResenjeZahtevaDto } from 'src/app/models/ResenjeZahtevaDto';
+import { ResenjeZahtevaDTO, ResenjeZahtevaDto } from 'src/app/models/ResenjeZahtevaDto';
 import { ZahtevZaPriznanjePatentaDto } from 'src/app/models/ZahtevZaPriznanjePatentaDTO';
 import { ResenjeZahtevaService } from 'src/app/services/resenje-zahteva.service';
 import { TokenService } from 'src/app/services/token.service';
+import ResenjaZahtevaUtil from 'src/app/util/resenja-util';
+import * as xml2js from 'xml2js';
 
 @Component({
   selector: 'app-modal-accept-decline-request',
@@ -13,7 +15,13 @@ import { TokenService } from 'src/app/services/token.service';
 })
 export class ModalAcceptDeclineRequestComponent implements OnInit {
 
+  @Input() servis! : string;
+
+  @Input() brojAutorskog! : string;
+
   @Input() zahtev! : ZahtevZaPriznanjePatentaDto;
+
+  @Output() autorskoResenjeDodato = new EventEmitter<ResenjeZahtevaDTO>();
 
   @Output() modalClosed = new EventEmitter();
 
@@ -39,6 +47,41 @@ export class ModalAcceptDeclineRequestComponent implements OnInit {
   }
 
   submit() {
+    if (this.servis === 'autorska') {
+      this.posaljiAutorsko();
+    }else if (this.servis === 'patent') {
+      this.submitPatent();
+    }else {
+
+    }
+  }
+
+  posaljiAutorsko() {
+    let prihvaceno;
+    if (this.form.controls["prihvaceno"].value === 'prihvati') {
+      prihvaceno = true;
+    }
+    else
+    {
+      prihvaceno = false;
+    }
+    let resenjeZahteva: ResenjeZahtevaDTO = {
+      zahtevJePrihvacen: prihvaceno,
+      obrazlozenje: this.form.value.obrazlozenje as string,
+      referenca: this.brojAutorskog
+    };
+    this.resenjeZahtevaService.kreirajResenjeAutorska(resenjeZahteva).subscribe(data => {
+      const parser = new xml2js.Parser({strict: true, trim: true});
+      parser.parseString(data.toString(), (err, result) => {
+        let resenjeZahteva: ResenjeZahtevaDTO | undefined;
+        let resenjeZahtevaUtil = new ResenjaZahtevaUtil();
+        resenjeZahteva = resenjeZahtevaUtil.transformisiResenjeZahteva(result.ResenjeZahtevaDTO);
+        this.autorskoResenjeDodato.emit(resenjeZahteva);
+      })
+    })
+  }
+
+  submitPatent() {
     let prihvaceno;
     if (this.form.controls["prihvaceno"].value === 'prihvati') {
       prihvaceno = true;

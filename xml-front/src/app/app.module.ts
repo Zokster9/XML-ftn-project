@@ -15,6 +15,7 @@ import { AutorskaTableComponent } from './components/autorska-table/autorska-tab
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RegisterComponent } from './components/register/register.component';
     AutorskaTableComponent,
     NavbarComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomePageComponent
   ],
   imports: [
     BrowserModule,

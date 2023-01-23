@@ -236,7 +236,7 @@
                 <div *ngFor="let autor of autori.controls; let i = index">
                     <hr>
                     <br>
-                    <section [formGroupName]="i">
+                    <div [formGroupName]="i">
                         <h6 class="mb-2 arial_font title-left new-line"><b>Autor</b></h6>
                         <div class="form-check title-left mt-1">
                             <input class="form-check-input" type="radio" name="autorZiv" id="da" value="da" formControlName="autorZiv" checked>
@@ -246,10 +246,9 @@
                             <input class="form-check-input" type="radio" name="autorZiv" id="ne" value="ne" formControlName="autorZiv">
                             <label class="form-check-label arial_font" for="ne">Autor je preminuo</label>
                         </div>
-                    </section>
-                    <br><br>
-                    <div *ngIf="autorskaForm.get('podaciOAutorskomDelu')?.get('autori')?.get([i])?.get('autorZiv')?.value === 'da'">
-                        <section [formGroupName]="i">
+                    </div>
+                    <div class="mt-5" *ngIf="autorskaForm.get('podaciOAutorskomDelu')?.get('autori')?.get([i])?.get('autorZiv')?.value === 'da'">
+                        <div [formGroupName]="i">
                             <div class="left-elem-three">
                                 <label for="imeAutora" class="arial_font">Ime</label>
                                 <input formControlName="ime" type="text" id="imeAutora" name="imeAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ime" required>
@@ -262,34 +261,37 @@
                                 <label for="drzavljanstvoAutora" class="arial_font">Drzavljanstvo</label>
                                 <input formControlName="drzavljanstvo" type="text" id="drzavljanstvoAutora" name="drzavljanstvoAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite drzavljanstvo" required>
                             </div>
-                        </section>
-                        <h6 class="mb-2 arial_font"><b>Adresa autora</b></h6>
-                        <section [formGroupName]="i">
+                        </div>
+                        <h6 class="mb-2 arial_font new-line"><b>Adresa autora</b></h6>
+                        <div [formGroupName]="i">
                             <div formGroupName="adresa">
-                                <div class="left_element">
-                                    <label for="gradAutora" class="arial_font">Grad</label>
-                                    <input formControlName="grad" type="text" id="gradAutora" name="gradAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+                                <div>
+                                    <div class="left_element">
+                                        <label for="gradAutora" class="arial_font">Grad</label>
+                                        <input formControlName="grad" type="text" id="gradAutora" name="gradAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite grad" required>
+                                    </div>
+                                    <div class="right_element">
+                                        <label for="drzavaAutora" class="arial_font">Država</label>
+                                        <input formControlName="drzava" type="text" id="drzavaAutora" name="drzavaAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
+                                    </div>
                                 </div>
-                                <div class="right_element">
-                                    <label for="drzavaAutora" class="arial_font">Država</label>
-                                    <input formControlName="drzava" type="text" id="drzavaAutora" name="drzavaAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite državu" required>
+                                <div>
+                                    <div class="left-elem-three">
+                                        <label for="ulicaAutora" class="arial_font">Ulica</label>
+                                        <input formControlName="ulica" type="text" id="ulicaAutora" name="ulicaAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu" required>
+                                    </div>
+                                    <div class="left-elem-three">
+                                        <label for="brojAutora" class="arial_font">Broj</label>
+                                        <input formControlName="broj" type="number" id="brojAutora" name="brojAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj" required>
+                                    </div>
+                                    <div class="right-elem-three">
+                                        <label for="postanskiBrojAutora" class="arial_font">Poštanski broj</label>
+                                        <input formControlName="postanskiBroj" type="number" id="postanskiBrojAutora" name="postanskiBrojAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
+                                    </div>
                                 </div>
                             </div>
-                            <div formGroupName="adresa">
-                                <div class="left-elem-three">
-                                    <label for="ulicaAutora" class="arial_font">Ulica</label>
-                                    <input formControlName="ulica" type="text" id="ulicaAutora" name="ulicaAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu" required>
-                                </div>
-                                <div class="left-elem-three">
-                                    <label for="brojAutora" class="arial_font">Broj</label>
-                                    <input formControlName="broj" type="number" id="brojAutora" name="brojAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj" required>
-                                </div>
-                                <div class="right-elem-three">
-                                    <label for="postanskiBrojAutora" class="arial_font">Poštanski broj</label>
-                                    <input formControlName="postanskiBroj" type="number" id="postanskiBrojAutora" name="postanskiBrojAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite poštanski broj" required>
-                                </div>
-                            </div>
-                        </section>
+                        </div>
+                        <button class="btn btn-danger mt-4" (click)="obrisiAutora(i)" [disabled]="i === 0">Obriši autora</button>
                     </div>
                     <div *ngIf="autorskaForm.get('podaciOAutorskomDelu')?.get('autori')?.get([i])?.get('autorZiv')?.value === 'ne'">
                         <div class="left-elem-three" [formGroupName]="i">
@@ -304,10 +306,13 @@
                             <label for="godinaSmrtiAutora" class="arial_font">Godina smrti</label>
                             <input formControlName="godinaSmrti" type="text" id="godinaSmrtiAutora" name="godinaSmrtiAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite godinu smrti" required>
                         </div>
+                        <button class="btn btn-danger mt-4" (click)="obrisiAutora(i)" [disabled]="i === 0">Obriši autora</button>
                     </div>
                 </div>
             </div>
         </section>
+        <hr>
+        <button class="btn btn-primary margin-right-75 mb-3" (click)="dodajAutora()">Dodaj autora</button>
     </div>
     <hr>
 

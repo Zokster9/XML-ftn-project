@@ -7,11 +7,12 @@ export interface ResenjeZahtevaDto {
 }
 
 export interface ResenjeZahtevaDTO {
-    datumResenja: number;
+    brojResenjaZahteva?: string;
+    datumResenja?: Date;
     zahtevJePrihvacen: boolean;
     sifra?: string;
     obrazlozenje?: string;
     referenca: string;
-    imeSluzbenika: string;
-    prezimeSluzbenika: string;
+    imeSluzbenika?: string;
+    prezimeSluzbenika?: string;
 }

@@ -6,6 +6,10 @@ import { AutorskaService } from 'src/app/services/autorska.service';
 import AutorskaUtil from 'src/app/util/autorska-util';
 import * as xml2js from 'xml2js';
 import { saveAs } from 'file-saver';
+import { TokenService } from 'src/app/services/token.service';
+import { ResenjeZahtevaService } from 'src/app/services/resenje-zahteva.service';
+import ResenjaZahtevaUtil from 'src/app/util/resenja-util';
+import { IzvestajDatumiDTO } from 'src/app/models/ReportDatesDto';
 
 @Component({
   selector: 'app-autorska-table',
@@ -18,31 +22,62 @@ export class AutorskaTableComponent {
   resenjaZahteva: ResenjeZahtevaDTO[] = [];
   pocetniDatum!: Date;
   krajnjiDatum!: Date;
+  modalOtvoren = false;
+  odabranoAutorsko!: string;
   tekst!: string;
   upit!: string;
+  uloga!: string;
+  loaded = false;
 
   ngOnInit(): void {
-    this.autorskaService.dobaviSve().subscribe(data => {
-      const parser = new xml2js.Parser({strict: true, trim: true});
-      parser.parseString(data.toString(), (err, result) => {
-        let obrasci = result.List.item;
-        let autorskaUtil = new AutorskaUtil();
-        for (var obrazac of obrasci) {
-          let obrazacAutorskoDeloDTO : ObrazacAutorskoDeloDTO;   
-          obrazacAutorskoDeloDTO = autorskaUtil.konvertujOdgovor(obrazac);
-          this.obrasciAutorska.push(obrazacAutorskoDeloDTO);
-        }
+    if (this.tokenService.getToken() === null) {
+      this.router.navigate(['/']);
+    } else {
+      this.uloga = this.tokenService.getRole() as string;
+      this.autorskaService.dobaviSve().subscribe(data => {
+        const parser = new xml2js.Parser({strict: true, trim: true});
+        parser.parseString(data.toString(), (err, result) => {
+          let obrasci = result.List.item;
+          let autorskaUtil = new AutorskaUtil();
+          for (var obrazac of obrasci) {
+            let obrazacAutorskoDeloDTO : ObrazacAutorskoDeloDTO;   
+            obrazacAutorskoDeloDTO = autorskaUtil.konvertujOdgovor(obrazac);
+            this.obrasciAutorska.push(obrazacAutorskoDeloDTO);
+          }
+        })
       })
-    })
+      this.resenjaZahtevaService.dobaviSvaResenjaAutorska().subscribe(data => {
+        const parser = new xml2js.Parser({strict: true, trim: true});
+        parser.parseString(data.toString(), (err, result) => {
+          let resenja = result.List.item;
+          let resenjeZahtevaUtil = new ResenjaZahtevaUtil();
+          if (resenja !== undefined) {
+            for (var resenje of resenja) {
+              let resenjeZahteva : ResenjeZahtevaDTO = resenjeZahtevaUtil.transformisiResenjeZahteva(resenje);
+              this.resenjaZahteva.push(resenjeZahteva);
+            }
+          }
+        })
+      })
+      this.loaded = true;
+    }
   }
 
   constructor(
     private autorskaService: AutorskaService,
+    private tokenService: TokenService,
+    private resenjaZahtevaService: ResenjeZahtevaService,
     private router: Router
   ){}
 
   kreirajIzvestaj() {
-
+    const izvestajDatumiDTO : IzvestajDatumiDTO = {
+      pocetniDatum: this.pocetniDatum,
+      krajnjiDatum: this.krajnjiDatum
+    }
+    this.resenjaZahtevaService.kreirajIzvestajAutorska(izvestajDatumiDTO).subscribe(data => {
+      window.open('http://localhost:9002/pdf/izvestaj.pdf');
+    })
   }
 
   pretraziPoTekstu() {
@@ -138,15 +173,33 @@ export class AutorskaTableComponent {
   }
 
   proveriPostojanjeResenja(brojAutorskog: string): boolean {
-    return true;
+    for (let resenje of this.resenjaZahteva) {
+      if (resenje.referenca === brojAutorskog) return true;
+    }
+    return false;
   }
 
   prikaziResenje(brojAutorskog: string) {
-
+    this.resenjaZahtevaService.prikaziResenjeKojeReferenciraNaZahtevAutorsko(brojAutorskog).subscribe(data => {
+      const parser = new xml2js.Parser({strict: true, trim: true});
+      parser.parseString(data.toString(), (err, result) => {
+        window.open('http://localhost:9002/html/' + brojAutorskog + '_resenje.html');
+      })
+    })
   }
 
   otvoriModal(brojAutorskog: string) {
+    this.odabranoAutorsko = brojAutorskog;
+    this.modalOtvoren = true;
+  }
 
+  zatvoriModal(resenjeZahtevaDTO: ResenjeZahtevaDTO) {
+    this.resenjaZahteva.push(resenjeZahtevaDTO);
+    this.samoZatvoriModal();
+  }
+
+  samoZatvoriModal() {
+    this.modalOtvoren = false;
   }
 
 }

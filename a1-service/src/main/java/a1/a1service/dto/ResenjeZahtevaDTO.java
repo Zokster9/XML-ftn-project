@@ -6,6 +6,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 public class ResenjeZahtevaDTO {
 
+    protected String brojResenjaZahteva;
     protected XMLGregorianCalendar datumResenja;
     protected boolean zahtevJePrihvacen;
     protected String sifra;
@@ -18,6 +19,7 @@ public class ResenjeZahtevaDTO {
     }
 
     public ResenjeZahtevaDTO(ResenjeZahteva resenjeZahteva) {
+        this.brojResenjaZahteva = resenjeZahteva.getBrojResenjaZahteva();
         this.datumResenja = resenjeZahteva.getDatumResenja();
         this.zahtevJePrihvacen = resenjeZahteva.isZahtevJePrihvacen();
         this.sifra = resenjeZahteva.getSifra();
@@ -25,6 +27,10 @@ public class ResenjeZahtevaDTO {
         this.referenca = resenjeZahteva.getReferenca();
         this.imeSluzbenika = resenjeZahteva.getImeSluzbenika();
         this.prezimeSluzbenika = resenjeZahteva.getPrezimeSluzbenika();
+    }
+
+    public String getBrojResenjaZahteva() {
+        return brojResenjaZahteva;
     }
 
     public XMLGregorianCalendar getDatumResenja() {

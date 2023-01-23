@@ -1,17 +1,20 @@
 package a1.a1service.transform;
 
 import a1.a1service.model.ObrazacAutorskoDelo;
+import a1.a1service.model.ResenjeZahteva;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.util.JAXBSource;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -69,5 +72,29 @@ public class AutorskaTransform {
         PdfDocument pdfDocument = new PdfDocument(new PdfWriter(pdfFajl));
         pdfDocument.setDefaultPageSize(new PageSize(780, 2000));
         HtmlConverter.convertToPdf(Files.newInputStream(Paths.get(htmlFajl)), pdfDocument);
+    }
+
+    public void kreirajResenjeZahtevaHTML(String htmlFile, ResenjeZahteva resenjeZahteva) {
+        try {
+            TransformerFactory factory = TransformerFactory.newInstance();
+            InputStream resourceAsStream = getClass().getResourceAsStream("/xslt/resenjeZahteva.xsl");
+            StreamSource xslt = new StreamSource(resourceAsStream);
+            Transformer transformer = factory.newTransformer(xslt);
+
+            JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
+            JAXBSource source = new JAXBSource(context, resenjeZahteva);
+            StreamResult result = new StreamResult(new FileOutputStream(htmlFile));
+
+            transformer.transform(source, result);
+
+        } catch (TransformerConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (TransformerException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

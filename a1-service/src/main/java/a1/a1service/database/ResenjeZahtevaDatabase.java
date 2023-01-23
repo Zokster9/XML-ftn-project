@@ -193,6 +193,7 @@ public class ResenjeZahtevaDatabase {
             XMLResource res = (XMLResource) result.getIterator().nextResource();
             JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
+            if (res == null) return null;
             resenjeZahteva = (ResenjeZahteva) unmarshaller.unmarshal(res.getContentAsDOM());
         } catch (JAXBException e) {
             e.printStackTrace();
@@ -245,6 +246,7 @@ public class ResenjeZahtevaDatabase {
             // get the collection
             System.out.println("[INFO] Retrieving the collection: " + collectionId);
             col = DatabaseManager.getCollection(conn.uri + collectionId);
+            if (col == null) return new ArrayList<>();
             //col.setProperty(OutputKeys.INDENT, "yes");
 
             XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");

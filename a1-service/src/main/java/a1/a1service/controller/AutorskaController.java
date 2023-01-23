@@ -49,10 +49,11 @@ public class AutorskaController {
     }
 
     @GetMapping(value = "/dobavi-html/{brojAutorskog}", produces = "application/xml", consumes = "application/xml")
-    public ResponseEntity<ObrazacAutorskoDeloDTO> dobaviObrazacHTML(@PathVariable("brojAutorskog") String brojAutorskog) {
+    public ResponseEntity<ObrazacAutorskoDeloDTO> dobaviObrazacHTML(@PathVariable("brojAutorskog") String brojAutorskog, HttpServletRequest request) {
         try {
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
             ObrazacAutorskoDelo obrazacAutorskoDelo = autorskaService.dobaviAutorskoDelo(brojAutorskog);
-            autorskaService.kreirajHTML(obrazacAutorskoDelo);
+            autorskaService.kreirajHTML(token, obrazacAutorskoDelo);
             return new ResponseEntity<>(new ObrazacAutorskoDeloDTO(obrazacAutorskoDelo), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -60,11 +61,12 @@ public class AutorskaController {
     }
 
     @GetMapping(value = "/dobavi-pdf/{brojAutorskog}", consumes = "application/xml", produces = "application/xml")
-    public ResponseEntity<ObrazacAutorskoDeloDTO> dobaviObrazacPDF(@PathVariable("brojAutorskog") String brojAutorskog) {
+    public ResponseEntity<ObrazacAutorskoDeloDTO> dobaviObrazacPDF(@PathVariable("brojAutorskog") String brojAutorskog, HttpServletRequest request) {
         try {
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
             ObrazacAutorskoDelo obrazacAutorskoDelo = autorskaService.dobaviAutorskoDelo(brojAutorskog);
-            autorskaService.kreirajHTML(obrazacAutorskoDelo);
-            autorskaService.kreirajPDF(obrazacAutorskoDelo);
+            autorskaService.kreirajHTML(token, obrazacAutorskoDelo);
+            autorskaService.kreirajPDF(token, obrazacAutorskoDelo);
             return new ResponseEntity<>(new ObrazacAutorskoDeloDTO(obrazacAutorskoDelo), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -72,9 +74,10 @@ public class AutorskaController {
     }
 
     @GetMapping(value = "/dobavi-sve", consumes = "application/xml", produces = "application/xml")
-    public ResponseEntity<List<ObrazacAutorskoDeloDTO>> dobaviSve() {
+    public ResponseEntity<List<ObrazacAutorskoDeloDTO>> dobaviSve(HttpServletRequest request) {
         try {
-            List<ObrazacAutorskoDelo> obrasci = autorskaService.dobaviSve();
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            List<ObrazacAutorskoDelo> obrasci = autorskaService.dobaviSve(token);
             List<ObrazacAutorskoDeloDTO> obrazacAutorskoDeloDTOS = new ArrayList<>();
             for (ObrazacAutorskoDelo obrazac: obrasci) {
                 obrazacAutorskoDeloDTOS.add(new ObrazacAutorskoDeloDTO(obrazac));
@@ -86,29 +89,38 @@ public class AutorskaController {
     }
 
     @GetMapping(value = "/dobavi-rdf/{brojAutorskog}", produces = "application/xml")
-    public ResponseEntity<String> dobaviRDF(@PathVariable(value = "brojAutorskog") String brojAutorskog) {
+    public ResponseEntity<String> dobaviRDF(@PathVariable(value = "brojAutorskog") String brojAutorskog, HttpServletRequest request) {
         try {
-            String rdf = autorskaService.kreirajRdfJson(brojAutorskog);
-            return new ResponseEntity<>(rdf, HttpStatus.OK);
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            if (autorskaService.proveriKorisnika(token, true)) {
+                String rdf = autorskaService.kreirajRdfJson(brojAutorskog);
+                return new ResponseEntity<>(rdf, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping(value = "/dobavi-json/{brojAutorskog}", produces = "application/json")
-    public ResponseEntity<String> dobaviJSON(@PathVariable("brojAutorskog") String brojAutorskog) {
+    public ResponseEntity<String> dobaviJSON(@PathVariable("brojAutorskog") String brojAutorskog, HttpServletRequest request) {
         try {
-            String rdf = autorskaService.kreirajRdfJson(brojAutorskog);
-            return new ResponseEntity<>(rdf, HttpStatus.OK);
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            if (autorskaService.proveriKorisnika(token, true)) {
+                String rdf = autorskaService.kreirajRdfJson(brojAutorskog);
+                return new ResponseEntity<>(rdf, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping(value = "/dobavi-tekst/{tekst}", produces = "application/xml")
-    public ResponseEntity<List<ObrazacAutorskoDeloDTO>> dobaviPoTekstu(@PathVariable("tekst") String tekst) {
+    public ResponseEntity<List<ObrazacAutorskoDeloDTO>> dobaviPoTekstu(@PathVariable("tekst") String tekst, HttpServletRequest request) {
         try {
-            List<ObrazacAutorskoDelo> obrasci = autorskaService.dobaviPoTekstu(tekst);
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            List<ObrazacAutorskoDelo> obrasci = autorskaService.dobaviPoTekstu(token, tekst);
             List<ObrazacAutorskoDeloDTO> obrazacAutorskoDeloDTOS = new ArrayList<>();
             for (ObrazacAutorskoDelo obrazac: obrasci) {
                 obrazacAutorskoDeloDTOS.add(new ObrazacAutorskoDeloDTO(obrazac));
@@ -120,9 +132,10 @@ public class AutorskaController {
     }
 
     @GetMapping(value = "/dobavi-metapodaci/{upit}", produces = "application/xml")
-    public ResponseEntity<List<ObrazacAutorskoDeloDTO>> dobaviPoMetapodacima(@PathVariable("upit") String upit) {
+    public ResponseEntity<List<ObrazacAutorskoDeloDTO>> dobaviPoMetapodacima(@PathVariable("upit") String upit, HttpServletRequest request) {
         try {
-            List<ObrazacAutorskoDelo> obrasci = autorskaService.dobaviPoMetapodacima(upit);
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            List<ObrazacAutorskoDelo> obrasci = autorskaService.dobaviPoMetapodacima(token, upit);
             List<ObrazacAutorskoDeloDTO> obrazacAutorskoDeloDTOS = new ArrayList<>();
             for (ObrazacAutorskoDelo obrazac: obrasci) {
                 obrazacAutorskoDeloDTOS.add(new ObrazacAutorskoDeloDTO(obrazac));
