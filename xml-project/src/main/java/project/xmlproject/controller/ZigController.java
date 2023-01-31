@@ -53,7 +53,26 @@ public class ZigController {
         podnosilacPrijave.setAdresa(adresa);
         podnosilacPrijave.setKontaktPodaci(kontaktPodaci);
 
+        TPravnoLice pravnoLice = new TPravnoLice();
+
+        Adresa adresa1 = new Adresa();
+        adresa1.setUlica("Ulica Firmi");
+        adresa1.setBroj("13/2");
+        adresa1.setMesto("Novi Sad");
+        adresa1.setDrzava("Srbija");
+        adresa1.setPostanskiBroj(21000);
+
+        KontaktPodaci kontaktPodaci1 = new KontaktPodaci();
+        kontaktPodaci1.setEmail("firma@gmail.com");
+        kontaktPodaci1.setBrojTelefona("+381642956023");
+        kontaktPodaci1.setBrojFaksa("383838");
+
+        pravnoLice.setNaziv("Firma za zigove");
+        pravnoLice.setAdresa(adresa1);
+        pravnoLice.setKontaktPodaci(kontaktPodaci1);
+
         podnosiociPrijave.getPodnosilacPrijave().add(podnosilacPrijave);
+        podnosiociPrijave.getPodnosilacPrijave().add(pravnoLice);
 
         // 2. element: Zig
         // sub elements: tipZiga, tipZnaka, izgledZnaka, naznaceneBoje, opisZnaka
@@ -153,7 +172,7 @@ public class ZigController {
         priloziUzZahtev.setSpisakRobeIUsluga(spisakRobeIUsluga);
         priloziUzZahtev.setDokazOUplatiTakse(dokazOUplatiTakse);
 
-        podaciOPrijavi.setBrojPrijaveZiga("Z-23456-24");
+        podaciOPrijavi.setBrojPrijaveZiga("Z-23456-25");
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(new Date());
         XMLGregorianCalendar xCal = DatatypeFactory.newInstance()

@@ -15,14 +15,18 @@
                     <xsl:value-of select="//Podaci_o_prijavi/Datum_podnosenja"/>
                 </xsl:variable>
                 <xsl:variable name="Priznati_datum_prijave">
-                    <xsl:value-of select="//Podacio_o_prijavi/Priznati_datum_prijave"/>
+                    <xsl:value-of select="//Podaci_o_prijavi/Priznati_datum_prijave"/>
                 </xsl:variable>
                 <xsl:for-each select="//Podnosioci_prijave/Podnosilac_prijave">
                     <z1:Podnosilac_prijave>
-                        <xsl:value-of select="//Ime"/><xsl:text> </xsl:text><xsl:value-of select="//Prezime"/>
-                    </z1:Podnosilac_prijave>
-                    <z1:Podnosilac_prijave>
-                        <xsl:value-of select="//Naziv"/>
+                        <xsl:choose>
+                            <xsl:when test="./Naziv">
+                                <xsl:value-of select="./Naziv"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="./Ime"/><xsl:text> </xsl:text><xsl:value-of select="./Prezime"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
                     </z1:Podnosilac_prijave>
                 </xsl:for-each>
                 <z1:Broj_prijave_ziga>

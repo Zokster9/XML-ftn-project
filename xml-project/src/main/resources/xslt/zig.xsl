@@ -47,16 +47,22 @@
                                 style="width:530pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
                                 colspan="23">
                             <xsl:for-each select="//Podnosioci_prijave/Podnosilac_prijave">
-                                <p style="text-indent: 0pt;text-align: left;"><br />
-                                    <xsl:value-of select="//Ime"/><xsl:text> </xsl:text><xsl:value-of select="//Prezime"/>,
-                                    <xsl:value-of select="//Adresa/Ulica"/><xsl:text> </xsl:text><xsl:value-of select="//Adresa/Broj"/>,<xsl:text> </xsl:text>
-                                    <xsl:value-of select="//Adresa/Postanski_broj"/>,<xsl:text> </xsl:text><xsl:value-of select="//Adresa/Mesto"/>,<xsl:text> </xsl:text><xsl:value-of select="//Adresa/Drzava"/>
-                                </p>
-<!--                                <p style="text-indent: 0pt;text-align: left;"><br />-->
-<!--                                    <xsl:value-of select="//Naziv"/>,-->
-<!--                                    <xsl:value-of select="//Adresa/Ulica"/><xsl:text> </xsl:text><xsl:value-of select="//Adresa/Broj"/>,<xsl:text> </xsl:text>-->
-<!--                                    <xsl:value-of select="//Adresa/Postanski_broj"/>,<xsl:text> </xsl:text><xsl:value-of select="//Adresa/Mesto"/>,<xsl:text> </xsl:text><xsl:value-of select="//Adresa/Drzava"/>-->
-<!--                                </p>-->
+                                <xsl:choose>
+                                    <xsl:when test="./Naziv">
+                                        <p style="text-indent: 0pt;text-align: left;"><br />
+                                            <xsl:value-of select="./Naziv"/>,
+                                            <xsl:value-of select="./Adresa/Ulica"/><xsl:text> </xsl:text><xsl:value-of select="./Adresa/Broj"/>,<xsl:text> </xsl:text>
+                                            <xsl:value-of select="./Adresa/Postanski_broj"/>,<xsl:text> </xsl:text><xsl:value-of select="./Adresa/Mesto"/>,<xsl:text> </xsl:text><xsl:value-of select="./Adresa/Drzava"/>
+                                        </p>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <p style="text-indent: 0pt;text-align: left;"><br />
+                                            <xsl:value-of select="./Ime"/><xsl:text> </xsl:text><xsl:value-of select="./Prezime"/>,
+                                            <xsl:value-of select="./Adresa/Ulica"/><xsl:text> </xsl:text><xsl:value-of select="./Adresa/Broj"/>,<xsl:text> </xsl:text>
+                                            <xsl:value-of select="./Adresa/Postanski_broj"/>,<xsl:text> </xsl:text><xsl:value-of select="./Adresa/Mesto"/>,<xsl:text> </xsl:text><xsl:value-of select="./Adresa/Drzava"/>
+                                        </p>
+                                    </xsl:otherwise>
+                                </xsl:choose>
                             </xsl:for-each>
                         </td>
                     </tr>
