@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+           targetNamespace="http://www.ftn.uns.ac.rs/zig" xmlns:zig="http://www.ftn.uns.ac.rs/zig">
+    <xs:element name="Zahtev_za_priznanje_ziga">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Podnosioci_prijave">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="Podnosilac_prijave"
+                                        type="zig:TLice"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="Punomocnik" type="zig:TLice"/>
+                <xs:element minOccurs="0" name="Zajednicki_predstavnik_podnosioca_prijave"
+                            type="zig:TLice"/>
+                <xs:element name="Zig">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Tip_ziga">
+                                <xs:complexType>
+                                    <xs:choice>
+                                        <xs:element name="Individualni_zig" default="true"
+                                                    type="xs:boolean"/>
+                                        <xs:element name="Kolektivni_zig" default="false"
+                                                    type="xs:boolean"/>
+                                        <xs:element name="Zig_garancije" default="false"
+                                                    type="xs:boolean"/>
+                                    </xs:choice>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Tip_znaka">
+                                <xs:complexType>
+                                    <xs:choice>
+                                        <xs:element name="Verbalni_znak" default="true"
+                                                    type="xs:boolean"/>
+                                        <xs:element name="Graficki_znak" default="false"
+                                                    type="xs:boolean"/>
+                                        <xs:element name="Kombinovani_znak" default="false"
+                                                    type="xs:boolean"/>
+                                        <xs:element name="Trodimenzionalni_znak" default="false"
+                                                    type="xs:boolean"/>
+                                        <xs:element name="Druga_vrsta_znaka" default="false"
+                                                    type="xs:boolean"/>
+                                    </xs:choice>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Izgled_znaka">
+                                <xs:complexType>
+                                    <xs:attribute name="image_url" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Naznacene_boje" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="Boja"
+                                                    type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="Transliteracija_znaka" type="xs:string"/>
+                            <xs:element minOccurs="0" name="Prevod_znaka" type="xs:string"/>
+                            <xs:element name="Opis_znaka" type="xs:string" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Klase_robe_i_usluga">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="45" name="Klasa" type="zig:TKlasa"> </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Pravo_prvenstva_i_osnov" type="xs:string" minOccurs="0"/>
+                <xs:element name="Placene_takse">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Osnovna_taksa" type="zig:TTaksa"/>
+                            <xs:element name="Taksa_za_klase">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Vrednost" type="zig:TTaksa"/>
+                                    </xs:sequence>
+                                    <xs:attribute name="broj_klasa" type="zig:TKlasa"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Taksa_za_graficko_resenje" type="zig:TTaksa"/>
+                            <xs:element name="Ukupna_taksa" type="zig:TTaksa"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Podaci_o_prijavi">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Prilozi_uz_zahtev">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="Primerak_znaka">
+                                            <xs:complexType>
+                                                <xs:attribute name="naziv_dokumenta"
+                                                              type="xs:string"/>
+                                                <xs:attribute name="putanja_dokumenta"
+                                                              type="xs:string"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="Spisak_robe_i_usluga">
+                                            <xs:complexType>
+                                                <xs:attribute name="naziv_dokumenta"
+                                                              type="xs:string"/>
+                                                <xs:attribute name="putanja_dokumenta"
+                                                              type="xs:string"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="Punomocje" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:attribute name="naziv_dokumenta"
+                                                              type="xs:string"/>
+                                                <xs:attribute name="putanja_dokumenta"
+                                                              type="xs:string"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="Generalno_punomocje_ranije_prilozeno"
+                                                    default="false" type="xs:boolean" minOccurs="0"/>
+                                        <xs:element name="Punomocje_ce_biti_naknadno_dostavljeno"
+                                                    default="false" type="xs:boolean" minOccurs="0"/>
+                                        <xs:element name="Opsti_akt_o_kolektivnom_zigu"
+                                                    minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:attribute name="naziv_dokumenta"
+                                                              type="xs:string"/>
+                                                <xs:attribute name="putanja_dokumenta"
+                                                              type="xs:string"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="Dokaz_o_pravu_prvenstva" minOccurs="0">
+                                            <xs:complexType>
+                                                <xs:attribute name="naziv_dokumenta"
+                                                              type="xs:string"/>
+                                                <xs:attribute name="putanja_dokumenta"
+                                                              type="xs:string"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="Dokaz_o_uplati_takse">
+                                            <xs:complexType>
+                                                <xs:attribute name="naziv_dokumenta"
+                                                              type="xs:string"/>
+                                                <xs:attribute name="putanja_dokumenta"
+                                                              type="xs:string"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="Broj_prijave_ziga" type="zig:TBroj_prijave"> </xs:element>
+                            <xs:element name="Datum_podnosenja" type="xs:date"/>
+                            <xs:element name="Datum_prihvatanja" type="xs:date"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Kontakt_podaci">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Broj_telefona" type="zig:TBroj_telefona"/>
+                <xs:element name="Email" type="zig:TEmail"/>
+                <xs:element name="Broj_faksa" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Adresa">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Ulica" type="xs:string"/>
+                <xs:element name="Broj" type="xs:string"/>
+                <xs:element name="Postanski_broj" type="zig:TPostanski_broj"/>
+                <xs:element name="Mesto" type="xs:string"/>
+                <xs:element name="Drzava" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType abstract="true" name="TLice">
+        <xs:sequence>
+            <xs:element ref="zig:Kontakt_podaci"/>
+            <xs:element ref="zig:Adresa"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TFizicko_lice">
+        <xs:complexContent>
+            <xs:extension base="zig:TLice">
+                <xs:sequence>
+                    <xs:element name="Ime" type="xs:string"/>
+                    <xs:element name="Prezime" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPravno_lice">
+        <xs:complexContent>
+            <xs:extension base="zig:TLice">
+                <xs:sequence>
+                    <xs:element name="Naziv" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="TBroj_telefona">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[+]?[(]?[0-9]{3}[)]?[-\\s.]?[0-9]{2}[-\\s.]?[0-9]{5,7}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TEmail">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TPostanski_broj">
+        <xs:restriction base="xs:int">
+            <xs:pattern value="[\-+]?[0-9]+"/>
+            <xs:minInclusive value="11000"/>
+            <xs:maxInclusive value="40000"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TTaksa">
+        <xs:restriction base="xs:double">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TKlasa">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="45"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TBroj_prijave">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="Z-[0-9]{5}-[0-9]{2}"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
