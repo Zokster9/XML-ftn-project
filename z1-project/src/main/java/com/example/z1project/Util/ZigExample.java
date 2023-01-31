@@ -107,11 +107,11 @@ public class ZigExample {
         ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev priloziUzZahtev = new ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev();
 
         // sub elements: nazivDokumenta
-        ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.PrimerakZnaka primerakZnaka = new ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.PrimerakZnaka();
+        TPrilogUzZahtev primerakZnaka = new TPrilogUzZahtev();
         primerakZnaka.setNazivDokumenta("znak.jpg");
 
         // sub elements: nazivDokumenta
-        ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.DokazOUplatiTakse dokazOUplatiTakse = new ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.DokazOUplatiTakse();
+        TPrilogUzZahtev dokazOUplatiTakse = new TPrilogUzZahtev();
         dokazOUplatiTakse.setNazivDokumenta("dokument.pdf");
 
         priloziUzZahtev.setPrimerakZnaka(primerakZnaka);
@@ -288,7 +288,7 @@ public class ZigExample {
         System.out.println("\t\t\t\t},");
     }
 
-    private void printDokazOPravuPrventsva(ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.DokazOPravuPrvenstva dokazOPravuPrvenstva) {
+    private void printDokazOPravuPrventsva(TPrilogUzZahtev dokazOPravuPrvenstva) {
         String vrednost = "";
         if (dokazOPravuPrvenstva != null) {
             vrednost = dokazOPravuPrvenstva.getNazivDokumenta();
@@ -296,7 +296,7 @@ public class ZigExample {
         System.out.println("\t\t\t\t\tDokaz o pravu prvenstva: " + vrednost);
     }
 
-    private void printOpstiAktOKolektivnomZigu(ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.OpstiAktOKolektivnomZigu opstiAktOKolektivnomZigu) {
+    private void printOpstiAktOKolektivnomZigu(TPrilogUzZahtev opstiAktOKolektivnomZigu) {
         String vrednost = "";
         if (opstiAktOKolektivnomZigu != null) {
             vrednost = opstiAktOKolektivnomZigu.getNazivDokumenta();
@@ -304,7 +304,7 @@ public class ZigExample {
         System.out.println("\t\t\t\t\tOpsti akt o kolektivnom zigu/zigu garancije: " + vrednost);
     }
 
-    private void printPunomocje(ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.Punomocje punomocje) {
+    private void printPunomocje(TPrilogUzZahtev punomocje) {
         String vrednost = "";
         if (punomocje != null) {
             vrednost = punomocje.getNazivDokumenta();

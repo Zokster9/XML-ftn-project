@@ -135,11 +135,11 @@ public class ZigController {
         ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev priloziUzZahtev = new ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev();
 
         // sub elements: nazivDokumenta
-        ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.PrimerakZnaka primerakZnaka = new ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.PrimerakZnaka();
+        TPrilogUzZahtev primerakZnaka = new TPrilogUzZahtev();
         primerakZnaka.setNazivDokumenta("znak.jpg");
 
         // sub elements: nazivDokumenta
-        ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.DokazOUplatiTakse dokazOUplatiTakse = new ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev.DokazOUplatiTakse();
+        TPrilogUzZahtev dokazOUplatiTakse = new TPrilogUzZahtev();
         dokazOUplatiTakse.setNazivDokumenta("dokument.pdf");
 
         priloziUzZahtev.setPrimerakZnaka(primerakZnaka);

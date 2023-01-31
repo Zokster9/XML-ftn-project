@@ -10,24 +10,22 @@ package com.example.z1project.model.zig;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for TFizicko_lice complex type.
+ * <p>Java class for TPrilogUzZahtev complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="TFizicko_lice"&gt;
+ * &lt;complexType name="TPrilogUzZahtev"&gt;
  *   &lt;complexContent&gt;
- *     &lt;extension base="{http://www.ftn.uns.ac.rs/zig}TLice"&gt;
- *       &lt;sequence&gt;
- *         &lt;element name="Ime" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *         &lt;element name="Prezime" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
- *       &lt;/sequence&gt;
- *     &lt;/extension&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;attribute name="nazivDokumenta" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="putanjaDokumenta" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
@@ -35,65 +33,60 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "TFizicko_lice", propOrder = {
-    "ime",
-    "prezime"
-})
-public class TFizickoLice
-    extends TLice
-{
+@XmlType(name = "TPrilogUzZahtev")
+public class TPrilogUzZahtev {
 
-    @XmlElement(name = "Ime", required = true)
-    protected String ime;
-    @XmlElement(name = "Prezime", required = true)
-    protected String prezime;
+    @XmlAttribute(name = "nazivDokumenta")
+    protected String nazivDokumenta;
+    @XmlAttribute(name = "putanjaDokumenta")
+    protected String putanjaDokumenta;
 
     /**
-     * Gets the value of the ime property.
+     * Gets the value of the nazivDokumenta property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getIme() {
-        return ime;
+    public String getNazivDokumenta() {
+        return nazivDokumenta;
     }
 
     /**
-     * Sets the value of the ime property.
+     * Sets the value of the nazivDokumenta property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setIme(String value) {
-        this.ime = value;
+    public void setNazivDokumenta(String value) {
+        this.nazivDokumenta = value;
     }
 
     /**
-     * Gets the value of the prezime property.
+     * Gets the value of the putanjaDokumenta property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getPrezime() {
-        return prezime;
+    public String getPutanjaDokumenta() {
+        return putanjaDokumenta;
     }
 
     /**
-     * Sets the value of the prezime property.
+     * Sets the value of the putanjaDokumenta property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setPrezime(String value) {
-        this.prezime = value;
+    public void setPutanjaDokumenta(String value) {
+        this.putanjaDokumenta = value;
     }
 
 }
