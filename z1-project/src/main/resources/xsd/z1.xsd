@@ -12,7 +12,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element minOccurs="0" name="Punomocnik" type="zig:TLice"/>
+                <xs:element minOccurs="0" name="Punomocnik" type="zig:TFizicko_lice"/>
                 <xs:element minOccurs="0" name="Zajednicki_predstavnik_podnosioca_prijave"
                             type="zig:TLice"/>
                 <xs:element name="Zig">

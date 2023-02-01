@@ -191,7 +191,7 @@ public class ZahtevZaPriznanjeZiga {
     @XmlElement(name = "Podnosioci_prijave", required = true)
     protected PodnosiociPrijave podnosiociPrijave;
     @XmlElement(name = "Punomocnik")
-    protected TLice punomocnik;
+    protected TFizickoLice punomocnik;
     @XmlElement(name = "Zajednicki_predstavnik_podnosioca_prijave")
     protected TLice zajednickiPredstavnikPodnosiocaPrijave;
     @XmlElement(name = "Zig", required = true)
@@ -234,10 +234,10 @@ public class ZahtevZaPriznanjeZiga {
      * 
      * @return
      *     possible object is
-     *     {@link TLice }
+     *     {@link TFizickoLice }
      *     
      */
-    public TLice getPunomocnik() {
+    public TFizickoLice getPunomocnik() {
         return punomocnik;
     }
 
@@ -246,10 +246,10 @@ public class ZahtevZaPriznanjeZiga {
      * 
      * @param value
      *     allowed object is
-     *     {@link TLice }
+     *     {@link TFizickoLice }
      *     
      */
-    public void setPunomocnik(TLice value) {
+    public void setPunomocnik(TFizickoLice value) {
         this.punomocnik = value;
     }
 

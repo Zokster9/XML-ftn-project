@@ -3,7 +3,7 @@ package com.example.z1project.dto;
 public class ZahtevZaPriznanjeZigaDTO {
 
     private PodnosiociPrijaveDTO podnosiociPrijave;
-    private LiceDTO punomocnik;
+    private FizickoLiceDTO punomocnik;
     private LiceDTO zajednickiPredstavnikPodnosiocaPrijave;
     private ZigDTO zig;
     private KlaseRobeIUslugaDTO klaseRobeIUsluga;
@@ -14,7 +14,7 @@ public class ZahtevZaPriznanjeZigaDTO {
     public ZahtevZaPriznanjeZigaDTO() {
     }
 
-    public ZahtevZaPriznanjeZigaDTO(PodnosiociPrijaveDTO podnosiociPrijave, LiceDTO punomocnik,
+    public ZahtevZaPriznanjeZigaDTO(PodnosiociPrijaveDTO podnosiociPrijave, FizickoLiceDTO punomocnik,
                                     LiceDTO zajednickiPredstavnikPodnosiocaPrijave, ZigDTO zig,
                                     KlaseRobeIUslugaDTO klaseRobeIUsluga, String pravoPrvenstvaIOsnov,
                                     PlaceneTakseDTO placeneTakse, PodaciOPrijaviDTO podaciOPrijavi) {
@@ -36,11 +36,11 @@ public class ZahtevZaPriznanjeZigaDTO {
         this.podnosiociPrijave = podnosiociPrijave;
     }
 
-    public LiceDTO getPunomocnik() {
+    public FizickoLiceDTO getPunomocnik() {
         return punomocnik;
     }
 
-    public void setPunomocnik(LiceDTO punomocnik) {
+    public void setPunomocnik(FizickoLiceDTO punomocnik) {
         this.punomocnik = punomocnik;
     }
 

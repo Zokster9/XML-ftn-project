@@ -1,3 +1,4 @@
+import { FizickoLiceDTO } from "./FizickoLiceDTO";
 import { KlaseRobeIUslugaDTO } from "./KlaseRobeIUslugaDTO";
 import { LiceDTO } from "./LiceDTO";
 import { PlaceneTakseDTO } from "./PlaceneTakseDTO";
@@ -7,7 +8,7 @@ import { ZigDTO } from "./ZigDTO";
 
 export interface ZahtevZaPriznanjeZigaDTO {
     podnosiociPrijave: PodnosiociPrijaveDTO;
-    punomocnik: LiceDTO;
+    punomocnik: FizickoLiceDTO;
     zajednickiPredstavnikPodnosiocaPrijave: LiceDTO;
     zig: ZigDTO;
     klaseRobeIUsluga: KlaseRobeIUslugaDTO;
