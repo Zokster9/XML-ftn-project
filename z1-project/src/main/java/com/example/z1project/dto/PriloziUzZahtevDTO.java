@@ -41,14 +41,46 @@ public class PriloziUzZahtevDTO {
     }
 
     public PriloziUzZahtevDTO(ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev priloziUzZahtev) {
-        this.primerakZnaka = new PrilogUzZahtevDTO(priloziUzZahtev.getPrimerakZnaka());
-        this.spisakRobeIUsluga = new PrilogUzZahtevDTO(priloziUzZahtev.getSpisakRobeIUsluga());
-        this.punomocje = new PrilogUzZahtevDTO(priloziUzZahtev.getPunomocje());
-        this.generalnoPunomocjeRanijePrilozeno = priloziUzZahtev.isGeneralnoPunomocjeRanijePrilozeno();
-        this.punomocjeCeBitiNaknadnoDostavljeno = priloziUzZahtev.isPunomocjeCeBitiNaknadnoDostavljeno();
-        this.opstiAktOKolektivnomZigu = new PrilogUzZahtevDTO(priloziUzZahtev.getOpstiAktOKolektivnomZigu());
-        this.dokazOPravuPrvenstva = new PrilogUzZahtevDTO(priloziUzZahtev.getDokazOPravuPrvenstva());
-        this.dokazOUplatiTakse = new PrilogUzZahtevDTO(priloziUzZahtev.getDokazOUplatiTakse());
+        try {
+            this.primerakZnaka = new PrilogUzZahtevDTO(priloziUzZahtev.getPrimerakZnaka());
+        } catch (Exception e){
+            this.primerakZnaka = null;
+        }
+        try {
+            this.spisakRobeIUsluga = new PrilogUzZahtevDTO(priloziUzZahtev.getSpisakRobeIUsluga());
+        } catch (Exception e){
+            this.spisakRobeIUsluga = null;
+        }
+        try {
+            this.punomocje = new PrilogUzZahtevDTO(priloziUzZahtev.getPunomocje());
+        } catch (Exception e){
+            this.punomocje = null;
+        }
+        try {
+            this.generalnoPunomocjeRanijePrilozeno = priloziUzZahtev.isGeneralnoPunomocjeRanijePrilozeno();
+        } catch (Exception e) {
+            this.generalnoPunomocjeRanijePrilozeno = false;
+        }
+        try {
+            this.punomocjeCeBitiNaknadnoDostavljeno = priloziUzZahtev.isPunomocjeCeBitiNaknadnoDostavljeno();
+        } catch (Exception e) {
+            this.punomocjeCeBitiNaknadnoDostavljeno = false;
+        }
+        try {
+            this.opstiAktOKolektivnomZigu = new PrilogUzZahtevDTO(priloziUzZahtev.getOpstiAktOKolektivnomZigu());
+        } catch (Exception e){
+            this.opstiAktOKolektivnomZigu = null;
+        }
+        try {
+            this.dokazOPravuPrvenstva = new PrilogUzZahtevDTO(priloziUzZahtev.getDokazOPravuPrvenstva());
+        } catch (Exception e){
+            this.dokazOPravuPrvenstva = null;
+        }
+        try {
+            this.dokazOUplatiTakse = new PrilogUzZahtevDTO(priloziUzZahtev.getDokazOUplatiTakse());
+        } catch (Exception e){
+            this.dokazOUplatiTakse = null;
+        }
     }
 
     public PrilogUzZahtevDTO getPrimerakZnaka() {

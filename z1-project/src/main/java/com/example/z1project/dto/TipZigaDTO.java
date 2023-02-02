@@ -24,8 +24,16 @@ public class TipZigaDTO {
 
     public TipZigaDTO(ZahtevZaPriznanjeZiga.Zig.TipZiga tipZiga) {
         this.individualniZig = tipZiga.isIndividualniZig();
-        this.kolektivniZig = tipZiga.isKolektivniZig();
-        this.zigGarancije = tipZiga.isZigGarancije();
+        try {
+            this.kolektivniZig = tipZiga.isKolektivniZig();
+        } catch (Exception e) {
+            this.kolektivniZig = false;
+        }
+        try {
+            this.zigGarancije = tipZiga.isZigGarancije();
+        } catch (Exception e) {
+            this.zigGarancije = false;
+        }
     }
 
     public boolean isIndividualniZig() {

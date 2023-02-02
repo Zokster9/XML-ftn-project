@@ -10,6 +10,8 @@ import com.example.z1project.transformXML.ZigTransformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ZigService {
 
@@ -41,6 +43,7 @@ public class ZigService {
     }
 
     public ZahtevZaPriznanjeZiga createZigPdf(String token, String brojPrijave) throws Exception {
+        proveriKorisnika(token, true);
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigDatabase.getByBrojPrijave(brojPrijave);
         String htmlFile = "src/main/resources/static/html/" + brojPrijave + ".html";
         String pdfFile = "src/main/resources/static/pdf/" + brojPrijave + ".pdf";
@@ -51,5 +54,12 @@ public class ZigService {
 
     public boolean proveriKorisnika(String token, boolean korisnikJeSluzbenik) throws Exception {
         return korisnikService.proveriKorisnika(token, korisnikJeSluzbenik);
+    }
+
+    public List<ZahtevZaPriznanjeZiga> dobaviSve(String token) throws Exception {
+        if (true) {
+            return zigRepository.getAll();
+        }
+        return null;
     }
 }

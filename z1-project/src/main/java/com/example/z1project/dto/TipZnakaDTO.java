@@ -29,11 +29,27 @@ public class TipZnakaDTO {
     }
 
     public TipZnakaDTO(ZahtevZaPriznanjeZiga.Zig.TipZnaka tipZnaka) {
-        this.verbalniZnak = tipZnaka.isVerbalniZnak();
+        try {
+            this.verbalniZnak = tipZnaka.isVerbalniZnak();
+        } catch (Exception e) {
+            this.verbalniZnak = false;
+        }
         this.grafickiZnak = tipZnaka.isGrafickiZnak();
-        this.kombinovaniZnak = tipZnaka.isKombinovaniZnak();
-        this.trodimenzionalniZnak = tipZnaka.isTrodimenzionalniZnak();
-        this.drugaVrstaZnaka = tipZnaka.isDrugaVrstaZnaka();
+        try {
+            this.kombinovaniZnak = tipZnaka.isKombinovaniZnak();
+        } catch (Exception e) {
+            this.kombinovaniZnak = false;
+        }
+        try {
+            this.trodimenzionalniZnak = tipZnaka.isTrodimenzionalniZnak();
+        } catch (Exception e) {
+            this.trodimenzionalniZnak = false;
+        }
+        try {
+            this.drugaVrstaZnaka = tipZnaka.isDrugaVrstaZnaka();
+        } catch (Exception e) {
+            this.drugaVrstaZnaka = false;
+        }
     }
 
     public boolean isVerbalniZnak() {

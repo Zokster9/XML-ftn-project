@@ -17,6 +17,8 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/zigovi")
@@ -62,10 +64,23 @@ public class ZigController {
         }
     }
 
-    @GetMapping(value="/create-zig-pdf/{brojPrijave}", produces = "application/xml")
-    public ResponseEntity<Void> getZigPDF(@PathVariable String brojPrijave, HttpServletRequest request) throws Exception {
+    @GetMapping(value="/create-zig-pdf/{brojPrijave}", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahtevZaPriznanjeZigaDTO> getZigPDF(@PathVariable String brojPrijave, HttpServletRequest request) throws Exception {
         String token = tokenUtils.getAuthHeaderFromHeader(request);
-        ZahtevZaPriznanjeZiga zahtevZaPriznanjePatenta = zigService.createZigPdf(token, brojPrijave);
-        return new ResponseEntity<>(HttpStatus.OK);
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigService.createZigPdf(token, brojPrijave);
+        return new ResponseEntity<>(new ZahtevZaPriznanjeZigaDTO(zahtevZaPriznanjeZiga), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<List<ZahtevZaPriznanjeZigaDTO>> getAll(HttpServletRequest request) {
+        try {
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            List<ZahtevZaPriznanjeZiga> zahtevIZaPriznanjeZiga = zigService.dobaviSve(token);
+            List<ZahtevZaPriznanjeZigaDTO> zahtevIZaPriznanjeZigaDTOS = zahtevIZaPriznanjeZiga.stream()
+                    .map(ZahtevZaPriznanjeZigaDTO::new).collect(Collectors.toList());
+            return new ResponseEntity<>(zahtevIZaPriznanjeZigaDTOS, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

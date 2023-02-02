@@ -50,15 +50,18 @@ public class ZahtevZaPriznanjeZigaDTO {
 
     public ZahtevZaPriznanjeZigaDTO(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) {
         this.podnosiociPrijave = new PodnosiociPrijaveDTO(zahtevZaPriznanjeZiga.getPodnosiociPrijave());
-        if (zahtevZaPriznanjeZiga.getPunomocnik().getIme() != null) this.punomocnik = new FizickoLiceDTO(zahtevZaPriznanjeZiga.getPunomocnik());
-        else this.punomocnik = null;
-        if (zahtevZaPriznanjeZiga.getZajednickiPredstavnikPodnosiocaPrijave().getAdresa() != null) {
+        try {
+            this.punomocnik = new FizickoLiceDTO(zahtevZaPriznanjeZiga.getPunomocnik());
+        } catch (Exception e) {
+            this.punomocnik = null;
+        }
+        try {
             if (zahtevZaPriznanjeZiga.getZajednickiPredstavnikPodnosiocaPrijave() instanceof TFizickoLice) {
                 this.fizickiZajednickiPredstavnikPodnosiocaPrijave = new FizickoLiceDTO((TFizickoLice) zahtevZaPriznanjeZiga.getZajednickiPredstavnikPodnosiocaPrijave());
             } else {
                 this.pravniZajednickiPredstavnikPodnosiocaPrijave = new PravnoLiceDTO((TPravnoLice) zahtevZaPriznanjeZiga.getZajednickiPredstavnikPodnosiocaPrijave());
             }
-        } else {
+        } catch (Exception e) {
             this.fizickiZajednickiPredstavnikPodnosiocaPrijave = null;
             this.pravniZajednickiPredstavnikPodnosiocaPrijave = null;
         }

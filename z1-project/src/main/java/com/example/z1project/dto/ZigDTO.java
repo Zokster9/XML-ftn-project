@@ -39,7 +39,11 @@ public class ZigDTO {
         this.tipZiga = new TipZigaDTO(zig.getTipZiga());
         this.tipZnaka = new TipZnakaDTO(zig.getTipZnaka());
         this.izgledZnaka = new IzgledZnakaDTO(zig.getIzgledZnaka());
-        this.naznaceneBoje = new NaznaceneBojeDTO(zig.getNaznaceneBoje());
+        try {
+            this.naznaceneBoje = new NaznaceneBojeDTO(zig.getNaznaceneBoje());
+        } catch (Exception e) {
+            this.naznaceneBoje = null;
+        }
         this.transliteracijaZnaka = zig.getTransliteracijaZnaka();
         this.prevodZnaka = zig.getPrevodZnaka();
         this.opisZnaka = zig.getOpisZnaka();
