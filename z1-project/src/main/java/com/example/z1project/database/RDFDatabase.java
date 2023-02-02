@@ -1,7 +1,12 @@
 package com.example.z1project.database;
 
 import com.example.z1project.Util.ConnectionUtilities;
+import com.example.z1project.model.zig.ResenjeZahteva;
 import com.example.z1project.model.zig.ZahtevZaPriznanjeZiga;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -13,6 +18,8 @@ import org.apache.jena.update.UpdateRequest;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.util.JAXBSource;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -21,7 +28,9 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class RDFDatabase {
 
@@ -270,4 +279,79 @@ public class RDFDatabase {
         return clearedBrojZigovi;
     }
 
+    public void kreirajIzvestaj(XMLGregorianCalendar pocetniDatum, XMLGregorianCalendar krajnjiDatum) {
+
+        int zahtevi = 0;
+        int prihvaceniZahtevi = 0;
+        int odbijeniZahtevi = 0;
+
+        String queryString = "select ?s ?p ?o {graph ?g {?s ?p ?o}}";
+        Query query = QueryFactory.create(queryString);
+
+        try (QueryExecution qexec = QueryExecutionFactory.sparqlService("http://localhost:8080/fuseki/zigovi-dataset/", query)) {
+            ResultSet resultSet = qexec.execSelect();
+
+            while (resultSet.hasNext()) {
+                QuerySolution solution = resultSet.next();
+                String s = solution.get("s").toString();
+                String p = solution.get("p").toString();
+                String o = solution.get("o").toString();
+                if (p.contains("datum_prijave")) {
+                    XMLGregorianCalendar date = DatatypeFactory.newInstance().newXMLGregorianCalendar(o);
+                    if (pocetniDatum.compare(date) <= 0 && krajnjiDatum.compare(date) >= 0) {
+                        zahtevi++;
+                    }
+                }
+            }
+            ResenjeZahtevaDatabase resenjeZahtevaDatabase = new ResenjeZahtevaDatabase();
+            List<ResenjeZahteva> resenjaZahteva = resenjeZahtevaDatabase.dobaviSve();
+            for (ResenjeZahteva resenjeZahteva : resenjaZahteva) {
+                if (pocetniDatum.compare(resenjeZahteva.getDatumResenja()) <= 0 && krajnjiDatum.compare(resenjeZahteva.getDatumResenja()) >= 0) {
+                    if (resenjeZahteva.isZahtevJePrihvacen()) {
+                        prihvaceniZahtevi++;
+                    } else {
+                        odbijeniZahtevi++;
+                    }
+                }
+            }
+
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/static/pdf/izvestaj.pdf"));
+            document.open();
+            Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 20, BaseColor.BLACK);
+            Chunk chunk = new Chunk("IZVESTAJ U PERIODU OD " + pocetniDatum.toString() + "\n DO " + krajnjiDatum.toString(), font);
+            document.add(chunk);
+            document.add(new Paragraph("\n\n"));
+
+            PdfPTable table = new PdfPTable(3);
+            addTableHeader(table);
+            addRows(table, zahtevi, prihvaceniZahtevi, odbijeniZahtevi);
+            document.add(table);
+            document.close();
+
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void addRows(PdfPTable table, int zahtevi, int prihvaceniZahtevi, int odbijeniZahtevi) {
+        table.addCell(String.valueOf(zahtevi));
+        table.addCell(String.valueOf(prihvaceniZahtevi));
+        table.addCell(String.valueOf(odbijeniZahtevi));
+    }
+
+    private void addTableHeader(PdfPTable table) {
+        Stream.of("Broj podnetih zahteva", "Broj prihvacenih zahteva", "Broj odbijenih zahteva")
+                .forEach(columnTitle -> {
+                    PdfPCell header = new PdfPCell();
+                    header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                    header.setBorderWidth(2);
+                    header.setPhrase(new Phrase(columnTitle));
+                    table.addCell(header);
+                });
+    }
 }
