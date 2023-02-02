@@ -1,3 +1,5 @@
+import { BojaDTO } from "./BojaDTO";
+
 export interface NaznaceneBojeDTO {
-    boja: string[];
+    boja: BojaDTO;
 }

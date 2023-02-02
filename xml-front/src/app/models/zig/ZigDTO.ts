@@ -7,7 +7,7 @@ export interface ZigDTO {
     tipZiga: TipZigaDTO;
     tipZnaka: TipZnakaDTO;
     izgledZnaka: IzgledZnakaDTO;
-    naznaceneBojeDTO: NaznaceneBojeDTO;
+    naznaceneBoje?: NaznaceneBojeDTO;
     transliteracijaZnaka?: string;
     prevodZnaka?: string;
     opisZnaka?: string;

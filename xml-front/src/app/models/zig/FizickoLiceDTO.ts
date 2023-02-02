@@ -1,6 +1,9 @@
-import { LiceDTO } from "./LiceDTO";
+import { AdresaDTO } from "./AdresaDTO";
+import { KontaktPodaciDTO } from "./KontaktPodaciDTO";
 
-export interface FizickoLiceDTO extends LiceDTO {
+export interface FizickoLiceDTO {
     ime: string;
     prezime: string;
+    adresa: AdresaDTO;
+    kontaktPodaci: KontaktPodaciDTO;
 }

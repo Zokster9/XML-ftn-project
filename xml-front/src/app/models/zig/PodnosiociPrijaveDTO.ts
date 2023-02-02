@@ -1,5 +1,7 @@
-import { LiceDTO } from "./LiceDTO";
+import { FizickiPodnosiociDTO } from "./FizickiPodnosilacDTO";
+import { PravniPodnosiociDTO } from "./PravniPodnosiociDTO";
 
 export interface PodnosiociPrijaveDTO {
-    podnosilacPrijave: LiceDTO[];
+    fizickiPodnosiociPrijave: FizickiPodnosiociDTO;
+    pravniPodnosiociPrijave: PravniPodnosiociDTO;
 }

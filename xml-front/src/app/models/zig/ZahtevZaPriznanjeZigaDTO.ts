@@ -1,18 +1,19 @@
 import { FizickoLiceDTO } from "./FizickoLiceDTO";
 import { KlaseRobeIUslugaDTO } from "./KlaseRobeIUslugaDTO";
-import { LiceDTO } from "./LiceDTO";
 import { PlaceneTakseDTO } from "./PlaceneTakseDTO";
 import { PodaciOPrijaviDTO } from "./PodaciOPrijaviDTO";
 import { PodnosiociPrijaveDTO } from "./PodnosiociPrijaveDTO";
+import { PravnoLiceDTO } from "./PravnoLiceDTO";
 import { ZigDTO } from "./ZigDTO";
 
 export interface ZahtevZaPriznanjeZigaDTO {
     podnosiociPrijave: PodnosiociPrijaveDTO;
-    punomocnik: FizickoLiceDTO;
-    zajednickiPredstavnikPodnosiocaPrijave: LiceDTO;
+    punomocnik?: FizickoLiceDTO;
+    fizickiZajednickiPredstavnikPodnosiocaPrijave?: FizickoLiceDTO;
+    pravniZajednickiPredstavnikPodnosiocaPrijave?: PravnoLiceDTO;
     zig: ZigDTO;
     klaseRobeIUsluga: KlaseRobeIUslugaDTO;
-    pravoPrvenstvaIOsnov: string;
+    pravoPrvenstvaIOsnov?: string;
     placeneTakse: PlaceneTakseDTO;
     podaciOPrijavi: PodaciOPrijaviDTO
 }
