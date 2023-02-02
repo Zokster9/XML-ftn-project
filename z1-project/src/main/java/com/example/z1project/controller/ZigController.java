@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -79,6 +80,60 @@ public class ZigController {
             List<ZahtevZaPriznanjeZigaDTO> zahtevIZaPriznanjeZigaDTOS = zahtevIZaPriznanjeZiga.stream()
                     .map(ZahtevZaPriznanjeZigaDTO::new).collect(Collectors.toList());
             return new ResponseEntity<>(zahtevIZaPriznanjeZigaDTOS, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/dobavi-rdf/{brojZiga}", produces = "application/xml")
+    public ResponseEntity<String> dobaviRDF(@PathVariable(value = "brojZiga") String brojZiga, HttpServletRequest request) {
+        try {
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            if (true) {
+                String rdf = zigService.kreirajRdfJson(brojZiga);
+                return new ResponseEntity<>(rdf, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/dobavi-json/{brojZiga}", produces = "application/json")
+    public ResponseEntity<String> dobaviJSON(@PathVariable("brojZiga") String brojZiga, HttpServletRequest request) {
+        try {
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            if (true) {
+                String rdf = zigService.kreirajRdfJson(brojZiga);
+                return new ResponseEntity<>(rdf, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/dobavi-tekst/{tekst}", produces = "application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjeZigaDTO>> dobaviPoTekstu(@PathVariable("tekst") String tekst, HttpServletRequest request) {
+        try {
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            List<ZahtevZaPriznanjeZiga> zahteviZaPriznanjeZiga = zigService.dobaviPoTekstu(token, tekst);
+            List<ZahtevZaPriznanjeZigaDTO> zahteviZaPriznanjeZigaDTOS = zahteviZaPriznanjeZiga.stream()
+                    .map(ZahtevZaPriznanjeZigaDTO::new).collect(Collectors.toList());
+            return new ResponseEntity<>(zahteviZaPriznanjeZigaDTOS, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/dobavi-metapodaci/{upit}", produces = "application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjeZigaDTO>> dobaviPoMetapodacima(@PathVariable("upit") String upit, HttpServletRequest request) {
+        try {
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            List<ZahtevZaPriznanjeZiga> zahteviZaPriznanjeZiga = zigService.dobaviPoMetapodacima(token, upit);
+            List<ZahtevZaPriznanjeZigaDTO> zahteviZaPriznanjeZigaDTOS = zahteviZaPriznanjeZiga.stream()
+                    .map(ZahtevZaPriznanjeZigaDTO::new).collect(Collectors.toList());
+            return new ResponseEntity<>(zahteviZaPriznanjeZigaDTOS, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

@@ -107,4 +107,91 @@ public class ZigRepository {
         }
         return zahteviZaPriznanjeZiga;
     }
+
+    public List<ZahtevZaPriznanjeZiga> dobaviPoTekstu(String tekst) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+
+        AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+
+        // initialize collection and document identifiers
+        String collectionId = null;
+        collectionId = "/db/xml-project/zigovi";
+
+        System.out.println("\t- collection ID: " + collectionId);
+
+        System.out.println("[INFO] Loading driver class: " + conn.driver);
+        Class<?> cl = Class.forName(conn.driver);
+
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+
+        DatabaseManager.registerDatabase(database);
+
+        Collection col = null;
+
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = null;
+        List<ZahtevZaPriznanjeZiga> zahteviZaPriznanjeZiga = null;
+        try {
+            // get the collection
+            System.out.println("[INFO] Retrieving the collection: " + collectionId);
+            col = DatabaseManager.getCollection(conn.uri + collectionId);
+            //col.setProperty(OutputKeys.INDENT, "yes");
+
+            XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xPathQueryService.setProperty("indent", "yes");
+
+            String xPathExp = "/*[contains(., '" + tekst + "')]";
+            //String xPathExp = "/*[contains(., 'Negde kod zeleznicke')]";
+            ResourceSet result = xPathQueryService.query(xPathExp);
+            ResourceIterator i = result.getIterator();
+            XMLResource res = null;
+            zahteviZaPriznanjeZiga = new ArrayList<>();
+            while (i.hasMoreResources()) {
+                res = (XMLResource) i.nextResource();
+                System.out.println(res.getContent());
+
+                JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
+                Unmarshaller unmarshaller = context.createUnmarshaller();
+                zahtevZaPriznanjeZiga = (ZahtevZaPriznanjeZiga) unmarshaller.unmarshal(res.getContentAsDOM());
+                zahteviZaPriznanjeZiga.add(zahtevZaPriznanjeZiga);
+            }
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        } finally {
+            //don't forget to clean up!
+
+            /*
+            if(res != null) {
+                try {
+                    ((EXistResource)res).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+            */
+
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+        return zahteviZaPriznanjeZiga;
+    }
+
+    public List<ZahtevZaPriznanjeZiga> dobaviPoMetapodacima(String upit) throws Exception {
+        List<String> brojeviZigova = rdfDatabase.pronadjiPoMetapodacima(upit);
+        List<ZahtevZaPriznanjeZiga> obrasci = new ArrayList<>();
+        for (String brojZiga : brojeviZigova) {
+            ZahtevZaPriznanjeZiga obrazacAutorskoDelo = dobaviZig(brojZiga);
+            obrasci.add(obrazacAutorskoDelo);
+        }
+        return obrasci;
+    }
+    public ZahtevZaPriznanjeZiga dobaviZig(String brojZiga) throws Exception {
+        ReadUnmarshal readUnmarshal = new ReadUnmarshal();
+        return readUnmarshal.readZig("zigovi", brojZiga + ".xml");
+    }
+
 }

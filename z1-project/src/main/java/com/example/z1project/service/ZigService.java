@@ -1,6 +1,7 @@
 package com.example.z1project.service;
 
 
+import com.example.z1project.database.RDFDatabase;
 import com.example.z1project.database.ZigDatabase;
 import com.example.z1project.dto.ZahtevZaPriznanjeZigaDTO;
 import com.example.z1project.marshall.MarshallZig;
@@ -10,6 +11,7 @@ import com.example.z1project.transformXML.ZigTransformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +27,8 @@ public class ZigService {
     private final ZigTransformation zigTransformation = new ZigTransformation();
 
     private final MarshallZig marshallZig = new MarshallZig();
+
+    private final RDFDatabase rdfDatabase = new RDFDatabase();
 
     public ZahtevZaPriznanjeZiga kreirajZahtev(ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO) throws Exception {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = marshallZig.marshalZahtevZaPriznanjeZiga(zahtevZaPriznanjeZigaDTO);
@@ -59,6 +63,24 @@ public class ZigService {
     public List<ZahtevZaPriznanjeZiga> dobaviSve(String token) throws Exception {
         if (true) {
             return zigRepository.getAll();
+        }
+        return null;
+    }
+
+    public String kreirajRdfJson(String brojZiga) {
+        return rdfDatabase.pronadjiRdfPoBrojuZiga(brojZiga);
+    }
+
+    public List<ZahtevZaPriznanjeZiga> dobaviPoTekstu(String token, String tekst) throws Exception {
+        if (true) {
+            return zigRepository.dobaviPoTekstu(tekst);
+        }
+        return null;
+    }
+
+    public List<ZahtevZaPriznanjeZiga> dobaviPoMetapodacima(String token, String upit) throws Exception {
+        if (true) {
+            return zigRepository.dobaviPoMetapodacima(upit);
         }
         return null;
     }
