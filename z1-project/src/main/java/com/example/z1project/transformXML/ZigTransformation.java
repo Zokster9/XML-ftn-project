@@ -72,8 +72,6 @@ public class ZigTransformation {
             Transformer transformer = factory.newTransformer(xslt);
 
             JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
-            //MarshalPatent marshalPatent = new MarshalPatent();
-            //ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = marshalPatent.marshalPatent(zahtevZaPriznanjePatentaCreationDto, "read");
             JAXBSource source = new JAXBSource(context, zahtevZaPriznanjeZiga);
             System.out.println("Source" + source);
             StreamResult result = new StreamResult(new FileOutputStream(htmlFile));
