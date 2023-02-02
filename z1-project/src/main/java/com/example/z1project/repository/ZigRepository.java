@@ -11,15 +11,16 @@ public class ZigRepository {
 
     public ZahtevZaPriznanjeZiga save(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) throws Exception {
         WriteMarshal writeMarshal = new WriteMarshal();
-        zahtevZaPriznanjeZiga = writeMarshal.write("zigovi", "z1.xml", zahtevZaPriznanjeZiga);
+        String documentName = zahtevZaPriznanjeZiga.getPodaciOPrijavi().getBrojPrijaveZiga() + ".xml";
+        zahtevZaPriznanjeZiga = writeMarshal.write("zigovi", documentName, zahtevZaPriznanjeZiga);
         rdfDatabase.createAndInsertRDF("src/main/resources/static/rdf/" +
                         zahtevZaPriznanjeZiga.getPodaciOPrijavi().getBrojPrijaveZiga() + ".rdf",
                 zahtevZaPriznanjeZiga);
         return zahtevZaPriznanjeZiga;
     }
 
-    public ZahtevZaPriznanjeZiga getZig() throws Exception {
+    public ZahtevZaPriznanjeZiga getZig(String brojPrijaveZiga) throws Exception {
         ReadUnmarshal readUnmarshal = new ReadUnmarshal();
-        return readUnmarshal.readZig("zigovi", "z1.xml");
+        return readUnmarshal.readZig("zigovi", brojPrijaveZiga + ".xml");
     }
 }

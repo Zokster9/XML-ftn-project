@@ -1,11 +1,20 @@
 package com.example.z1project.dto;
 
+import com.example.z1project.model.zig.ZahtevZaPriznanjeZiga;
+
+import javax.xml.bind.annotation.XmlElement;
+
 public class TipZnakaDTO {
 
+    @XmlElement
     private boolean verbalniZnak;
+    @XmlElement
     private boolean grafickiZnak;
+    @XmlElement
     private boolean kombinovaniZnak;
+    @XmlElement
     private boolean trodimenzionalniZnak;
+    @XmlElement
     private boolean drugaVrstaZnaka;
 
     public TipZnakaDTO() {
@@ -17,6 +26,14 @@ public class TipZnakaDTO {
         this.kombinovaniZnak = kombinovaniZnak;
         this.trodimenzionalniZnak = trodimenzionalniZnak;
         this.drugaVrstaZnaka = drugaVrstaZnaka;
+    }
+
+    public TipZnakaDTO(ZahtevZaPriznanjeZiga.Zig.TipZnaka tipZnaka) {
+        this.verbalniZnak = tipZnaka.isVerbalniZnak();
+        this.grafickiZnak = tipZnaka.isGrafickiZnak();
+        this.kombinovaniZnak = tipZnaka.isKombinovaniZnak();
+        this.trodimenzionalniZnak = tipZnaka.isTrodimenzionalniZnak();
+        this.drugaVrstaZnaka = tipZnaka.isDrugaVrstaZnaka();
     }
 
     public boolean isVerbalniZnak() {

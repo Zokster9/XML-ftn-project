@@ -1,11 +1,20 @@
 package com.example.z1project.dto;
 
+import com.example.z1project.model.zig.Adresa;
+
+import javax.xml.bind.annotation.XmlElement;
+
 public class AdresaDTO {
 
+    @XmlElement
     private String ulica;
+    @XmlElement
     private String broj;
+    @XmlElement
     private int postanskiBroj;
+    @XmlElement
     private String mesto;
+    @XmlElement
     private String drzava;
 
     public AdresaDTO() {
@@ -17,6 +26,14 @@ public class AdresaDTO {
         this.postanskiBroj = postanskiBroj;
         this.mesto = mesto;
         this.drzava = drzava;
+    }
+
+    public AdresaDTO(Adresa adresa) {
+        this.ulica = adresa.getUlica();
+        this.broj = adresa.getBroj();
+        this.postanskiBroj = adresa.getPostanskiBroj();
+        this.mesto = adresa.getMesto();
+        this.drzava = adresa.getDrzava();
     }
 
     public String getUlica() {

@@ -2,13 +2,19 @@ package com.example.z1project.service;
 
 
 import com.example.z1project.database.ZigDatabase;
+import com.example.z1project.dto.ZahtevZaPriznanjeZigaDTO;
+import com.example.z1project.marshall.MarshallZig;
 import com.example.z1project.model.zig.ZahtevZaPriznanjeZiga;
 import com.example.z1project.repository.ZigRepository;
 import com.example.z1project.transformXML.ZigTransformation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ZigService {
+
+    @Autowired
+    private KorisnikService korisnikService;
 
     private final ZigRepository zigRepository = new ZigRepository();
 
@@ -16,12 +22,15 @@ public class ZigService {
 
     private final ZigTransformation zigTransformation = new ZigTransformation();
 
-    public ZahtevZaPriznanjeZiga addZig(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) throws Exception {
+    private final MarshallZig marshallZig = new MarshallZig();
+
+    public ZahtevZaPriznanjeZiga kreirajZahtev(ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO) throws Exception {
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = marshallZig.marshalZahtevZaPriznanjeZiga(zahtevZaPriznanjeZigaDTO);
         return zigRepository.save(zahtevZaPriznanjeZiga);
     }
 
-    public ZahtevZaPriznanjeZiga getZig() throws Exception {
-        return zigRepository.getZig();
+    public ZahtevZaPriznanjeZiga getZig(String brojPrijaveZiga) throws Exception {
+        return zigRepository.getZig(brojPrijaveZiga);
     }
 
     public ZahtevZaPriznanjeZiga createZigHtml(String brojPrijave) throws Exception {
@@ -31,12 +40,16 @@ public class ZigService {
         return zahtevZaPriznanjeZiga;
     }
 
-    public ZahtevZaPriznanjeZiga createZigPdf(String brojPrijave) throws Exception {
+    public ZahtevZaPriznanjeZiga createZigPdf(String token, String brojPrijave) throws Exception {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigDatabase.getByBrojPrijave(brojPrijave);
         String htmlFile = "src/main/resources/static/html/" + brojPrijave + ".html";
         String pdfFile = "src/main/resources/static/pdf/" + brojPrijave + ".pdf";
         zigTransformation.generateHTML(htmlFile, zahtevZaPriznanjeZiga);
         zigTransformation.generatePDF(htmlFile, pdfFile);
         return zahtevZaPriznanjeZiga;
+    }
+
+    public boolean proveriKorisnika(String token, boolean korisnikJeSluzbenik) throws Exception {
+        return korisnikService.proveriKorisnika(token, korisnikJeSluzbenik);
     }
 }

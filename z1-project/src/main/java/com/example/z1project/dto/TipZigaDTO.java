@@ -1,9 +1,16 @@
 package com.example.z1project.dto;
 
+import com.example.z1project.model.zig.ZahtevZaPriznanjeZiga;
+
+import javax.xml.bind.annotation.XmlElement;
+
 public class TipZigaDTO {
 
+    @XmlElement
     private boolean individualniZig;
+    @XmlElement
     private boolean kolektivniZig;
+    @XmlElement
     private boolean zigGarancije;
 
     public TipZigaDTO() {
@@ -13,6 +20,12 @@ public class TipZigaDTO {
         this.individualniZig = individualniZig;
         this.kolektivniZig = kolektivniZig;
         this.zigGarancije = zigGarancije;
+    }
+
+    public TipZigaDTO(ZahtevZaPriznanjeZiga.Zig.TipZiga tipZiga) {
+        this.individualniZig = tipZiga.isIndividualniZig();
+        this.kolektivniZig = tipZiga.isKolektivniZig();
+        this.zigGarancije = tipZiga.isZigGarancije();
     }
 
     public boolean isIndividualniZig() {

@@ -1,13 +1,24 @@
 package com.example.z1project.dto;
 
+import com.example.z1project.model.zig.ZahtevZaPriznanjeZiga;
+
+import javax.xml.bind.annotation.XmlElement;
+
 public class ZigDTO {
 
+    @XmlElement
     private TipZigaDTO tipZiga;
+    @XmlElement
     private TipZnakaDTO tipZnaka;
+    @XmlElement
     private IzgledZnakaDTO izgledZnaka;
+    @XmlElement
     private NaznaceneBojeDTO naznaceneBoje;
+    @XmlElement
     private String transliteracijaZnaka;
+    @XmlElement
     private String prevodZnaka;
+    @XmlElement
     private String opisZnaka;
 
     public ZigDTO() {
@@ -22,6 +33,16 @@ public class ZigDTO {
         this.transliteracijaZnaka = transliteracijaZnaka;
         this.prevodZnaka = prevodZnaka;
         this.opisZnaka = opisZnaka;
+    }
+
+    public ZigDTO(ZahtevZaPriznanjeZiga.Zig zig) {
+        this.tipZiga = new TipZigaDTO(zig.getTipZiga());
+        this.tipZnaka = new TipZnakaDTO(zig.getTipZnaka());
+        this.izgledZnaka = new IzgledZnakaDTO(zig.getIzgledZnaka());
+        this.naznaceneBoje = new NaznaceneBojeDTO(zig.getNaznaceneBoje());
+        this.transliteracijaZnaka = zig.getTransliteracijaZnaka();
+        this.prevodZnaka = zig.getPrevodZnaka();
+        this.opisZnaka = zig.getOpisZnaka();
     }
 
     public TipZigaDTO getTipZiga() {

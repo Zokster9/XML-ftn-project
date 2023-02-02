@@ -1,23 +1,35 @@
 package com.example.z1project.dto;
 
+import com.example.z1project.model.zig.ZahtevZaPriznanjeZiga;
+
+import javax.xml.bind.annotation.XmlElement;
+
 public class PriloziUzZahtevDTO {
 
-    private PriloziUzZahtevDTO primerakZnaka;
-    private PriloziUzZahtevDTO spisakRobeIUsluga;
-    private PriloziUzZahtevDTO punomocje;
+    @XmlElement
+    private PrilogUzZahtevDTO primerakZnaka;
+    @XmlElement
+    private PrilogUzZahtevDTO spisakRobeIUsluga;
+    @XmlElement
+    private PrilogUzZahtevDTO punomocje;
+    @XmlElement
     private boolean generalnoPunomocjeRanijePrilozeno;
+    @XmlElement
     private boolean punomocjeCeBitiNaknadnoDostavljeno;
-    private PriloziUzZahtevDTO opstiAktOKolektivnomZigu;
-    private PriloziUzZahtevDTO dokazOPravuPrvenstva;
-    private PriloziUzZahtevDTO dokazOUplatiTakse;
+    @XmlElement
+    private PrilogUzZahtevDTO opstiAktOKolektivnomZigu;
+    @XmlElement
+    private PrilogUzZahtevDTO dokazOPravuPrvenstva;
+    @XmlElement
+    private PrilogUzZahtevDTO dokazOUplatiTakse;
 
     public PriloziUzZahtevDTO() {
     }
 
-    public PriloziUzZahtevDTO(PriloziUzZahtevDTO primerakZnaka, PriloziUzZahtevDTO spisakRobeIUsluga,
-                              PriloziUzZahtevDTO punomocje, boolean generalnoPunomocjeRanijePrilozeno,
-                              boolean punomocjeCeBitiNaknadnoDostavljeno, PriloziUzZahtevDTO opstiAktOKolektivnomZigu,
-                              PriloziUzZahtevDTO dokazOPravuPrvenstva, PriloziUzZahtevDTO dokazOUplatiTakse) {
+    public PriloziUzZahtevDTO(PrilogUzZahtevDTO primerakZnaka, PrilogUzZahtevDTO spisakRobeIUsluga,
+                              PrilogUzZahtevDTO punomocje, boolean generalnoPunomocjeRanijePrilozeno,
+                              boolean punomocjeCeBitiNaknadnoDostavljeno, PrilogUzZahtevDTO opstiAktOKolektivnomZigu,
+                              PrilogUzZahtevDTO dokazOPravuPrvenstva, PrilogUzZahtevDTO dokazOUplatiTakse) {
         this.primerakZnaka = primerakZnaka;
         this.spisakRobeIUsluga = spisakRobeIUsluga;
         this.punomocje = punomocje;
@@ -28,27 +40,38 @@ public class PriloziUzZahtevDTO {
         this.dokazOUplatiTakse = dokazOUplatiTakse;
     }
 
-    public PriloziUzZahtevDTO getPrimerakZnaka() {
+    public PriloziUzZahtevDTO(ZahtevZaPriznanjeZiga.PodaciOPrijavi.PriloziUzZahtev priloziUzZahtev) {
+        this.primerakZnaka = new PrilogUzZahtevDTO(priloziUzZahtev.getPrimerakZnaka());
+        this.spisakRobeIUsluga = new PrilogUzZahtevDTO(priloziUzZahtev.getSpisakRobeIUsluga());
+        this.punomocje = new PrilogUzZahtevDTO(priloziUzZahtev.getPunomocje());
+        this.generalnoPunomocjeRanijePrilozeno = priloziUzZahtev.isGeneralnoPunomocjeRanijePrilozeno();
+        this.punomocjeCeBitiNaknadnoDostavljeno = priloziUzZahtev.isPunomocjeCeBitiNaknadnoDostavljeno();
+        this.opstiAktOKolektivnomZigu = new PrilogUzZahtevDTO(priloziUzZahtev.getOpstiAktOKolektivnomZigu());
+        this.dokazOPravuPrvenstva = new PrilogUzZahtevDTO(priloziUzZahtev.getDokazOPravuPrvenstva());
+        this.dokazOUplatiTakse = new PrilogUzZahtevDTO(priloziUzZahtev.getDokazOUplatiTakse());
+    }
+
+    public PrilogUzZahtevDTO getPrimerakZnaka() {
         return primerakZnaka;
     }
 
-    public void setPrimerakZnaka(PriloziUzZahtevDTO primerakZnaka) {
+    public void setPrimerakZnaka(PrilogUzZahtevDTO primerakZnaka) {
         this.primerakZnaka = primerakZnaka;
     }
 
-    public PriloziUzZahtevDTO getSpisakRobeIUsluga() {
+    public PrilogUzZahtevDTO getSpisakRobeIUsluga() {
         return spisakRobeIUsluga;
     }
 
-    public void setSpisakRobeIUsluga(PriloziUzZahtevDTO spisakRobeIUsluga) {
+    public void setSpisakRobeIUsluga(PrilogUzZahtevDTO spisakRobeIUsluga) {
         this.spisakRobeIUsluga = spisakRobeIUsluga;
     }
 
-    public PriloziUzZahtevDTO getPunomocje() {
+    public PrilogUzZahtevDTO getPunomocje() {
         return punomocje;
     }
 
-    public void setPunomocje(PriloziUzZahtevDTO punomocje) {
+    public void setPunomocje(PrilogUzZahtevDTO punomocje) {
         this.punomocje = punomocje;
     }
 
@@ -68,27 +91,27 @@ public class PriloziUzZahtevDTO {
         this.punomocjeCeBitiNaknadnoDostavljeno = punomocjeCeBitiNaknadnoDostavljeno;
     }
 
-    public PriloziUzZahtevDTO getOpstiAktOKolektivnomZigu() {
+    public PrilogUzZahtevDTO getOpstiAktOKolektivnomZigu() {
         return opstiAktOKolektivnomZigu;
     }
 
-    public void setOpstiAktOKolektivnomZigu(PriloziUzZahtevDTO opstiAktOKolektivnomZigu) {
+    public void setOpstiAktOKolektivnomZigu(PrilogUzZahtevDTO opstiAktOKolektivnomZigu) {
         this.opstiAktOKolektivnomZigu = opstiAktOKolektivnomZigu;
     }
 
-    public PriloziUzZahtevDTO getDokazOPravuPrvenstva() {
+    public PrilogUzZahtevDTO getDokazOPravuPrvenstva() {
         return dokazOPravuPrvenstva;
     }
 
-    public void setDokazOPravuPrvenstva(PriloziUzZahtevDTO dokazOPravuPrvenstva) {
+    public void setDokazOPravuPrvenstva(PrilogUzZahtevDTO dokazOPravuPrvenstva) {
         this.dokazOPravuPrvenstva = dokazOPravuPrvenstva;
     }
 
-    public PriloziUzZahtevDTO getDokazOUplatiTakse() {
+    public PrilogUzZahtevDTO getDokazOUplatiTakse() {
         return dokazOUplatiTakse;
     }
 
-    public void setDokazOUplatiTakse(PriloziUzZahtevDTO dokazOUplatiTakse) {
+    public void setDokazOUplatiTakse(PrilogUzZahtevDTO dokazOUplatiTakse) {
         this.dokazOUplatiTakse = dokazOUplatiTakse;
     }
 }

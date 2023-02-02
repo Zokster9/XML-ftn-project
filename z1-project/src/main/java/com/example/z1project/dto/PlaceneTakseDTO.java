@@ -1,10 +1,18 @@
 package com.example.z1project.dto;
 
+import com.example.z1project.model.zig.ZahtevZaPriznanjeZiga;
+
+import javax.xml.bind.annotation.XmlElement;
+
 public class PlaceneTakseDTO {
 
+    @XmlElement
     private double osnovnaTaksa;
+    @XmlElement
     private TaksaZaKlaseDTO taksaZaKlase;
+    @XmlElement
     private double taksaZaGrafickoResenje;
+    @XmlElement
     private double ukupnaTaksa;
 
     public PlaceneTakseDTO() {
@@ -15,6 +23,13 @@ public class PlaceneTakseDTO {
         this.taksaZaKlase = taksaZaKlase;
         this.taksaZaGrafickoResenje = taksaZaGrafickoResenje;
         this.ukupnaTaksa = ukupnaTaksa;
+    }
+
+    public PlaceneTakseDTO(ZahtevZaPriznanjeZiga.PlaceneTakse placeneTakse) {
+        this.osnovnaTaksa = placeneTakse.getOsnovnaTaksa();
+        this.taksaZaKlase = new TaksaZaKlaseDTO(placeneTakse.getTaksaZaKlase());
+        this.taksaZaGrafickoResenje = placeneTakse.getTaksaZaGrafickoResenje();
+        this.ukupnaTaksa = placeneTakse.getUkupnaTaksa();
     }
 
     public double getOsnovnaTaksa() {
