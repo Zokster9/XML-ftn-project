@@ -17,11 +17,15 @@ export class ModalAcceptDeclineRequestComponent implements OnInit {
 
   @Input() servis! : string;
 
-  @Input() brojAutorskog! : string;
+  @Input() brojAutorskog!: string;
+  
+  @Input() brojZiga! : string;
 
   @Input() zahtev! : ZahtevZaPriznanjePatentaDto;
 
   @Output() autorskoResenjeDodato = new EventEmitter<ResenjeZahtevaDTO>();
+
+  @Output() zigResenjeDodato = new EventEmitter<ResenjeZahtevaDTO>();
 
   @Output() modalClosed = new EventEmitter();
 
@@ -51,9 +55,36 @@ export class ModalAcceptDeclineRequestComponent implements OnInit {
       this.posaljiAutorsko();
     }else if (this.servis === 'patent') {
       this.submitPatent();
-    }else {
-
+    } else {
+      this.posaljiZig();
     }
+  }
+
+  posaljiZig() {
+    let prihvaceno;
+    if (this.form.controls["prihvaceno"].value === 'prihvati') {
+      prihvaceno = true;
+    }
+    else
+    {
+      prihvaceno = false;
+    }
+    let resenjeZahteva: ResenjeZahtevaDTO = {
+      zahtevJePrihvacen: prihvaceno,
+      obrazlozenje: this.form.value.obrazlozenje as string,
+      referenca: this.brojZiga,
+    };
+    this.resenjeZahtevaService.addResenjeZig(resenjeZahteva).subscribe({
+      next: response => {
+        const parser = new xml2js.Parser({strict: true, trim: true});
+        parser.parseString(response.toString(), (err, result) => {
+          let resenjeZahteva: ResenjeZahtevaDTO | undefined;
+          let resenjeZahtevaUtil = new ResenjaZahtevaUtil();
+          resenjeZahteva = resenjeZahtevaUtil.transformisiResenjeZahteva(result.ResenjeZahtevaDTO);
+          this.zigResenjeDodato.emit(resenjeZahteva);
+        });
+      }
+    });
   }
 
   posaljiAutorsko() {

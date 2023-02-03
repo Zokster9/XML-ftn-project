@@ -9,7 +9,6 @@ import { FizickoLiceDTO } from '../models/zig/FizickoLiceDTO';
 import { PravnoLiceDTO } from '../models/zig/PravnoLiceDTO';
 import { ZigDTO } from '../models/zig/ZigDTO';
 import { NaznaceneBojeDTO } from '../models/zig/NaznaceneBojeDTO';
-import { BojaDTO } from '../models/zig/BojaDTO';
 import { KlaseRobeIUslugaDTO } from '../models/zig/KlaseRobeIUslugaDTO';
 import { PlaceneTakseDTO } from '../models/zig/PlaceneTakseDTO';
 import { PodaciOPrijaviDTO } from '../models/zig/PodaciOPrijaviDTO';
@@ -26,7 +25,7 @@ export class ZigService {
     private tokenService: TokenService
   ) { }
 
-  convertResponseToZig(response: any): ZahtevZaPriznanjeZigaDTO | null {
+  convertResponseToZig(response: any): ZahtevZaPriznanjeZigaDTO {
     const fizickiPodnosiociPrijave: FizickoLiceDTO[] = [];
     for (let fizickiPodnosilac of response.podnosiociPrijave[0].fizickiPodnosiociPrijave[0].fizickiPodnosiociPrijave) {
       fizickiPodnosiociPrijave.push({
@@ -240,4 +239,56 @@ export class ZigService {
         .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
     });
   }
+
+  getZig(brojPrijave: string) {
+    return this.httpClient.get(this.url + "/zigovi/" + brojPrijave, {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/xml')
+        .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+    });
+  }
+
+  public showHTML(brojZiga : string) {
+    return this.httpClient.get(this.url + `/zigovi/create-zig-html/${brojZiga}`, {
+      headers: new HttpHeaders().set('Content-type', 'application/xml')
+        .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+    });
+  }
+
+  public showPDF(brojZiga : string) {
+    return this.httpClient.get(this.url + `/zigovi/create-zig-pdf/${brojZiga}`, {
+      headers: new HttpHeaders().set('Content-type', 'application/xml')
+        .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+    });
+  }
+
+  public showRDF(brojZiga: string) {
+    return this.httpClient.get(this.url + '/zigovi/dobavi-rdf/' + brojZiga, {
+      headers: new HttpHeaders().set('Content-type', 'application/xml')
+        .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+    });
+  }
+
+  public showJSON(brojZiga: string) {
+    return this.httpClient.get(this.url + '/zigovi/dobavi-json/' + brojZiga, {
+      headers: new HttpHeaders().set('Content-type', 'application/xml')
+        .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+    });
+  }
+
+  getByText(tekst: string) {
+    return this.httpClient.get(this.url + '/zigovi/dobavi-tekst/' + tekst, {
+      headers: new HttpHeaders().set('Content-Type', 'application/xml')
+        .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+    });;
+  }
+
+  getByMetadata(upit: string) {
+    return this.httpClient.get(this.url + '/zigovi/dobavi-metapodaci/' + upit, {
+      headers: new HttpHeaders().set('Content-Type', 'application/xml')
+        .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+    });
+  }
+
+  
 }

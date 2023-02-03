@@ -15,6 +15,8 @@ export class ResenjeZahtevaService {
 
     private autorskaUrl = environment.autorskaApiUrl;
 
+    private zigUrl = environment.zigApiUrl;
+
     constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
     public addResenjeZahteva(resenjeZahtevaDto: ResenjeZahtevaDto, token: string) {
@@ -58,5 +60,43 @@ export class ResenjeZahtevaService {
         const xmlZahtev = JsonToXML.parse("izvestajDatumiDTO", izvestajDatumiDTO);
         const xmlOdgovor = this.httpClient.post(this.autorskaUrl + '/resenja-zahteva/kreiraj-izvestaj', xmlZahtev, {headers: new HttpHeaders().set('Content-Type', 'application/xml').set('Authorization', this.tokenService.getToken() as string), responseType:'text'});
         return xmlOdgovor;
+    }
+
+    public getAllResenjaZig() {
+        return this.httpClient.get(this.zigUrl + '/resenja-zahteva/dobavi-sve', {
+            headers: new HttpHeaders().set('Content-type', 'application/xml')
+                .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+        });
+    }
+
+    public addResenjeZig(resenjeZahtevaDTO: ResenjeZahtevaDTO) {
+        const xmlZahtev = JsonToXML.parse("resenjeZahtevaDTO", resenjeZahtevaDTO);
+        return this.httpClient.post(this.zigUrl + '/resenja-zahteva/dodaj-resenje-zahteva', xmlZahtev, {
+            headers: new HttpHeaders().set('Content-Type', 'application/xml')
+                .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+        });
+    }
+
+    public createIzvestajZig(izvestajDatumiDTO: IzvestajDatumiDTO) {
+        const xmlZahtev = JsonToXML.parse("izvestajDatumiDTO", izvestajDatumiDTO);
+        return this.httpClient.post(this.zigUrl + '/resenja-zahteva/kreiraj-izvestaj', xmlZahtev, {
+            headers: new HttpHeaders().set('Content-Type', 'application/xml')
+                .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+        });
+    }
+
+    public showResenjeKojeReferenciraNaZahtevZig(brojZiga: string) {
+        return this.httpClient.get(this.zigUrl + '/resenja-zahteva/dobavi-po-broju-zahteva/' + brojZiga, {
+            headers: new HttpHeaders().set('Content-Type', 'application/xml')
+                .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+        });
+    }
+
+    public generateIzvestajZig(izvestajDatumiDTO: IzvestajDatumiDTO) {
+        const xmlZahtev = JsonToXML.parse("izvestajDatumiDTO", izvestajDatumiDTO);
+        return this.httpClient.post(this.zigUrl + '/resenja-zahteva/kreiraj-izvestaj', xmlZahtev, {
+            headers: new HttpHeaders().set('Content-Type', 'application/xml')
+                .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
+        });
     }
 }
