@@ -27,6 +27,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -296,7 +298,8 @@ public class RDFDatabase {
                 String s = solution.get("s").toString();
                 String p = solution.get("p").toString();
                 String o = solution.get("o").toString();
-                if (p.contains("datum_prijave")) {
+                if (p.contains("Datum_prijave")) {
+                    if (o.equals("")) continue;
                     XMLGregorianCalendar date = DatatypeFactory.newInstance().newXMLGregorianCalendar(o);
                     if (pocetniDatum.compare(date) <= 0 && krajnjiDatum.compare(date) >= 0) {
                         zahtevi++;
@@ -319,7 +322,8 @@ public class RDFDatabase {
             PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/static/pdf/izvestaj.pdf"));
             document.open();
             Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 20, BaseColor.BLACK);
-            Chunk chunk = new Chunk("IZVESTAJ U PERIODU OD " + pocetniDatum.toString() + "\n DO " + krajnjiDatum.toString(), font);
+            Chunk chunk = new Chunk("IZVESTAJ U PERIODU " + convertDateToStr(pocetniDatum) + " - " +
+                    convertDateToStr(krajnjiDatum), font);
             document.add(chunk);
             document.add(new Paragraph("\n\n"));
 
@@ -353,5 +357,11 @@ public class RDFDatabase {
                     header.setPhrase(new Phrase(columnTitle));
                     table.addCell(header);
                 });
+    }
+
+    private String convertDateToStr(XMLGregorianCalendar calendar) {
+        Date date = calendar.toGregorianCalendar().getTime();
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy.");
+        return df.format(date);
     }
 }

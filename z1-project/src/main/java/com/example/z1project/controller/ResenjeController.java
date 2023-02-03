@@ -8,12 +8,11 @@ import com.example.z1project.service.ResenjeZahtevaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/resenja-zahteva")
@@ -48,6 +47,21 @@ public class ResenjeController {
                 return new ResponseEntity<>(reportDatesDTO, HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/dobavi-sve", produces = "application/xml")
+    public ResponseEntity<List<ResenjeZahtevaDTO>> dobaviSvaResenja(HttpServletRequest request) {
+        try {
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            List<ResenjeZahteva> resenjaZahteva = resenjeZahtevaService.dobaviSve(token);
+            List<ResenjeZahtevaDTO> resenjeZahtevaDTOS = new ArrayList<>();
+            for (ResenjeZahteva resenjeZahteva: resenjaZahteva) {
+                resenjeZahtevaDTOS.add(new ResenjeZahtevaDTO(resenjeZahteva));
+            }
+            return new ResponseEntity<>(resenjeZahtevaDTOS, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

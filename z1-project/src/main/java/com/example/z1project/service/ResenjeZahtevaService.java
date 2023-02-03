@@ -16,6 +16,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 @Service
 public class ResenjeZahtevaService {
@@ -51,5 +52,10 @@ public class ResenjeZahtevaService {
         c.setTime(date);
         XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
         return xmlGregorianCalendar;
+    }
+
+    public List<ResenjeZahteva> dobaviSve(String token) throws Exception {
+        korisnikService.proveriKorisnika(token, true);
+        return resenjeZahtevaRepository.dobaviSve();
     }
 }
