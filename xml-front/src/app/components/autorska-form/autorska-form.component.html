@@ -40,7 +40,7 @@
             </div>
         </section>
 
-        <h6 class="mb-2 arial_font"><b>Adresa podnosioca</b></h6>
+        <h6 class="mb-2 arial_font new-line"><b>Adresa podnosioca</b></h6>
         <section formGroupName="podnosilac">
             <div formGroupName="fizickoLice">
                 <div class="left_element" formGroupName="adresaLica">
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div formGroupName="fizickoLice">
-                <div class="left-elem-three" formGroupName="adresaLica">
+                <div class="left-elem-three new-line" formGroupName="adresaLica">
                     <label for="ulicaPodnosioca" class="arial_font">Ulica</label>
                     <input formControlName="ulica" type="text" id="ulicaPodnosioca" name="ulicaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu" required>
                 </div>
@@ -90,7 +90,7 @@
                 </div>
             </div>
             <div formGroupName="pravnoLice">
-                <div class="left-elem-three" formGroupName="sediste">
+                <div class="left-elem-three new-line" formGroupName="sediste">
                     <label for="ulicaPodnosioca" class="arial_font">Ulica</label>
                     <input formControlName="ulica" type="text" id="ulicaPodnosioca" name="ulicaPodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu" required>
                 </div>
@@ -132,7 +132,7 @@
             </div>
         </section>
 
-        <h6 class="mb-2 arial_font"><b>Adresa punomocnika</b></h6>
+        <h6 class="mb-2 arial_font new-line"><b>Adresa punomocnika</b></h6>
         <section formGroupName="punomocnik">
             <div>
                 <div class="left_element" formGroupName="adresa">
@@ -145,7 +145,7 @@
                 </div>
             </div>
             <div>
-                <div class="left-elem-three" formGroupName="adresa">
+                <div class="left-elem-three new-line" formGroupName="adresa">
                     <label for="ulicaPunomocnika" class="arial_font">Ulica</label>
                     <input formControlName="ulica" type="text" id="ulicaPunomocnika" name="ulicaPunomocnika" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu" required>
                 </div>
@@ -276,7 +276,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="left-elem-three">
+                                    <div class="left-elem-three new-line">
                                         <label for="ulicaAutora" class="arial_font">Ulica</label>
                                         <input formControlName="ulica" type="text" id="ulicaAutora" name="ulicaAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ulicu" required>
                                     </div>
@@ -291,7 +291,9 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-danger mt-4" (click)="obrisiAutora(i)" [disabled]="i === 0">Obriši autora</button>
+                        <div class="new-line">
+                            <button class="btn btn-danger mt-4" (click)="obrisiAutora(i)" [disabled]="i === 0">Obriši autora</button>
+                        </div>
                     </div>
                     <div *ngIf="autorskaForm.get('podaciOAutorskomDelu')?.get('autori')?.get([i])?.get('autorZiv')?.value === 'ne'">
                         <div class="left-elem-three" [formGroupName]="i">
@@ -306,7 +308,9 @@
                             <label for="godinaSmrtiAutora" class="arial_font">Godina smrti</label>
                             <input formControlName="godinaSmrti" type="text" id="godinaSmrtiAutora" name="godinaSmrtiAutora" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite godinu smrti" required>
                         </div>
-                        <button class="btn btn-danger mt-4" (click)="obrisiAutora(i)" [disabled]="i === 0">Obriši autora</button>
+                        <div class="new-line">
+                            <button class="btn btn-danger mt-4" (click)="obrisiAutora(i)" [disabled]="i === 0">Obriši autora</button>
+                        </div>
                     </div>
                 </div>
             </div>

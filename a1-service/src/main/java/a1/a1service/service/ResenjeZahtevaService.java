@@ -8,6 +8,7 @@ import a1.a1service.marshal.MarshalResenjeZahteva;
 import a1.a1service.model.ResenjeZahteva;
 import a1.a1service.repository.ResenjeZahtevaRepository;
 import a1.a1service.transform.AutorskaTransform;
+import com.itextpdf.kernel.pdf.PdfDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
@@ -26,6 +27,9 @@ public class ResenjeZahtevaService {
     @Autowired
     private KorisnikService korisnikService;
 
+    @Autowired
+    private EmailService emailService;
+
     MarshalResenjeZahteva marshalResenjeZahteva = new MarshalResenjeZahteva();
 
     ResenjeZahtevaRepository resenjeZahtevaRepository = new ResenjeZahtevaRepository();
@@ -37,7 +41,18 @@ public class ResenjeZahtevaService {
     public ResenjeZahteva dodajResenjeZahteva(String token, ResenjeZahtevaDTO resenjeZahtevaDTO) throws Exception {
         KorisnikDTO korisnikDTO = korisnikService.dobaviKorisnika(token);
         ResenjeZahteva resenjeZahteva = marshalResenjeZahteva.marshalResenjeZahteva(resenjeZahtevaDTO, korisnikDTO);
-        return resenjeZahtevaRepository.kreiraj(resenjeZahteva);
+        resenjeZahteva = resenjeZahtevaRepository.kreiraj(resenjeZahteva);
+        kreirajHtmlPdf(resenjeZahteva);
+        emailService.posaljiMejlZaZahtev(resenjeZahteva);
+        return resenjeZahteva;
+    }
+
+    private void kreirajHtmlPdf(ResenjeZahteva resenjeZahteva) throws IOException {
+        autorskaTransform.kreirajResenjeZahtevaHTML("src/main/resources/static/html/"
+                + resenjeZahteva.getReferenca() +
+                "_resenje.html", resenjeZahteva);
+        autorskaTransform.kreirajPDF("src/main/resources/static/html/" + resenjeZahteva.getReferenca() + "_resenje.html",
+                "src/main/resources/static/pdf/" + resenjeZahteva.getReferenca() + "_resenje.pdf" );
     }
 
     public ResenjeZahteva dobaviPoBrojuAutorskog(String token, String brojAutorskog) throws Exception {

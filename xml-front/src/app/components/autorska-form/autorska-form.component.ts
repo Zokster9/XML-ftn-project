@@ -140,6 +140,9 @@ export class AutorskaFormComponent{
         parser.parseString(xmlText.toString(), (err, result) => {
           obrazacAutorskoDeloDTO = result.ObrazacAutorskoDeloDTO;
         })
+      alert("Uspesno ste poslali zahtev za priznanje autorskog dela");
+    }, error => {
+      alert("GRESKA!");
     })
   }
 

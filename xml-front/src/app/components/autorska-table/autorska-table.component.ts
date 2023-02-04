@@ -162,7 +162,7 @@ export class AutorskaTableComponent {
   }
 
   dobaviJSON(brojAutorskog: string) {
-    const nazivFajla = brojAutorskog + '.rdf';
+    const nazivFajla = brojAutorskog + '.json';
     this.autorskaService.dobaviJSON(brojAutorskog).subscribe(data => {
       xml2js.parseString(data, (error, result) => {
         const jsonString = JSON.stringify(result);
