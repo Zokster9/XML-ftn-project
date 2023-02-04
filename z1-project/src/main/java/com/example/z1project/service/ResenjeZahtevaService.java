@@ -58,4 +58,13 @@ public class ResenjeZahtevaService {
         korisnikService.proveriKorisnika(token, true);
         return resenjeZahtevaRepository.dobaviSve();
     }
+
+    public ResenjeZahteva dobaviPoBrojuZahteva(String token, String brojZiga) throws Exception {
+        korisnikService.proveriKorisnika(token, true);
+        ResenjeZahteva resenjeZahteva = resenjeZahtevaRepository.dobaviPoBrojuZahteva(brojZiga);
+        zigTransformation.kreirajResenjeZahtevaHTML("src/main/resources/static/html/"
+                + resenjeZahteva.getReferenca() +
+                "_resenje.html", resenjeZahteva);
+        return resenjeZahteva;
+    }
 }

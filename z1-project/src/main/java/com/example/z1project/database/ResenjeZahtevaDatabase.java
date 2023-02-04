@@ -231,4 +231,66 @@ public class ResenjeZahtevaDatabase {
         }
         return resenjaZahteva;
     }
+
+    public ResenjeZahteva dobaviPoBrojuZahteva(String brojPrijaveZiga) throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
+        AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+
+        // initialize collection and document identifiers
+        String collectionId = null;
+        collectionId = "/db/xml-project/resenje-zahteva-zigovi";
+
+        System.out.println("\t- collection ID: " + collectionId);
+
+        System.out.println("[INFO] Loading driver class: " + conn.driver);
+        Class<?> cl = Class.forName(conn.driver);
+
+        Database database = (Database) cl.newInstance();
+        database.setProperty("create-database", "true");
+
+        DatabaseManager.registerDatabase(database);
+
+        Collection col = null;
+
+        ResenjeZahteva resenjeZahteva = null;
+        try {
+            // get the collection
+            System.out.println("[INFO] Retrieving the collection: " + collectionId);
+            col = DatabaseManager.getCollection(conn.uri + collectionId);
+            //col.setProperty(OutputKeys.INDENT, "yes");
+
+            XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xPathQueryService.setProperty("indent", "yes");
+
+            String xPathExp = "//resenje_zahteva[referenca='" + brojPrijaveZiga + "']";
+            ResourceSet result = xPathQueryService.query(xPathExp);
+            XMLResource res = (XMLResource) result.getIterator().nextResource();
+            JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            if (res == null) return null;
+            resenjeZahteva = (ResenjeZahteva) unmarshaller.unmarshal(res.getContentAsDOM());
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        } finally {
+            //don't forget to clean up!
+
+            /*
+            if(res != null) {
+                try {
+                    ((EXistResource)res).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+            */
+
+            if (col != null) {
+                try {
+                    col.close();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+        return resenjeZahteva;
+    }
 }

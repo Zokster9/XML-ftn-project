@@ -24,7 +24,7 @@ public class ResenjeController {
     @Autowired
     private TokenUtils tokenUtils;
 
-    @PostMapping(value="/dodaj-resenje-zahteva", consumes = "application/xml", produces = "application/xml")
+    @PostMapping(value="/", consumes = "application/xml", produces = "application/xml")
     public ResponseEntity<ResenjeZahtevaDTO> dodajResenjeZahteva(@RequestBody ResenjeZahtevaDTO resenjeZahtevaDTO, HttpServletRequest request) throws Exception {
         try {
             String token = tokenUtils.getAuthHeaderFromHeader(request);
@@ -52,7 +52,7 @@ public class ResenjeController {
         }
     }
 
-    @GetMapping(value = "/dobavi-sve", produces = "application/xml")
+    @GetMapping(value = "/", produces = "application/xml")
     public ResponseEntity<List<ResenjeZahtevaDTO>> dobaviSvaResenja(HttpServletRequest request) {
         try {
             String token = tokenUtils.getAuthHeaderFromHeader(request);
@@ -62,6 +62,17 @@ public class ResenjeController {
                 resenjeZahtevaDTOS.add(new ResenjeZahtevaDTO(resenjeZahteva));
             }
             return new ResponseEntity<>(resenjeZahtevaDTOS, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/{brojZiga}", produces = "application/xml")
+    public ResponseEntity<ResenjeZahtevaDTO> dobaviPoBrojuZahteva(@PathVariable(value = "brojZiga") String brojZiga, HttpServletRequest request) {
+        try {
+            String token = tokenUtils.getAuthHeaderFromHeader(request);
+            ResenjeZahteva resenjeZahteva = resenjeZahtevaService.dobaviPoBrojuZahteva(token, brojZiga);
+            return new ResponseEntity<>(new ResenjeZahtevaDTO(resenjeZahteva), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

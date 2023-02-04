@@ -63,7 +63,7 @@ export class ResenjeZahtevaService {
     }
 
     public getAllResenjaZig() {
-        return this.httpClient.get(this.zigUrl + '/resenja-zahteva/dobavi-sve', {
+        return this.httpClient.get(this.zigUrl + '/resenja-zahteva/', {
             headers: new HttpHeaders().set('Content-type', 'application/xml')
                 .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
         });
@@ -71,7 +71,7 @@ export class ResenjeZahtevaService {
 
     public addResenjeZig(resenjeZahtevaDTO: ResenjeZahtevaDTO) {
         const xmlZahtev = JsonToXML.parse("resenjeZahtevaDTO", resenjeZahtevaDTO);
-        return this.httpClient.post(this.zigUrl + '/resenja-zahteva/dodaj-resenje-zahteva', xmlZahtev, {
+        return this.httpClient.post(this.zigUrl + '/resenja-zahteva/', xmlZahtev, {
             headers: new HttpHeaders().set('Content-Type', 'application/xml')
                 .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
         });
@@ -86,7 +86,7 @@ export class ResenjeZahtevaService {
     }
 
     public showResenjeKojeReferenciraNaZahtevZig(brojZiga: string) {
-        return this.httpClient.get(this.zigUrl + '/resenja-zahteva/dobavi-po-broju-zahteva/' + brojZiga, {
+        return this.httpClient.get(this.zigUrl + '/resenja-zahteva/' + brojZiga, {
             headers: new HttpHeaders().set('Content-Type', 'application/xml')
                 .set('Authorization', this.tokenService.getToken() as string), responseType: 'text'
         });

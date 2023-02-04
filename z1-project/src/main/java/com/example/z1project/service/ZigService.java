@@ -5,7 +5,9 @@ import com.example.z1project.database.RDFDatabase;
 import com.example.z1project.database.ZigDatabase;
 import com.example.z1project.dto.ZahtevZaPriznanjeZigaDTO;
 import com.example.z1project.marshall.MarshallZig;
+import com.example.z1project.model.zig.ResenjeZahteva;
 import com.example.z1project.model.zig.ZahtevZaPriznanjeZiga;
+import com.example.z1project.repository.ResenjeZahtevaRepository;
 import com.example.z1project.repository.ZigRepository;
 import com.example.z1project.transformXML.ZigTransformation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class ZigService {
     private final MarshallZig marshallZig = new MarshallZig();
 
     private final RDFDatabase rdfDatabase = new RDFDatabase();
+
+    private final ResenjeZahtevaRepository resenjeZahtevaRepository = new ResenjeZahtevaRepository();
 
     public ZahtevZaPriznanjeZiga kreirajZahtev(ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO) throws Exception {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = marshallZig.marshalZahtevZaPriznanjeZiga(zahtevZaPriznanjeZigaDTO);
@@ -61,10 +65,20 @@ public class ZigService {
     }
 
     public List<ZahtevZaPriznanjeZiga> dobaviSve(String token) throws Exception {
-        if (true) {
+        if (proveriKorisnika(token, true)) {
             return zigRepository.getAll();
+        } else {
+            List<ZahtevZaPriznanjeZiga> povratna = new ArrayList<>();
+            List<ZahtevZaPriznanjeZiga> zahtevi = zigRepository.getAll();
+            for (ZahtevZaPriznanjeZiga zahtev : zahtevi) {
+                ResenjeZahteva resenjeZahteva = resenjeZahtevaRepository.dobaviPoBrojuZahteva(
+                        zahtev.getPodaciOPrijavi().getBrojPrijaveZiga());
+                if (resenjeZahteva != null) {
+                    if (resenjeZahteva.isZahtevJePrihvacen()) povratna.add(zahtev);
+                }
+            }
+            return povratna;
         }
-        return null;
     }
 
     public String kreirajRdfJson(String brojZiga) {
@@ -72,16 +86,36 @@ public class ZigService {
     }
 
     public List<ZahtevZaPriznanjeZiga> dobaviPoTekstu(String token, String tekst) throws Exception {
-        if (true) {
+        if (proveriKorisnika(token, true)) {
             return zigRepository.dobaviPoTekstu(tekst);
+        } else {
+            List<ZahtevZaPriznanjeZiga> povratna = new ArrayList<>();
+            List<ZahtevZaPriznanjeZiga> zahtevi = zigRepository.dobaviPoTekstu(tekst);
+            for (ZahtevZaPriznanjeZiga zahtev: zahtevi) {
+                ResenjeZahteva resenjeZahteva = resenjeZahtevaRepository.dobaviPoBrojuZahteva(zahtev.getPodaciOPrijavi()
+                        .getBrojPrijaveZiga());
+                if (resenjeZahteva != null) {
+                    if (resenjeZahteva.isZahtevJePrihvacen()) povratna.add(zahtev);
+                }
+            }
+            return povratna;
         }
-        return null;
     }
 
     public List<ZahtevZaPriznanjeZiga> dobaviPoMetapodacima(String token, String upit) throws Exception {
-        if (true) {
+        if (proveriKorisnika(token, true)) {
             return zigRepository.dobaviPoMetapodacima(upit);
+        } else {
+            List<ZahtevZaPriznanjeZiga> povratna = new ArrayList<>();
+            List<ZahtevZaPriznanjeZiga> zahtevi = zigRepository.dobaviPoMetapodacima(upit);
+            for (ZahtevZaPriznanjeZiga zahtev: zahtevi) {
+                ResenjeZahteva resenjeZahteva = resenjeZahtevaRepository.dobaviPoBrojuZahteva(zahtev.getPodaciOPrijavi()
+                        .getBrojPrijaveZiga());
+                if (resenjeZahteva != null) {
+                    if (resenjeZahteva.isZahtevJePrihvacen()) povratna.add(zahtev);
+                }
+            }
+            return povratna;
         }
-        return null;
     }
 }
