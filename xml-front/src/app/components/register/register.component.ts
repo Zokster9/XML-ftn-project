@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { KorisnikDTO } from 'src/app/models/KorisnikDto';
 import { UserService } from 'src/app/services/user.service';
 
@@ -19,7 +20,7 @@ export class RegisterComponent implements OnInit{
   });
 
   constructor(
-    private formBuilder: FormBuilder, private userService: UserService
+    private formBuilder: FormBuilder, private userService: UserService, private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -35,7 +36,7 @@ export class RegisterComponent implements OnInit{
       korisnikJeSluzbenik: this.registrationForm.value.korisnikJeSluzbenik as boolean
     }
     this.userService.registracija(korisnikDTO).subscribe(data => {
-      console.log(data);
+      this.router.navigate(['/login']);
     })
   }
 

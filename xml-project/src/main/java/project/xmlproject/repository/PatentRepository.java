@@ -68,22 +68,24 @@ public class PatentRepository {
 
         for (PriznanjePravaPrvenstva priznanjePravaPrvenstva :
                 zahtevZaPriznanjePatenta.getPodaciOPrijavama().getPriznanjaPravaPrvenstva().getPriznanjePravaPrvenstva()) {
+            boolean exists = false;
             try {
                 ZahtevZaPriznanjePatenta zahtev = patentDatabase.getByBrojPrijave(priznanjePravaPrvenstva.getBrojRanijePrijave());
-                referenciraniZahtevi.add(zahtev);
+                for (ZahtevZaPriznanjePatenta zahtev1 : referenciraniZahtevi) {
+                    if (zahtev1.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave()
+                            .equals(zahtev.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave())) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) {
+                    referenciraniZahtevi.add(zahtev);
+                }
             } catch (NullPointerException e) {
                 System.out.println("Non existing patent");
             }
 
         }
-        for (ZahtevZaPriznanjePatenta zahtev : referenciraniZahtevi) {
-            System.out.println(zahtev.getPodaciOPrijavama().getNovaPrijava().getBrojPrijave());
-        }
         return referenciraniZahtevi;
-    }
-
-    public static void main(String[] args) throws Exception {
-        PatentRepository patentRepository = new PatentRepository();
-        patentRepository.getReferencedPatents("P1671903952390");
     }
 }

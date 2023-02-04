@@ -1110,7 +1110,7 @@
                                     <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 0pt;">
                                         <span id="bookmark=id.4i7ojhp"></span>
                                         <span style="min-height: 9pt; font-size: 9pt;">     </span>
-                                        <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Datum_prijave"/></span>
+                                        <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="./Datum_prijave"/></span>
                                     </p>
                                 </td>
                                 <td style="width: 116.6pt; border-width: 0.75pt; border-style: solid; border-color: rgb(0, 0, 0);">
@@ -1120,14 +1120,14 @@
                                     <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 0pt;">
                                         <span id="bookmark=id.2xcytpi"></span>
                                         <span style="min-height: 9pt; font-size: 9pt;">     </span>
-                                        <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Broj_prvobitne_prijave"/></span>
+                                        <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="./Broj_ranije_prijave"/></span>
                                     </p>
                                 </td>
                                 <td colspan="3" style="width: 148.4pt; border-width: 0.75pt 1.5pt 0.75pt 0.75pt; border-style: solid; border-color: rgb(0, 0, 0);">
                                     <p style="margin-bottom: 0pt; text-indent: 0pt; margin-left: 0pt;">
                                         <span id="bookmark=id.1ci93xb"></span>
                                         <span style="min-height: 9pt; font-size: 9pt;">     </span>
-                                        <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="//Dvoslovna_oznaka_drzave_organizacije"/></span>
+                                        <span style="min-height: 9pt; font-size: 9pt;"><xsl:value-of select="./Dvoslovna_oznaka_drzave_organizacije"/></span>
                                     </p>
                                 </td>
                             </tr>
