@@ -23,17 +23,6 @@ import java.util.GregorianCalendar;
 
 public class MarshalResenjeZahteva {
 
-    public void generateQRCodeImage(String text, int width, int height, String filePath)
-            throws IOException, WriterException {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
-
-        Path path = FileSystems.getDefault().getPath(filePath);
-        System.out.println(path);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
-
-    }
-
     public byte[] getQRCodeImage(String text, int width, int height) throws WriterException, IOException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
@@ -64,9 +53,6 @@ public class MarshalResenjeZahteva {
     }
 
     private String marshalGenerateQrCode(String brojZahteva) throws IOException, WriterException {
-        //String qrCodeFileName = "../qr/" + brojZahteva + "_resenje_html.png";
-        generateQRCodeImage("http://localhost:9004/html/" + brojZahteva + "_resenje.html",
-                300, 300, "./src/main/resources/static/qr/" + brojZahteva + "_resenje_html.png");
         return Base64.getEncoder().encodeToString(getQRCodeImage("http://localhost:9004/html/" + brojZahteva + "_resenje.html",
                 300, 300));
     }

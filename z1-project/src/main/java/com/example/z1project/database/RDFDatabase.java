@@ -96,14 +96,14 @@ public class RDFDatabase {
     }
 
     public String pronadjiRdfPoBrojuZiga(String brojZiga) {
-        String queryString1 = "PREFIX ex:<http://localhost:8080/fuseki/zigovi-dataset/data/>\n" +
+        String queryString1 = "PREFIX ex:<http://localhost:9001/fuseki/zigovi-dataset/data/>\n" +
                 "SELECT ?s ?p ?o\n" +
                 "FROM ex:" + brojZiga + "\n" +
                 "WHERE {\n" +
                 "  ?s ?p ?o .\n" +
                 "}";
         Query query = QueryFactory.create(queryString1);
-        try (QueryExecution quexec = QueryExecutionFactory.sparqlService("http://localhost:8080/fuseki/zigovi-dataset/", query)) {
+        try (QueryExecution quexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/zigovi-dataset/", query)) {
             ResultSet resultSet = quexec.execSelect();
             //FileOutputStream out = new FileOutputStream("src/main/resources/static/rdf/" + patentNumber + ".rdf");
             //ResultSetFormatter.outputAsXML(out, resultSet);
@@ -230,7 +230,7 @@ public class RDFDatabase {
                     "}";
             System.out.println(queryString);
             Query query = QueryFactory.create(queryString);
-            try (QueryExecution quexec = QueryExecutionFactory.sparqlService("http://localhost:8080/fuseki/zigovi-dataset/", query)) {
+            try (QueryExecution quexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/zigovi-dataset/", query)) {
                 ResultSet resultSet = quexec.execSelect();
                 ArrayList<String> zigNumbersForThisQuery = new ArrayList<>();
                 while (resultSet.hasNext()) {
@@ -290,7 +290,7 @@ public class RDFDatabase {
         String queryString = "select ?s ?p ?o {graph ?g {?s ?p ?o}}";
         Query query = QueryFactory.create(queryString);
 
-        try (QueryExecution qexec = QueryExecutionFactory.sparqlService("http://localhost:8080/fuseki/zigovi-dataset/", query)) {
+        try (QueryExecution qexec = QueryExecutionFactory.sparqlService("http://localhost:9001/fuseki/zigovi-dataset/", query)) {
             ResultSet resultSet = qexec.execSelect();
 
             while (resultSet.hasNext()) {
