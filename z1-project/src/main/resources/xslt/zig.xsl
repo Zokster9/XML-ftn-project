@@ -511,7 +511,7 @@
                         знака</p></td>
                     <td
                             style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p
-                            style="text-indent: 0pt;text-align: left;"><br /><xsl:value-of select="//@naziv_dokumenta"/></p></td>
+                            style="text-indent: 0pt;text-align: left;"><br /><xsl:value-of select="//Podaci_o_prijavi/Prilozi_uz_zahtev/Primerak_znaka/@naziv_dokumenta"/></p></td>
                 </tr>
                 <tr style="height:23pt">
                     <td
@@ -521,7 +521,7 @@
                         робе и услуга**</p></td>
                     <td
                             style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p
-                            style="text-indent: 0pt;text-align: left;"><br /> <xsl:value-of select="//@naziv_dokumenta"/></p></td>
+                            style="text-indent: 0pt;text-align: left;"><br /> <xsl:value-of select="//Podaci_o_prijavi/Prilozi_uz_zahtev/Spisak_robe_i_usluga/@naziv_dokumenta"/></p></td>
                 </tr>
                 <tr style="height:23pt">
                     <td
@@ -531,10 +531,7 @@
                         Пуномоћје</p></td>
                     <td
                             style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p
-                            style="text-indent: 0pt;text-align: left;"><br />
-                        <xsl:for-each select="//@naziv_dokumenta">
-                            <xsl:value-of select="."/>
-                        </xsl:for-each>
+                            style="text-indent: 0pt;text-align: left;"><br /> <xsl:value-of select="//Podaci_o_prijavi/Prilozi_uz_zahtev/Punomocje/@naziv_dokumenta"/>
                     </p></td>
                 </tr>
                 <tr style="height:23pt">
@@ -585,7 +582,7 @@
                         о уплати таксе</p></td>
                     <td
                             style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p
-                            style="text-indent: 0pt;text-align: left;"><br /><xsl:value-of select="//Podaci_o_prijavi/Prilozi_uz_zahtev/TPrilogUzZahtev/@nazivDokumenta"/></p></td>
+                            style="text-indent: 0pt;text-align: left;"><br /><xsl:value-of select="//Podaci_o_prijavi/Prilozi_uz_zahtev/Dokaz_o_uplati_takse/@naziv_dokumenta"/></p></td>
                 </tr>
             </table><p
                     style="text-indent: 0pt;text-align: left;"><br /></p><p
