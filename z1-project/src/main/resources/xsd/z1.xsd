@@ -12,7 +12,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element minOccurs="0" name="Punomocnik" type="zig:TLice"/>
+                <xs:element minOccurs="0" name="Punomocnik" type="zig:TFizicko_lice"/>
                 <xs:element minOccurs="0" name="Zajednicki_predstavnik_podnosioca_prijave"
                             type="zig:TLice"/>
                 <xs:element name="Zig">
@@ -96,59 +96,22 @@
                             <xs:element name="Prilozi_uz_zahtev">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="Primerak_znaka">
-                                            <xs:complexType>
-                                                <xs:attribute name="naziv_dokumenta"
-                                                              type="xs:string"/>
-                                                <xs:attribute name="putanja_dokumenta"
-                                                              type="xs:string"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="Spisak_robe_i_usluga">
-                                            <xs:complexType>
-                                                <xs:attribute name="naziv_dokumenta"
-                                                              type="xs:string"/>
-                                                <xs:attribute name="putanja_dokumenta"
-                                                              type="xs:string"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="Punomocje" minOccurs="0">
-                                            <xs:complexType>
-                                                <xs:attribute name="naziv_dokumenta"
-                                                              type="xs:string"/>
-                                                <xs:attribute name="putanja_dokumenta"
-                                                              type="xs:string"/>
-                                            </xs:complexType>
-                                        </xs:element>
+                                        <xs:element name="Primerak_znaka"
+                                                    type="zig:TPrilog_uz_zahtev"> </xs:element>
+                                        <xs:element name="Spisak_robe_i_usluga"
+                                                    type="zig:TPrilog_uz_zahtev"> </xs:element>
+                                        <xs:element name="Punomocje" minOccurs="0"
+                                                    type="zig:TPrilog_uz_zahtev"> </xs:element>
                                         <xs:element name="Generalno_punomocje_ranije_prilozeno"
                                                     default="false" type="xs:boolean" minOccurs="0"/>
                                         <xs:element name="Punomocje_ce_biti_naknadno_dostavljeno"
                                                     default="false" type="xs:boolean" minOccurs="0"/>
                                         <xs:element name="Opsti_akt_o_kolektivnom_zigu"
-                                                    minOccurs="0">
-                                            <xs:complexType>
-                                                <xs:attribute name="naziv_dokumenta"
-                                                              type="xs:string"/>
-                                                <xs:attribute name="putanja_dokumenta"
-                                                              type="xs:string"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="Dokaz_o_pravu_prvenstva" minOccurs="0">
-                                            <xs:complexType>
-                                                <xs:attribute name="naziv_dokumenta"
-                                                              type="xs:string"/>
-                                                <xs:attribute name="putanja_dokumenta"
-                                                              type="xs:string"/>
-                                            </xs:complexType>
-                                        </xs:element>
-                                        <xs:element name="Dokaz_o_uplati_takse">
-                                            <xs:complexType>
-                                                <xs:attribute name="naziv_dokumenta"
-                                                              type="xs:string"/>
-                                                <xs:attribute name="putanja_dokumenta"
-                                                              type="xs:string"/>
-                                            </xs:complexType>
-                                        </xs:element>
+                                                    minOccurs="0" type="zig:TPrilog_uz_zahtev"> </xs:element>
+                                        <xs:element name="Dokaz_o_pravu_prvenstva" minOccurs="0"
+                                                    type="zig:TPrilog_uz_zahtev"> </xs:element>
+                                        <xs:element name="Dokaz_o_uplati_takse"
+                                                    type="zig:TPrilog_uz_zahtev"> </xs:element>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
@@ -159,6 +122,9 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute name="qr_html" type="xs:string"/>
+            <xs:attribute name="qr_pdf" type="xs:string"/>
+            <xs:attribute name="is_pdf" type="xs:boolean"/>
         </xs:complexType>
     </xs:element>
     <xs:element name="Kontakt_podaci">
@@ -205,6 +171,10 @@
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPrilog_uz_zahtev">
+        <xs:attribute name="naziv_dokumenta" type="xs:string"/>
+        <xs:attribute name="putanja_dokumenta" type="xs:string"/>
     </xs:complexType>
     <xs:simpleType name="TBroj_telefona">
         <xs:restriction base="xs:string">

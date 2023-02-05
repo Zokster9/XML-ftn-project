@@ -8,6 +8,8 @@ import { PatentFormXonomyComponent } from './components/patent-form-xonomy/paten
 import { PatentFormComponent } from './components/patent-form/patent-form.component';
 import { PatentPdfHtmlTableComponent } from './components/patent-pdf-html-table/patent-pdf-html-table.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ZigFormComponent } from './components/zig-form/zig-form.component';
+import { ZigPdfHtmlTableComponent } from './components/zig-pdf-html-table/zig-pdf-html-table.component';
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -17,7 +19,9 @@ const routes: Routes = [
   {path: 'pregledaj-patente', component: PatentPdfHtmlTableComponent},
   {path: 'kreiraj-patent-xonomy', component:PatentFormXonomyComponent},
   {path: 'pregledaj-autorska', component: AutorskaTableComponent},
-  {path: 'registracija', component: RegisterComponent},
+  { path: 'registracija', component: RegisterComponent },
+  { path: 'kreiraj-zig', component: ZigFormComponent },
+  { path: 'pregledaj-zigove', component: ZigPdfHtmlTableComponent },
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 

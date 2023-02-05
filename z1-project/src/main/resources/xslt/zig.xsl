@@ -20,7 +20,12 @@
                         italic; font-weight: normal; text-decoration: none; font-size: 9pt; } .s5 { color:
                         black; font-family:"Times New Roman", serif; font-style: normal; font-weight: normal;
                                                                                                   text-decoration: underline; font-size: 10pt; } table, tbody {vertical-align: top;
-                                                                                                                                                     overflow: visible; } </style>
+                                                                                                                                                     overflow: visible; } center {
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 50%;
+                    } </style>
             </head>
             <body>
                 <h1
@@ -96,7 +101,7 @@
                                 style="width:530pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
                                 colspan="23">
                             <p style="text-indent: 0pt;text-align: left;"><br />
-                                <xsl:if test="//Punomocnik">
+                                <xsl:if test="//Punomocnik/Ime != ''">
                                     <xsl:value-of select="//Punomocnik/Ime"/><xsl:text> </xsl:text><xsl:value-of select="//Punomocnik/Naziv"/><xsl:value-of select="//Punomocnik/Prezime"/>,
                                     <xsl:value-of select="//Punomocnik/Adresa/Ulica"/><xsl:text> </xsl:text><xsl:value-of select="//Punomocnik/Adresa/Broj"/>,<xsl:text> </xsl:text>
                                     <xsl:value-of select="//Punomocnik/Adresa/Postanski_broj"/>,<xsl:text> </xsl:text><xsl:value-of select="//Punomocnik/Adresa/Mesto"/>,<xsl:text> </xsl:text><xsl:value-of select="//Punomocnik/Adresa/Drzava"/>
@@ -132,7 +137,7 @@
                         <td
                                 style="width:530pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
                                 colspan="23"><p style="text-indent: 0pt;text-align: left;"><br />
-                            <xsl:if test="//Zajednicki_predstavnik_podnosioca_prijave">
+                            <xsl:if test="//Zajednicki_predstavnik_podnosioca_prijave/Adresa/Ulica != ''">
                                 <xsl:value-of select="//Zajednicki_predstavnik_podnosioca_prijave/Ime"/><xsl:text> </xsl:text><xsl:value-of select="//Zajednicki_predstavnik_podnosioca_prijave/Naziv"/><xsl:value-of select="//Zajednicki_predstavnik_podnosioca_prijave/Prezime"/>,
                                 <xsl:value-of select="//Zajednicki_predstavnik_podnosioca_prijave/Adresa/Ulica"/><xsl:text> </xsl:text><xsl:value-of select="//Zajednicki_predstavnik_podnosioca_prijave/Adresa/Broj"/>,<xsl:text> </xsl:text>
                                 <xsl:value-of select="//Zajednicki_predstavnik_podnosioca_prijave/Adresa/Postanski_broj"/>,<xsl:text> </xsl:text><xsl:value-of select="//Zajednicki_predstavnik_podnosioca_prijave/Adresa/Mesto"/>,<xsl:text> </xsl:text><xsl:value-of select="//Zajednicki_predstavnik_podnosioca_prijave/Adresa/Drzava"/>
@@ -180,7 +185,7 @@
                             жиг</p></td>
                         <td
                                 style="width:51pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_ziga/Individualni_zig">X</xsl:if></p></td>
+                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_ziga/Individualni_zig = 'true'">X</xsl:if></p></td>
                     </tr>
                     <tr style="height:15pt">
                         <td
@@ -190,10 +195,11 @@
                             жиг</p></td>
                         <td
                                 style="width:51pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_ziga/Kolektivni_zig">X</xsl:if></p></td>
+                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_ziga/Kolektivni_zig = 'true'">X</xsl:if></p></td>
                         <td
                                 style="width:270pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                                colspan="12" rowspan="11"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:value-of select="//Zig/Izgled_znaka/@image_url"/> </p></td>
+                                colspan="12" rowspan="11"><p style="text-indent: 0pt;text-align: left;"><br /><img width="400px" height="250px"><xsl:attribute
+                                name="src"><xsl:text>data:image/png;base64, </xsl:text><xsl:value-of select="//Zig/Izgled_znaka/@image_url"/></xsl:attribute></img> </p></td>
                     </tr>
                     <tr style="height:14pt">
                         <td
@@ -203,7 +209,7 @@
                             гаранције</p></td>
                         <td
                                 style="width:51pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_ziga/Zig_garancije">X</xsl:if></p></td>
+                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_ziga/Zig_garancije = 'true'">X</xsl:if></p></td>
                     </tr>
                     <tr style="height:12pt">
                         <td
@@ -219,7 +225,7 @@
                             знак (знак у речи)</p></td>
                         <td
                                 style="width:51pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_znaka/Verbalni_znak">X</xsl:if></p></td>
+                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_znaka/Verbalni_znak = 'true'">X</xsl:if></p></td>
                     </tr>
                     <tr style="height:23pt">
                         <td
@@ -229,7 +235,7 @@
                             знак; боју, комбинацију боја</p></td>
                         <td
                                 style="width:51pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_znaka/Graficki_znak">X</xsl:if></p></td>
+                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_znaka/Graficki_znak = 'true'">X</xsl:if></p></td>
                     </tr>
                     <tr style="height:14pt">
                         <td
@@ -239,7 +245,7 @@
                             знак</p></td>
                         <td
                                 style="width:51pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_znaka/Kombinovani_znak">X</xsl:if></p></td>
+                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_znaka/Kombinovani_znak = 'true'">X</xsl:if></p></td>
                     </tr>
                     <tr style="height:14pt">
                         <td
@@ -249,7 +255,7 @@
                             знак</p></td>
                         <td
                                 style="width:51pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_znaka/Trodimenzionalni_znak">X</xsl:if></p></td>
+                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_znaka/Trodimenzionalni_znak = 'true'">X</xsl:if></p></td>
                     </tr>
                     <tr style="height:14pt">
                         <td
@@ -259,7 +265,7 @@
                             врсту знака (навести коју)</p></td>
                         <td
                                 style="width:51pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_znaka/Druga_vrsta_znaka">X</xsl:if></p></td>
+                                colspan="2"><p style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Zig/Tip_znaka/Druga_vrsta_znaka = 'true'">X</xsl:if></p></td>
                     </tr>
                     <tr style="height:44pt">
                         <td
@@ -278,21 +284,48 @@
                                 style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
                                 colspan="11"><p class="s1"
                                                 style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">6.
-                            Транслитерација знака*:</p><p style="padding-left: 5pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//Zig/Transliteracija_znaka"/> </p></td>
+                            Транслитерација знака*:</p><p style="padding-left: 5pt;text-indent: 0pt;text-align: left;">
+                            <xsl:choose>
+                                <xsl:when test="//Zig/Transliteracija_znaka = 'undefined'">
+                                    <xsl:text></xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="//Zig/Transliteracija_znaka"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </p></td>
                     </tr>
                     <tr style="height:22pt">
                         <td
                                 style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
                                 colspan="11"><p class="s1"
                                                 style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">7.
-                            Превод знака*:</p><p style="padding-left: 5pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//Zig/Prevod_znaka"/></p></td>
+                            Превод знака*:</p><p style="padding-left: 5pt;text-indent: 0pt;text-align: left;">
+                            <xsl:choose>
+                                <xsl:when test="//Zig/Prevod_znaka = 'undefined'">
+                                    <xsl:text></xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="//Zig/Prevod_znaka"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </p></td>
                     </tr>
                     <tr style="height:36pt">
                         <td
                                 style="width:260pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
                                 colspan="11"><p class="s1"
                                                 style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">8.
-                            Опис знака:</p><p style="padding-left: 5pt;text-indent: 0pt;text-align: left;"><xsl:value-of select="//Zig/Opis_znaka"/></p></td>
+                            Опис знака:</p><p style="padding-left: 5pt;text-indent: 0pt;text-align: left;">
+                            <xsl:choose>
+                                <xsl:when test="//Zig/Opis_znaka = 'undefined'">
+                                    <xsl:text></xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="//Zig/Opis_znaka"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </p></td>
                     </tr>
                     <tr style="height:12pt">
                         <td
@@ -360,7 +393,14 @@
                                 colspan="23"><p class="s1"
                                                 style="padding-left: 5pt;text-indent: 0pt;line-height: 11pt;text-align: left;">10.
                             Затражено право првенства и основ:</p><p style="padding-left: 5pt;text-indent: 0pt;text-align: left;">
-                            <xsl:value-of select="//Pravo_prvenstva_i_osnov"/>
+                            <xsl:choose>
+                                <xsl:when test="//Pravo_prvenstva_i_osnov = 'undefined'">
+                                    <xsl:text></xsl:text>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="//Pravo_prvenstva_i_osnov"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
                         </p></td>
                     </tr>
                 </table><p
@@ -439,10 +479,29 @@
                             style="width:219pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
                             rowspan="9"><p style="text-indent: 0pt;text-align: left;"><br /></p><p
                             class="s2"
-                            style="padding-top: 9pt;padding-left: 61pt;padding-right: 61pt;text-indent: 0pt;line-height: 200%;text-align: center;">Број
+                            style="align-items:center;padding-top: 9pt;padding-left: 61pt;padding-right: 61pt;text-indent: 0pt;line-height: 200%;text-align: center;">Број
                         пријаве жига:<br/> <span><xsl:value-of select="//Podaci_o_prijavi/Broj_prijave_ziga"/> </span><br/> <b>Датум подношења:</b> </p><p class="s2"
                                                                                                                                                            style="padding-top: 9pt;padding-left: 61pt;padding-right: 61pt;text-indent: 0pt;line-height: 200%;text-align: center;">
-                        <xsl:value-of select="//Podaci_o_prijavi/Datum_podnosenja"/></p></td>
+                        <xsl:value-of select="//Podaci_o_prijavi/Datum_podnosenja"/></p>
+                        <div style="text-align: center;" class="center">
+                            <xsl:choose>
+                                <xsl:when test="//@is_pdf = 'true'">
+                                    <img height="100px" width="100px">
+                                        <xsl:attribute
+                                                name="src"><xsl:text>data:image/png;base64, </xsl:text><xsl:value-of select="//@qr_pdf"/>
+                                        </xsl:attribute>
+                                    </img>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <img height="100px" width="100px">
+                                        <xsl:attribute
+                                                name="src"><xsl:text>data:image/png;base64, </xsl:text><xsl:value-of select="//@qr_html"/>
+                                        </xsl:attribute>
+                                    </img>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </div>
+                        </td>
                 </tr>
                 <tr style="height:23pt">
                     <td
@@ -462,7 +521,7 @@
                         робе и услуга**</p></td>
                     <td
                             style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p
-                            style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Podaci_o_prijavi/Prilozi_uz_zahtev/Spisak_robe_i_usluga">X</xsl:if> </p></td>
+                            style="text-indent: 0pt;text-align: left;"><br /> <xsl:value-of select="//Podaci_o_prijavi/Prilozi_uz_zahtev/Spisak_robe_i_usluga/@naziv_dokumenta"/></p></td>
                 </tr>
                 <tr style="height:23pt">
                     <td
@@ -472,7 +531,8 @@
                         Пуномоћје</p></td>
                     <td
                             style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p
-                            style="text-indent: 0pt;text-align: left;"><br /><xsl:value-of select="//Podaci_o_prijavi/Prilozi_uz_zahtev/Punomocje/@naziv_dokumenta"/></p></td>
+                            style="text-indent: 0pt;text-align: left;"><br /> <xsl:value-of select="//Podaci_o_prijavi/Prilozi_uz_zahtev/Punomocje/@naziv_dokumenta"/>
+                    </p></td>
                 </tr>
                 <tr style="height:23pt">
                     <td
@@ -482,7 +542,7 @@
                         пуномоћје раније приложено</p></td>
                     <td
                             style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p
-                            style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Podaci_o_prijavi/Prilozi_uz_zahtev/Generalno_punomocje_ranije_prilozeno">X</xsl:if></p></td>
+                            style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Podaci_o_prijavi/Prilozi_uz_zahtev/Generalno_punomocje_ranije_prilozeno = 'true'">X</xsl:if></p></td>
                 </tr>
                 <tr style="height:23pt">
                     <td
@@ -492,7 +552,7 @@
                         ће бити накнадно достављено</p></td>
                     <td
                             style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"><p
-                            style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Podaci_o_prijavi/Prilozi_uz_zahtev/Punomocje_ce_biti_naknadno_dostavljeno">X</xsl:if></p></td>
+                            style="text-indent: 0pt;text-align: left;"><br /><xsl:if test="//Podaci_o_prijavi/Prilozi_uz_zahtev/Punomocje_ce_biti_naknadno_dostavljeno = 'true'">X</xsl:if></p></td>
                 </tr>
                 <tr style="height:23pt">
                     <td

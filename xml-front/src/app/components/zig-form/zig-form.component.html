@@ -1,0 +1,409 @@
+<app-navbar></app-navbar>
+<form class="card p-3 bg-light w-75 mt-3 mb-3 margin-left-30" (ngSubmit)="onSubmit()" [formGroup]="zigForma">
+    <section [formGroup]="zigForma.controls.podnosilac">
+        <h5 class="mb-2 arial_font title-left new-line"><b>Podnosilac</b></h5>
+        <mat-radio-group [formControl]="zigForma.controls.podnosilac.controls.vrstaPodnosioca" color="primary" aria-label="Select an option">
+            <div class="form-check title-left mt-1">
+                <mat-radio-button value="fizickoLice">Fizicko lice</mat-radio-button>
+            </div>
+            <div class="form-check title-right mt-1">
+                <mat-radio-button value="pravnoLice">Pravno lice</mat-radio-button>
+            </div>
+        </mat-radio-group>
+    </section>
+    <br>
+    <!--Ako je odabrano pravno lice-->
+    <div *ngIf="zigForma.get('podnosilac')?.get('vrstaPodnosioca')?.value === 'pravnoLice'">
+        <h6 class="mb-2 arial_font"><b>Podaci o firmi</b></h6>
+        <section formGroupName="podnosilac">
+            <div formGroupName="pravnoLice">
+                <label for="pravniNazivPodnosioca" class="arial_font">Pravno ime</label>
+                <input formControlName="naziv" type="text" id="pravniNazivPodnosioca" 
+                name="pravniNazivPodnosioca" class="bg_gray borderless_input input_size mb-3" 
+                placeholder="Unesite naziv" required>
+            </div>
+        </section>
+    </div>
+    <!--Ako je odabrano fizicko lice-->
+    <div *ngIf="zigForma.get('podnosilac')?.get('vrstaPodnosioca')?.value === 'fizickoLice'">
+        <h6 class="mb-2 arial_font"><b>Licni podaci</b></h6>
+        <section formGroupName="podnosilac">
+            <div class="left-elem-three" formGroupName="fizickoLice">
+                <label for="imePodnosioca" class="arial_font">Ime</label>
+                <input formControlName="ime" type="text" id="imePodnosioca" name="imePodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ime" required>
+            </div>
+            <div class="left-elem-three" formGroupName="fizickoLice">
+                <label for="prezimePodnosioca" class="arial_font">Prezime</label>
+                <input formControlName="prezime" type="text" id="prezimePodnosioca" name="prezimePodnosioca" class="bg_gray borderless_input input_size mb-3" placeholder="Unesite prezime" required>
+            </div>
+        </section>
+    </div>
+    <section formGroupName="podnosilac">
+        <h6 class="mb-2 arial_font"><b>Kontakt podaci</b></h6>
+        <div>
+            <div class="left_element">
+                <label for="emailPodnosioca" class="arial_font">Email</label>
+                <input formControlName="email" type="text" id="emailPodnosioca" name="emailPodnosioca" 
+                class="bg_gray borderless_input input_size mb-3" placeholder="Unesite email" required>
+            </div>
+            <div class="right_element">
+                <label for="brojTelefonaPodnosioca" class="arial_font">Broj telefona</label>
+                <input formControlName="brojTelefona" type="text" id="brojTelefonaPodnosioca" name="brojTelefonaPodnosioca" 
+                class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj telefona" required>
+            </div>
+        </div>
+        <div>
+            <div>
+                <label for="faksPodnosioca" class="arial_font new-line">Faks</label>
+                <input formControlName="brojFaksa" type="text" id="faksPodnosioca" 
+                name="faksPodnosioca" class="bg_gray borderless_input input_size mb-3" 
+                placeholder="Unesite faks" required>
+            </div>
+        </div>
+    </section>
+    <section formGroupName="podnosilac">
+        <h6 class="mb-2 arial_font"><b>Adresa podnosioca</b></h6>
+        <div>
+            <div class="left_element">
+                <label for="ulicaPodnosioca" class="arial_font">Ulica</label>
+                <input formControlName="ulica" type="text" id="ulicaPodnosioca" name="ulicaPodnosioca" 
+                class="bg_gray borderless_input input_size mb-3" placeholder="Unesite adresu ulice" required>
+            </div>
+            <div class="right_element">
+                <label for="brojUlicePodnosioca" class="arial_font new-line">Broj ulice</label>
+                <input formControlName="broj" type="text" id="brojUlicePodnosioca" name="brojUlicePodnosioca" 
+                class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj ulice" required>
+            </div>
+        </div>
+        <div class="new-line">
+            <div class="left_element">
+                <label for="mestoPodnosioca" class="arial_font new-line">Mesto</label>
+                <input formControlName="mesto" type="text" id="mestoPodnosioca" name="mesto" 
+                class="bg_gray borderless_input input_size mb-3" placeholder="Unesite mesto stanovanja" required>
+            </div>
+            <div class="right_element">
+                <label for="drzavaPodnosioca" class="arial_font new-line">Drzava</label>
+                <input formControlName="drzava" type="text" id="drzavaPodnosioca" name="drzava" 
+                class="bg_gray borderless_input input_size mb-3" placeholder="Unesite drzavu stanovanja" required>
+            </div>
+        </div>
+        <div>
+            <div>
+                <label for="postanskiBrojPodnosioca" class="arial_font new-line">Postanski broj</label>
+                <input formControlName="postanskiBroj" type="number" id="postanskiBrojPodnosioca" 
+                name="postanskiBrojPodnosioca" class="bg_gray borderless_input input_size mb-3" 
+                placeholder="Unesite postanski broj" required>
+            </div>
+        </div>
+    </section>
+    <div>
+        <button (click)="addPodnosilacPrijave()" type="button" class="btn btn-primary arial_font btn-block">Dodaj podnosioca</button>
+    </div>
+    <br>
+    <div>
+        <h6 class="mb-2 arial_font"><b>Uneti podnosioci</b></h6>
+        <mat-form-field class="example-chip-list w-100" appearance="fill">
+            <mat-chip-grid #chipGrid>
+                <mat-chip-row *ngFor="let podnosilacPrijave of podnosiociPrijave"
+                            (removed)="removePodnosilacPrijave(podnosilacPrijave)">
+                {{podnosilacPrijave.kontaktPodaci.email}}
+                <button mat-button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                </button>
+                </mat-chip-row>
+                <input disabled
+                    [matChipInputFor]="chipGrid"/>
+            </mat-chip-grid>
+        </mat-form-field>
+    </div>
+    <br>
+    <hr>
+
+    <section [formGroup]="zigForma.controls.punomocnik">
+        <h5 class="mb-2 arial_font title-left new-line"><b>Punomocnik</b></h5>
+        <mat-radio-group [formControl]="zigForma.controls.punomocnik.controls.prekoPunomocnika" color="primary" aria-label="Select an option">
+            <div class="form-check title-left mt-1">
+                <mat-radio-button value="da">Prijava se podnosi preko punomocnika</mat-radio-button>
+            </div>
+            <div class="form-check title-right mt-1">
+                <mat-radio-button value="ne">Prijava se NE podnosi preko punomocnika</mat-radio-button>
+            </div>
+        </mat-radio-group>
+    </section>
+
+    <div *ngIf="zigForma.get('punomocnik')?.get('prekoPunomocnika')?.value === 'da'">
+        <section formGroupName="punomocnik">
+            <h6 class="mb-2 arial_font"><b>Licni podaci</b></h6>
+            <section>
+                <div class="left-elem-three">
+                    <label for="imePunomocnika" class="arial_font">Ime</label>
+                    <input formControlName="ime" type="text" id="imePunomocnika" name="imePunomocnika" 
+                    class="bg_gray borderless_input input_size mb-3" placeholder="Unesite ime" required>
+                </div>
+                <div class="left-elem-three">
+                    <label for="prezimePunomocnika" class="arial_font">Prezime</label>
+                    <input formControlName="prezime" type="text" id="prezimePunomocnika" name="prezimePunomocnika"
+                     class="bg_gray borderless_input input_size mb-3" placeholder="Unesite prezime" required>
+                </div>
+            </section>
+        </section>
+        <section formGroupName="punomocnik">
+            <h6 class="mb-2 arial_font new-line"><b>Kontakt podaci</b></h6>
+            <div>
+                <div class="left_element">
+                    <label for="emailPunomocnika" class="arial_font">Email</label>
+                    <input formControlName="email" type="text" id="emailPunomocnika" name="emailPunomocnika" 
+                    class="bg_gray borderless_input input_size mb-3" placeholder="Unesite email" required>
+                </div>
+                <div class="right_element">
+                    <label for="brojTelefonaPunomocnika" class="arial_font">Broj telefona</label>
+                    <input formControlName="brojTelefona" type="text" id="brojTelefonaPunomocnika" name="brojTelefonaPunomocnika" 
+                    class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj telefona" required>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label for="faksPunomocnika" class="arial_font new-line">Faks</label>
+                    <input formControlName="brojFaksa" type="text" id="faksPunomocnika" 
+                    name="faksPunomocnika" class="bg_gray borderless_input input_size mb-3" 
+                    placeholder="Unesite faks" required>
+                </div>
+            </div>
+        </section>
+        <section formGroupName="punomocnik">
+            <h6 class="mb-2 arial_font new-line"><b>Adresa punomocnika</b></h6>
+            <div>
+                <div class="left_element">
+                    <label for="ulicaPunomocnika" class="arial_font">Ulica</label>
+                    <input formControlName="ulica" type="text" id="ulicaPunomocnika" name="ulicaPunomocnika" 
+                    class="bg_gray borderless_input input_size mb-3" placeholder="Unesite adresu ulice" required>
+                </div>
+                <div class="right_element">
+                    <label for="brojUlicePunomocnika" class="arial_font">Broj ulice</label>
+                    <input formControlName="broj" type="text" id="brojUlicePunomocnika" name="brojUlicePunomocnika" 
+                    class="bg_gray borderless_input input_size mb-3" placeholder="Unesite broj ulice" required>
+                </div>
+            </div>
+            <div class="new-line">
+                <div class="left_element">
+                    <label for="mestoPunomocnika" class="arial_font">Mesto</label>
+                    <input formControlName="mesto" type="text" id="mestoPunomocnika" name="mestoPunomocnika" 
+                    class="bg_gray borderless_input input_size mb-3" placeholder="Unesite mesto stanovanja" required>
+                </div>
+                <div class="right_element">
+                    <label for="drzavaPunomocnika" class="arial_font">Drzava</label>
+                    <input formControlName="drzava" type="text" id="drzavaPunomocnika" name="drzavaPunomocnika" 
+                    class="bg_gray borderless_input input_size mb-3" placeholder="Unesite drzavu stanovanja" required>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <label for="postanskiBrojPunomocnika" class="arial_font new-line">Postanski broj</label>
+                    <input formControlName="postanskiBroj" type="number" id="postanskiBrojPunomocnika" 
+                    name="postanskiBrojPunomocnika" class="bg_gray borderless_input input_size mb-3" 
+                    placeholder="Unesite postanski broj" required>
+                </div>
+            </div>
+        </section>
+    </div>
+    <br>
+    <hr>
+
+    <section [formGroup]="zigForma.controls.zajednickiPredstavnik">
+        <h5 class="mb-2 arial_font title-left new-line"><b>Zajednicki predstavnik</b></h5>
+        <mat-radio-group [formControl]="zigForma.controls.zajednickiPredstavnik.controls.prekoZajednickogPredstavnika" color="primary" aria-label="Select an option">
+            <div class="form-check title-left mt-1">
+                <mat-radio-button value="da">Prijava se podnosi preko zajednickog predstavnika</mat-radio-button>
+            </div>
+            <div class="form-check title-right mt-1">
+                <mat-radio-button value="ne">Prijava se NE podnosi preko zajednickog predstavnika</mat-radio-button>
+            </div>
+        </mat-radio-group>
+    </section>
+
+    <div *ngIf="zigForma.get('zajednickiPredstavnik')?.get('prekoZajednickogPredstavnika')?.value === 'da'">
+        <mat-form-field appearance="fill">
+            <mat-label class="arial_text">Izaberi zajednickog predstavnika</mat-label>
+            <mat-select id="selectType" [formControl]="zajednickiPredstavnik">
+                <mat-option>--</mat-option>
+                <mat-option class="arial_text" *ngFor="let podnosilacPrijave of podnosiociPrijave" [value]="podnosilacPrijave">
+                {{podnosilacPrijave.kontaktPodaci.email}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <br>
+    <hr>
+
+    <section formGroupName="zig">
+        <h5 class="mb-2 arial_font title-left new-line"><b>Zig</b></h5>
+        <section>
+            <label for="izgledZnaka" class="arial_font new-line"><b>Izgled znaka</b></label>
+            <input formControlName="imageUrl" type="file" id="izgledZnaka" 
+                name="izgledZnaka" class="bg_gray borderless_input mb-3" required>
+        </section>
+        <section>
+            <label for="tipZiga" class="arial_font new-line"><b>Tip ziga</b></label>
+            <mat-form-field appearance="fill">
+                <mat-label class="arial_font">Tip ziga</mat-label>
+                <mat-select id="selectType" formControlName="tipZiga">
+                    <mat-option>--</mat-option>
+                    <mat-option class="arial_text" *ngFor="let tip of tipoviZiga" [value]="tip">
+                    {{tip}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+        <section>
+            <label for="tipZnaka" class="arial_font new-line"><b>Tip znaka</b></label>
+            <mat-form-field appearance="fill">
+                <mat-label class="arial_font">Tip znaka</mat-label>
+                <mat-select id="selectType" formControlName="tipZnaka">
+                    <mat-option>--</mat-option>
+                    <mat-option class="arial_text" *ngFor="let tip of tipoviZnaka" [value]="tip">
+                    {{tip}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </section>
+        <section>
+            <label for="naznaceneBoje" class="arial_font new-line"><b>Naznacene boje</b></label>
+            <input formControlName="naznaceneBoje" type="text" id="naznaceneBoje" 
+                name="naznaceneBoje" class="bg_gray borderless_input input_size mb-3" required>
+        </section>
+        <section>
+            <label for="transliteracijaZnaka" class="arial_font new-line"><b>Transliteracija znaka</b></label>
+            <input formControlName="transliteracijaZnaka" type="text" id="transliteracijaZnaka" 
+                name="transliteracijaZnaka" class="bg_gray borderless_input input_size mb-3" required>
+        </section>
+        <section>
+            <label for="prevodZnaka" class="arial_font new-line"><b>Prevod znaka</b></label>
+            <input formControlName="prevodZnaka" type="text" id="prevodZnaka" 
+                name="prevodZnaka" class="bg_gray borderless_input input_size mb-3" required>
+        </section>
+        <section>
+            <label for="opisZnaka" class="arial_font new-line"><b>Opis znaka</b></label>
+            <input formControlName="opisZnaka" type="text" id="opisZnaka" 
+                name="opisZnaka" class="bg_gray borderless_input input_size mb-3" required>
+        </section>
+    </section>
+    <br>
+    <hr>
+
+    <section >
+        <h5 class="mb-2 arial_font title-left new-line"><b>Klase robe i usluga</b></h5>
+        <br><br>
+        <div class="checkbox-column klase" *ngFor="let option of klaseRobe">
+            <label [for]="'klasaRobe'+option" style="word-wrap:break-word">
+                <input [id]="'klasaRobe'+option"  type="checkbox" [value]="option" (change)="onCheckboxChange($event)"/>{{option}}
+            </label>
+        </div>
+    </section>
+    <br>
+    <hr>
+
+    <section>
+        <label for="pravoPrventsvaIOsnov" class="arial_font new-line"><b>Zatrazeno pravo prvenstva i osnov</b></label>
+        <input formControlName="zatrazenoPravoPrvenstvaIOsnov" type="text" id="pravoPrventsvaIOsnov" 
+            name="pravoPrventsvaIOsnov" class="bg_gray borderless_input input_size mb-3" required>
+    </section>
+    <hr>
+    <span>*Popuniti samo ako je znak ili element znaka ispisan slovima koja nisu ćirilična ili latinična</span>
+    <hr>
+    
+    <section formGroupName="takse">
+        <h5 class="mb-2 arial_font title-left new-line"><b>Placene takse</b></h5>
+        <section>
+            <label for="osnovnaTaksa" class="arial_font new-line"><b>Osnovna taksa</b></label>
+            <input min="0" formControlName="osnovnaTaksa" type="number" id="osnovnaTaksa" 
+                name="osnovnaTaksa" class="bg_gray borderless_input input_size mb-3" (change)="taksaChange($event)" required>
+        </section>
+        <section>
+            <label for="taksaZaKlase" class="arial_font new-line"><b>Taksa za {{ brojIzabranihKlasa }} klase</b></label>
+            <input min="0" formControlName="taksaZaKlase" type="number" id="taksaZaKlase" 
+                name="taksaZaKlase" class="bg_gray borderless_input input_size mb-3" (change)="taksaChange($event)" required>
+        </section>
+        <section>
+            <label for="taksaZaGrafickoResenje" class="arial_font new-line"><b>Taksa za graficko resenje</b></label>
+            <input min="0" formControlName="taksaZaGrafickoResenje" type="number" id="taksaZaGrafickoResenje" 
+                name="taksaZaGrafickoResenje" class="bg_gray borderless_input input_size mb-3" (change)="taksaChange($event)">
+        </section>
+        <section>
+            <label for="ukupnaTaksa" class="arial_font new-line"><b>Ukupna taksa</b></label>
+            <input onKeyDown="return false" min="0" [formControl]="ukupnaTaksa" type="number" id="ukupnaTaksa" 
+                name="ukupnaTaksa" class="bg_gray borderless_input input_size mb-3" disable/>
+        </section>
+    </section>
+    <hr>
+    <br>
+
+    <section formGroupName="priloziUzZahtev">
+        <h5 class="mb-2 arial_font title-left new-line"><b>Prilozi uz zahtev</b></h5>
+        <section>
+            <label for="primerakZnaka" class="arial_font new-line"><b>Primerak znaka</b></label>
+            <input formControlName="primerakZnaka" type="file" id="primerakZnaka" 
+                name="primerakZnaka" class="bg_gray borderless_input mb-3" required>
+        </section>
+        <section>
+            <label for="spisakRobeIUsluga" class="arial_font new-line"><b>Spisak robe i usluga</b></label>
+            <input formControlName="spisakRobeIUsluga" type="file" id="spisakRobeIUsluga" 
+                name="spisakRobeIUsluga" class="bg_gray borderless_input mb-3" required>
+        </section>
+        <section>
+            <label for="punomocje" class="arial_font new-line"><b>Punomocje</b></label>
+            <input formControlName="punomocje" type="file" id="punomocje" 
+                name="punomocje" class="bg_gray borderless_input mb-3" required>
+        </section>
+        <section>
+            <mat-radio-group [formControl]="zigForma.controls.priloziUzZahtev.controls.generalnoPunomocjeRanijePrilozeno" color="primary" aria-label="Select an option">
+                <div class="form-check title-left mt-1">
+                    <mat-radio-button value="da">Generalno punomocje je ranije prilozeno</mat-radio-button>
+                </div>
+                <div class="form-check title-right mt-1">
+                    <mat-radio-button value="ne">Generalno punomocje NIJE ranije prilozeno</mat-radio-button>
+                </div>
+            </mat-radio-group>
+        </section>
+        <section>
+            <mat-radio-group [formControl]="zigForma.controls.priloziUzZahtev.controls.punomocjeCeBitiNaknadnoDostavljeno" color="primary" aria-label="Select an option">
+                <div class="form-check title-left mt-1 new-line">
+                    <mat-radio-button value="da">Punomocje ce biti naknadno dostavljeno</mat-radio-button>
+                </div>
+                <div class="form-check title-right mt-1">
+                    <mat-radio-button value="ne">Punomocje NECE biti naknadno dostavljeno</mat-radio-button>
+                </div>
+            </mat-radio-group>
+        </section>
+        <section>
+            <label for="opstiAktOZigu" class="arial_font new-line"><b>Opsti akt o kolektivnom zigu/zigu garancije</b></label>
+            <input formControlName="opstiAktOZigu" type="file" id="opstiAktOZigu" 
+                name="opstiAktOZigu" class="bg_gray borderless_input mb-3" required>
+        </section>
+        <section>
+            <label for="dokazOPravuPrvenstva" class="arial_font new-line"><b>Dokaz o pravu prvenstva</b></label>
+            <input formControlName="dokazOPravuPrvenstva" type="file" id="dokazOPravuPrvenstva" 
+                name="dokazOPravuPrvenstva" class="bg_gray borderless_input mb-3" required>
+        </section>
+        <section>
+            <label for="dokazOUplatiTakse" class="arial_font new-line"><b>Dokaz o uplati takse</b></label>
+            <input formControlName="dokazOUplatiTakse" type="file" id="dokazOUplatiTakse" 
+                name="dokazOUplatiTakse" class="bg_gray borderless_input mb-3" required>
+        </section>
+    </section>
+
+    <hr>
+    <span>**Uz zaokruživanje broja klase robe/usluga Ničanske klasifikacije u rubrici 9 dostavlja se i spisak koji
+sadrži konkretne nazive robe koju podnosilac prijave proizvodi, odnosno usluga koje pruža. U cilju
+određenja obima zaštite koja se stiče žigom, spisak treba da sadrži jasne i precizne nazive robe i
+usluga. U tu svrhu mogu se koristiti pojmovi iz detaljne Liste roba i usluga ili MGS Manager aplikacije,
+dostupnih na sajtu Zavoda. Ukoliko se u spisak unose termini iz Liste klasa Ničanske klasifikacije,
+zaštita obuhvata samo tako imenovane, konkretne robe/usluge u njihovom jasnom i nedvosmislenom
+značenju.</span>
+
+    <hr>
+    <br>
+
+    <section class="submit-btn">
+        <button type="submit" class="btn btn-primary arial_font btn-block w-25">Pošalji</button>
+    </section>
+</form>

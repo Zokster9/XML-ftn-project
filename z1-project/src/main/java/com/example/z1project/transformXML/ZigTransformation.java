@@ -1,4 +1,5 @@
 package com.example.z1project.transformXML;
+import com.example.z1project.model.zig.ResenjeZahteva;
 import com.example.z1project.model.zig.ZahtevZaPriznanjeZiga;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.kernel.geom.PageSize;
@@ -10,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.util.JAXBSource;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -72,8 +74,6 @@ public class ZigTransformation {
             Transformer transformer = factory.newTransformer(xslt);
 
             JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
-            //MarshalPatent marshalPatent = new MarshalPatent();
-            //ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = marshalPatent.marshalPatent(zahtevZaPriznanjePatentaCreationDto, "read");
             JAXBSource source = new JAXBSource(context, zahtevZaPriznanjeZiga);
             System.out.println("Source" + source);
             StreamResult result = new StreamResult(new FileOutputStream(htmlFile));
@@ -92,4 +92,27 @@ public class ZigTransformation {
 
     }
 
+    public void kreirajResenjeZahtevaHTML(String htmlFile, ResenjeZahteva resenjeZahteva) {
+        try {
+            TransformerFactory factory = TransformerFactory.newInstance();
+            InputStream resourceAsStream = getClass().getResourceAsStream("/xslt/resenjeZahteva.xsl");
+            StreamSource xslt = new StreamSource(resourceAsStream);
+            Transformer transformer = factory.newTransformer(xslt);
+
+            JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
+            JAXBSource source = new JAXBSource(context, resenjeZahteva);
+            StreamResult result = new StreamResult(new FileOutputStream(htmlFile));
+
+            transformer.transform(source, result);
+
+        } catch (TransformerConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (TransformerException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
