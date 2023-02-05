@@ -27,42 +27,85 @@ export class ZigService {
 
   convertResponseToZig(response: any): ZahtevZaPriznanjeZigaDTO {
     const fizickiPodnosiociPrijave: FizickoLiceDTO[] = [];
-    for (let fizickiPodnosilac of response.podnosiociPrijave[0].fizickiPodnosiociPrijave[0].fizickiPodnosiociPrijave) {
+    try {
+      for (let fizickiPodnosilac of response.podnosiociPrijave[0].fizickiPodnosiociPrijave[0].fizickiPodnosiociPrijave) {
+        fizickiPodnosiociPrijave.push({
+          ime: fizickiPodnosilac.ime[0],
+          prezime: fizickiPodnosilac.prezime[0],
+          adresa: {
+            broj: fizickiPodnosilac.adresa[0].broj[0],
+            drzava: fizickiPodnosilac.adresa[0].drzava[0],
+            mesto: fizickiPodnosilac.adresa[0].mesto[0],
+            postanskiBroj: fizickiPodnosilac.adresa[0].postanskiBroj[0],
+            ulica: fizickiPodnosilac.adresa[0].ulica[0],
+          },
+          kontaktPodaci: {
+            brojFaksa: fizickiPodnosilac.kontaktPodaci[0].brojFaksa[0],
+            brojTelefona: fizickiPodnosilac.kontaktPodaci[0].brojTelefona[0],
+            email: fizickiPodnosilac.kontaktPodaci[0].email[0],
+          }
+        });
+      }
+    } catch (err) { 
+      const fizickiPodnosilac = response.podnosiociPrijave[0].fizickiPodnosiociPrijave[0].fizickiPodnosiociPrijave;
       fizickiPodnosiociPrijave.push({
-        ime: fizickiPodnosilac.ime[0],
-        prezime: fizickiPodnosilac.prezime[0],
-        adresa: {
-          broj: fizickiPodnosilac.adresa[0].broj[0],
-          drzava: fizickiPodnosilac.adresa[0].drzava[0],
-          mesto: fizickiPodnosilac.adresa[0].mesto[0],
-          postanskiBroj: fizickiPodnosilac.adresa[0].postanskiBroj[0],
-          ulica: fizickiPodnosilac.adresa[0].ulica[0],
-        },
-        kontaktPodaci: {
-          brojFaksa: fizickiPodnosilac.kontaktPodaci[0].brojFaksa[0],
-          brojTelefona: fizickiPodnosilac.kontaktPodaci[0].brojTelefona[0],
-          email: fizickiPodnosilac.kontaktPodaci[0].email[0],
-        }
-      });
+          ime: fizickiPodnosilac.ime[0],
+          prezime: fizickiPodnosilac.prezime[0],
+          adresa: {
+            broj: fizickiPodnosilac.adresa[0].broj[0],
+            drzava: fizickiPodnosilac.adresa[0].drzava[0],
+            mesto: fizickiPodnosilac.adresa[0].mesto[0],
+            postanskiBroj: fizickiPodnosilac.adresa[0].postanskiBroj[0],
+            ulica: fizickiPodnosilac.adresa[0].ulica[0],
+          },
+          kontaktPodaci: {
+            brojFaksa: fizickiPodnosilac.kontaktPodaci[0].brojFaksa[0],
+            brojTelefona: fizickiPodnosilac.kontaktPodaci[0].brojTelefona[0],
+            email: fizickiPodnosilac.kontaktPodaci[0].email[0],
+          }
+        });
     }
     
     const pravniPodnosiociPrijave: PravnoLiceDTO[] = [];
-    for (let pravniPodnosilac of response.podnosiociPrijave[0].pravniPodnosiociPrijave[0].pravniPodnosiociPrijave) {
-      pravniPodnosiociPrijave.push({
-        naziv: pravniPodnosilac.naziv[0],
-        adresa: {
-          broj: pravniPodnosilac.adresa[0].broj[0],
-          drzava: pravniPodnosilac.adresa[0].drzava[0],
-          mesto: pravniPodnosilac.adresa[0].mesto[0],
-          postanskiBroj: pravniPodnosilac.adresa[0].postanskiBroj[0],
-          ulica: pravniPodnosilac.adresa[0].ulica[0],
-        },
-        kontaktPodaci: {
-          brojFaksa: pravniPodnosilac.kontaktPodaci[0].brojFaksa[0],
-          brojTelefona: pravniPodnosilac.kontaktPodaci[0].brojTelefona[0],
-          email: pravniPodnosilac.kontaktPodaci[0].email[0],
-        }
-      });
+    try {
+      for (let pravniPodnosilac of response.podnosiociPrijave[0].pravniPodnosiociPrijave[0].pravniPodnosiociPrijave) {
+        pravniPodnosiociPrijave.push({
+          naziv: pravniPodnosilac.naziv[0],
+          adresa: {
+            broj: pravniPodnosilac.adresa[0].broj[0],
+            drzava: pravniPodnosilac.adresa[0].drzava[0],
+            mesto: pravniPodnosilac.adresa[0].mesto[0],
+            postanskiBroj: pravniPodnosilac.adresa[0].postanskiBroj[0],
+            ulica: pravniPodnosilac.adresa[0].ulica[0],
+          },
+          kontaktPodaci: {
+            brojFaksa: pravniPodnosilac.kontaktPodaci[0].brojFaksa[0],
+            brojTelefona: pravniPodnosilac.kontaktPodaci[0].brojTelefona[0],
+            email: pravniPodnosilac.kontaktPodaci[0].email[0],
+          }
+        });
+      }
+    } catch (err) {
+      try {
+        const pravniPodnosilac = response.podnosiociPrijave[0].pravniPodnosiociPrijave[0].pravniPodnosiociPrijave;
+        pravniPodnosiociPrijave.push({
+            naziv: pravniPodnosilac.naziv[0],
+            adresa: {
+              broj: pravniPodnosilac.adresa[0].broj[0],
+              drzava: pravniPodnosilac.adresa[0].drzava[0],
+              mesto: pravniPodnosilac.adresa[0].mesto[0],
+              postanskiBroj: pravniPodnosilac.adresa[0].postanskiBroj[0],
+              ulica: pravniPodnosilac.adresa[0].ulica[0],
+            },
+            kontaktPodaci: {
+              brojFaksa: pravniPodnosilac.kontaktPodaci[0].brojFaksa[0],
+              brojTelefona: pravniPodnosilac.kontaktPodaci[0].brojTelefona[0],
+              email: pravniPodnosilac.kontaktPodaci[0].email[0],
+            }
+          });
+      } catch (error) {
+
+      }
     }
     const podnosiociPrijave: PodnosiociPrijaveDTO = {
       fizickiPodnosiociPrijave: {

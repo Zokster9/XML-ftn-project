@@ -20,6 +20,7 @@ import { ZigDTO } from 'src/app/models/zig/ZigDTO';
 import { LiceDTO } from 'src/app/models/zig/LiceDTO';
 import { ZigService } from 'src/app/services/zig.service';
 import * as xml2js from 'xml2js';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-zig-form',
@@ -169,6 +170,7 @@ export class ZigFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private zigService: ZigService,
+    private router: Router
   ) { }
   
   ngOnInit(): void {
@@ -275,7 +277,8 @@ export class ZigFormComponent implements OnInit {
         const parser = new xml2js.Parser({ strict: true, trim: true });
         parser.parseString(xmlText.toString(), (err, result) => {
           zahtevZaPriznanjeZiga = result.ZahtevZaPriznanjeZigaDTO;
-        })
+        });
+        this.router.navigate(['/pocetna-stranica']);
       }
     })
   }
