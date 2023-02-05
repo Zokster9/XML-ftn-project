@@ -46,6 +46,7 @@ public class ZigService {
     public ZahtevZaPriznanjeZiga createZigHtml(String brojPrijave) throws Exception {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigDatabase.getByBrojPrijave(brojPrijave);
         String htmlFile = "src/main/resources/static/html/" + brojPrijave + ".html";
+        zahtevZaPriznanjeZiga.setIsPdf(false);
         zigTransformation.generateHTML(htmlFile, zahtevZaPriznanjeZiga);
         return zahtevZaPriznanjeZiga;
     }
@@ -53,6 +54,7 @@ public class ZigService {
     public ZahtevZaPriznanjeZiga createZigPdf(String token, String brojPrijave) throws Exception {
         proveriKorisnika(token, true);
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigDatabase.getByBrojPrijave(brojPrijave);
+        zahtevZaPriznanjeZiga.setIsPdf(true);
         String htmlFile = "src/main/resources/static/html/" + brojPrijave + ".html";
         String pdfFile = "src/main/resources/static/pdf/" + brojPrijave + ".pdf";
         zigTransformation.generateHTML(htmlFile, zahtevZaPriznanjeZiga);

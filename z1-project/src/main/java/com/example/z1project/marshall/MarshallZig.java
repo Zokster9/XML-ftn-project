@@ -2,27 +2,64 @@ package com.example.z1project.marshall;
 
 import com.example.z1project.dto.*;
 import com.example.z1project.model.zig.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageConfig;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class MarshallZig {
 
-    public ZahtevZaPriznanjeZiga marshalZahtevZaPriznanjeZiga(ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO) throws DatatypeConfigurationException {
+    public byte[] getQRCodeImage(String text, int width, int height) throws WriterException, IOException {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+
+        ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+        MatrixToImageConfig con = new MatrixToImageConfig( 0xFF000002 , 0xFFFFC041 ) ;
+
+        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream,con);
+        byte[] pngData = pngOutputStream.toByteArray();
+        return pngData;
+    }
+
+    public ZahtevZaPriznanjeZiga marshalZahtevZaPriznanjeZiga(ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO) throws DatatypeConfigurationException,
+            IOException, WriterException {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = new ZahtevZaPriznanjeZiga();
         zahtevZaPriznanjeZiga.setPodnosiociPrijave(marshalPodnosioci(zahtevZaPriznanjeZigaDTO.getPodnosiociPrijave()));
         zahtevZaPriznanjeZiga.setPunomocnik(marshalPunomocnik(zahtevZaPriznanjeZigaDTO.getPunomocnik()));
         zahtevZaPriznanjeZiga.setZajednickiPredstavnikPodnosiocaPrijave(marshalZajednickiPredstavnikPodnosiocaPrijave(
-                zahtevZaPriznanjeZigaDTO.getFizickiZajednickiPredstavnikPodnosiocaPrijave(), zahtevZaPriznanjeZigaDTO.getPravniZajednickiPredstavnikPodnosiocaPrijave()));
+                zahtevZaPriznanjeZigaDTO.getFizickiZajednickiPredstavnikPodnosiocaPrijave(), zahtevZaPriznanjeZigaDTO
+                        .getPravniZajednickiPredstavnikPodnosiocaPrijave()));
         zahtevZaPriznanjeZiga.setZig(marshalZig(zahtevZaPriznanjeZigaDTO.getZig()));
         zahtevZaPriznanjeZiga.setKlaseRobeIUsluga(marshalKlaseRobeIUsluga(zahtevZaPriznanjeZigaDTO.getKlaseRobeIUsluga()));
         zahtevZaPriznanjeZiga.setPravoPrvenstvaIOsnov(zahtevZaPriznanjeZigaDTO.getPravoPrvenstvaIOsnov());
         zahtevZaPriznanjeZiga.setPlaceneTakse(marshalPlaceneTakse(zahtevZaPriznanjeZigaDTO.getPlaceneTakse()));
         zahtevZaPriznanjeZiga.setPodaciOPrijavi(marshalPodaciOPrijavi(zahtevZaPriznanjeZigaDTO.getPodaciOPrijavi()));
+        zahtevZaPriznanjeZiga.setQrPdf(marshalQrCodePdf(zahtevZaPriznanjeZiga.getPodaciOPrijavi().getBrojPrijaveZiga()));
+        zahtevZaPriznanjeZiga.setQrHtml(marshalQrCodeHtml(zahtevZaPriznanjeZiga.getPodaciOPrijavi().getBrojPrijaveZiga()));
         return zahtevZaPriznanjeZiga;
+    }
+
+    private String marshalQrCodeHtml(String brojPrijaveZiga) throws IOException, WriterException {
+        return Base64.getEncoder().encodeToString(getQRCodeImage("http://localhost:9004/html/" + brojPrijaveZiga + ".html",
+                300, 300));
+    }
+
+    private String marshalQrCodePdf(String brojPrijaveZiga) throws IOException, WriterException {
+        return Base64.getEncoder().encodeToString(getQRCodeImage("http://localhost:9004/pdf/" + brojPrijaveZiga + ".pdf",
+                300, 300));
     }
 
     private ZahtevZaPriznanjeZiga.PodaciOPrijavi marshalPodaciOPrijavi(PodaciOPrijaviDTO podaciOPrijaviDTO) throws DatatypeConfigurationException {
@@ -81,7 +118,7 @@ public class MarshallZig {
         return klaseRobeIUsluga;
     }
 
-    private ZahtevZaPriznanjeZiga.Zig marshalZig(ZigDTO zigDTO) {
+    private ZahtevZaPriznanjeZiga.Zig marshalZig(ZigDTO zigDTO) throws IOException {
         ZahtevZaPriznanjeZiga.Zig zig = new ZahtevZaPriznanjeZiga.Zig();
         zig.setIzgledZnaka(marshalIzgledZnaka(zigDTO.getIzgledZnaka()));
         zig.setTipZnaka(marshalTipZnaka(zigDTO.getTipZnaka()));
@@ -118,9 +155,10 @@ public class MarshallZig {
         return tipZnaka;
     }
 
-    private ZahtevZaPriznanjeZiga.Zig.IzgledZnaka marshalIzgledZnaka(IzgledZnakaDTO izgledZnakaDTO) {
+    private ZahtevZaPriznanjeZiga.Zig.IzgledZnaka marshalIzgledZnaka(IzgledZnakaDTO izgledZnakaDTO) throws IOException {
         ZahtevZaPriznanjeZiga.Zig.IzgledZnaka izgledZnaka = new ZahtevZaPriznanjeZiga.Zig.IzgledZnaka();
-        izgledZnaka.setImageUrl(izgledZnakaDTO.getImageUrl());
+        String fileName = "./src/main/resources/static/zahtev_data/" + izgledZnakaDTO.getImageUrl();
+        izgledZnaka.setImageUrl(Base64.getEncoder().encodeToString(Files.readAllBytes(Paths.get(fileName))));
         return izgledZnaka;
     }
 

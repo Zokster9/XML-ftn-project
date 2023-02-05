@@ -16,6 +16,7 @@
                 </xs:choice>
                 <xs:element name="referenca" type="xs:string"/>
             </xs:sequence>
+            <xs:attribute name="qr" type="xs:string"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>

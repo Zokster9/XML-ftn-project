@@ -2,9 +2,8 @@ package com.example.z1project.controller;
 
 
 import com.example.z1project.Util.TokenUtils;
-import com.example.z1project.Util.ZigExample;
 import com.example.z1project.dto.ZahtevZaPriznanjeZigaDTO;
-import com.example.z1project.model.zig.*;
+import com.example.z1project.model.zig.ZahtevZaPriznanjeZiga;
 import com.example.z1project.service.ZigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,11 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.stream.Collectors;
 

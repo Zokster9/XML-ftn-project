@@ -8,7 +8,7 @@
             .docx-wrapper>section.docx { background: white; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); margin-bottom: 30px; }
             .docx { color: black; }
             section.docx { box-sizing: border-box; display: flex; flex-flow: column nowrap; position: relative; overflow: hidden; }
-            section.docx>article { margin-bottom: auto; }
+            section.docx>article { margin-bottom: 1%; }
             .docx table { border-collapse: collapse; }
             .docx table td, .docx table th { vertical-align: top; }
             .docx p { margin: 0pt; min-height: 1em; }
@@ -18,6 +18,13 @@
             math {
             display: inline-block;
             line-height: initial;
+            }
+
+            center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
             }
 
             mfrac {
@@ -155,6 +162,13 @@
                         </xsl:choose>
                         <p class="docx_normal" style="margin-left: 0pt;"/>
                     </article>
+                    <div style="text-align: center;" class="center">
+                        <img height="300px" width="300px">
+                            <xsl:attribute
+                                    name="src"><xsl:text>data:image/png;base64,</xsl:text><xsl:value-of select="//@qr"/>
+                            </xsl:attribute>
+                        </img>
+                    </div>
                 </section>
             </div>
         </html>
