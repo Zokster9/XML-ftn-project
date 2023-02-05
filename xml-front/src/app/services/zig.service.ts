@@ -47,23 +47,27 @@ export class ZigService {
         });
       }
     } catch (err) { 
-      const fizickiPodnosilac = response.podnosiociPrijave[0].fizickiPodnosiociPrijave[0].fizickiPodnosiociPrijave;
-      fizickiPodnosiociPrijave.push({
-          ime: fizickiPodnosilac.ime[0],
-          prezime: fizickiPodnosilac.prezime[0],
-          adresa: {
-            broj: fizickiPodnosilac.adresa[0].broj[0],
-            drzava: fizickiPodnosilac.adresa[0].drzava[0],
-            mesto: fizickiPodnosilac.adresa[0].mesto[0],
-            postanskiBroj: fizickiPodnosilac.adresa[0].postanskiBroj[0],
-            ulica: fizickiPodnosilac.adresa[0].ulica[0],
-          },
-          kontaktPodaci: {
-            brojFaksa: fizickiPodnosilac.kontaktPodaci[0].brojFaksa[0],
-            brojTelefona: fizickiPodnosilac.kontaktPodaci[0].brojTelefona[0],
-            email: fizickiPodnosilac.kontaktPodaci[0].email[0],
-          }
-        });
+      try {
+        const fizickiPodnosilac = response.podnosiociPrijave[0].fizickiPodnosiociPrijave[0].fizickiPodnosiociPrijave;
+        fizickiPodnosiociPrijave.push({
+            ime: fizickiPodnosilac.ime[0],
+            prezime: fizickiPodnosilac.prezime[0],
+            adresa: {
+              broj: fizickiPodnosilac.adresa[0].broj[0],
+              drzava: fizickiPodnosilac.adresa[0].drzava[0],
+              mesto: fizickiPodnosilac.adresa[0].mesto[0],
+              postanskiBroj: fizickiPodnosilac.adresa[0].postanskiBroj[0],
+              ulica: fizickiPodnosilac.adresa[0].ulica[0],
+            },
+            kontaktPodaci: {
+              brojFaksa: fizickiPodnosilac.kontaktPodaci[0].brojFaksa[0],
+              brojTelefona: fizickiPodnosilac.kontaktPodaci[0].brojTelefona[0],
+              email: fizickiPodnosilac.kontaktPodaci[0].email[0],
+            }
+          });
+      } catch (error) {
+        
+      }
     }
     
     const pravniPodnosiociPrijave: PravnoLiceDTO[] = [];
