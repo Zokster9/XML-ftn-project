@@ -106,6 +106,7 @@ export class AutorskaTableComponent {
       parser.parseString(data.toString(), (err, result) => {
         let obrasci = result.List.item;
         let autorskaUtil = new AutorskaUtil();
+        this.obrasciAutorska = [];
         for (var obrazac of obrasci) {
           let obrazacAutorskoDeloDTO : ObrazacAutorskoDeloDTO;   
           obrazacAutorskoDeloDTO = autorskaUtil.konvertujOdgovor(obrazac);

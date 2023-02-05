@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 @Service
@@ -27,9 +29,9 @@ public class EmailService {
     private final String emailFrom = "xmlprojekat@gmail.com";
 
     @Async
-    public void posaljiMejlZaZahtev(ResenjeZahteva resenjeZahteva) throws MessagingException {
+    public void posaljiMejlZaZahtev(ResenjeZahteva resenjeZahteva) throws MessagingException, IOException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        ClassPathResource pdf = new ClassPathResource("static/pdf/" + resenjeZahteva.getReferenca() + "_resenje.pdf");
+        File pdf = new ClassPathResource("static/pdf/" + resenjeZahteva.getReferenca() + "_resenje.pdf").getFile();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
         helper.setTo(Objects.requireNonNull(env.getProperty(emailTo)));
         helper.setFrom(emailFrom);
