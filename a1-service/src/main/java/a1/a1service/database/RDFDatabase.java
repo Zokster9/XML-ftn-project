@@ -29,7 +29,9 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.nio.file.*;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -336,7 +338,7 @@ public class RDFDatabase {
             PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/static/pdf/izvestaj.pdf"));
             document.open();
             Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 20, BaseColor.BLACK);
-            Chunk chunk = new Chunk("IZVESTAJ U PERIODU OD " + pocetniDatum.toString() + "\n DO " + krajnjiDatum.toString(), font);
+            Chunk chunk = new Chunk("IZVESTAJ U PERIODU OD " + convertDateToStr(pocetniDatum) + " DO " + convertDateToStr(krajnjiDatum), font);
             document.add(chunk);
             document.add(new Paragraph("\n\n"));
 
@@ -370,5 +372,11 @@ public class RDFDatabase {
                     header.setPhrase(new Phrase(columnTitle));
                     table.addCell(header);
                 });
+    }
+
+    private String convertDateToStr(XMLGregorianCalendar calendar) {
+        Date date = calendar.toGregorianCalendar().getTime();
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy.");
+        return df.format(date);
     }
 }
