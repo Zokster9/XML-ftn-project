@@ -66,7 +66,7 @@ public class MarshallZig {
         ZahtevZaPriznanjeZiga.PodaciOPrijavi podaciOPrijavi = new ZahtevZaPriznanjeZiga.PodaciOPrijavi();
         podaciOPrijavi.setPriloziUzZahtev(marshalPriloziUzZahtev(podaciOPrijaviDTO.getPriloziUzZahtev()));
         String milliseconds = String.valueOf(new Date().getTime());
-        podaciOPrijavi.setBrojPrijaveZiga("Z-" + milliseconds.substring(0, 5) + "-" + milliseconds.substring(5, 7));
+        podaciOPrijavi.setBrojPrijaveZiga("Z-" + milliseconds.substring(5, 10) + "-" + milliseconds.substring(10, 12));
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(new Date());
         XMLGregorianCalendar xCal = DatatypeFactory.newInstance()
