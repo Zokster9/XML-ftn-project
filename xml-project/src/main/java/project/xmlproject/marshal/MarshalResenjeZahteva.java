@@ -30,7 +30,7 @@ public class MarshalResenjeZahteva {
         resenjeZahteva.setObrazlozenje(resenjeZahtevaDto.getObrazlozenje());
         resenjeZahteva.setReferenca(resenjeZahtevaDto.getReferenca());
         resenjeZahteva.setNaziv(korisnikDTO.getIme() + ' ' + korisnikDTO.getPrezime());
-        resenjeZahteva.setRefId(resenjeZahteva.getReferenca());
+        resenjeZahteva.setRefId("www.ftn.uns.ac.rs/" + resenjeZahteva.getReferenca());
         return resenjeZahteva;
     }
 

@@ -49,7 +49,7 @@ public class MarshalPatent {
         zahtevZaPriznanjePatenta.setPodnosilac(podnosilac);
         zahtevZaPriznanjePatenta.setPronalazac(pronalazac);
         zahtevZaPriznanjePatenta.setPunomocnik(punomocnik);
-        zahtevZaPriznanjePatenta.setId(podaciOPrijavama.getNovaPrijava().getBrojPrijave());
+        zahtevZaPriznanjePatenta.setId("www.ftn.uns.ac.rs/" + podaciOPrijavama.getNovaPrijava().getBrojPrijave());
 
         return zahtevZaPriznanjePatenta;
     }

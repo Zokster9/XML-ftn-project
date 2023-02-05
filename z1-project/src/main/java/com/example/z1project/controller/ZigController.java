@@ -83,7 +83,7 @@ public class ZigController {
     public ResponseEntity<String> dobaviRDF(@PathVariable(value = "brojZiga") String brojZiga, HttpServletRequest request) {
         try {
             String token = tokenUtils.getAuthHeaderFromHeader(request);
-            if (true) {
+            if (zigService.proveriKorisnika(token, true)) {
                 String rdf = zigService.kreirajRdfJson(brojZiga);
                 return new ResponseEntity<>(rdf, HttpStatus.OK);
             }
@@ -97,7 +97,7 @@ public class ZigController {
     public ResponseEntity<String> dobaviJSON(@PathVariable("brojZiga") String brojZiga, HttpServletRequest request) {
         try {
             String token = tokenUtils.getAuthHeaderFromHeader(request);
-            if (true) {
+            if (zigService.proveriKorisnika(token, true)) {
                 String rdf = zigService.kreirajRdfJson(brojZiga);
                 return new ResponseEntity<>(rdf, HttpStatus.OK);
             }
